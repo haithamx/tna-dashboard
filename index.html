@@ -105,10 +105,10 @@ const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
     <div class="hero-inner">
       <div>
         <div class="accent-bar"></div>
-        <span class="badge">تحليل محسَّن · 939 برنامجاً من 67 جهة (شيتان)</span>
+        <span class="badge" id="hero-badge">لوحة تحليل الاحتياجات التدريبية 2027</span>
         <h1>لوحة تحليل الاحتياجات التدريبية 2027</h1>
         <p class="sub">تحليل منهجي شامل لطلبات الجهات — استخراج الكفاءات وتصنيفها وترتيبها بمؤشرات موضوعية وفق المنهجية المعتمدة.</p>
-        <p class="updated">بيانات التقرير الوارد من الجهات · خاضعة للمراجعة قبل الاعتماد النهائي · 26 أغسطس 2026</p>
+        <p class="updated" id="hero-updated">جاري تحميل البيانات…</p>
       </div>
       <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 60" width="160" height="60" aria-label="جامعة الملك سعود">
   <rect x="0" y="0" width="160" height="3" fill="#008DC3" rx="1.5"/>
@@ -122,32 +122,35 @@ const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
 
 <section>
   <div class="wrap">
+    <!-- KPIs: Supabase tna_heatmap — SUM(count), COUNT(DISTINCT entity), COUNT(DISTINCT domain) -->
     <div class="kpi-row">
-      <div class="kpi"><div class="num">939</div><div class="label">برنامج تدريبي مطلوب</div></div>
-      <div class="kpi"><div class="num">67</div><div class="label">جهة جامعية مشاركة</div></div>
-      <div class="kpi"><div class="num">807</div><div class="label">كفاءة موحّدة مستخرجة</div></div>
-      <div class="kpi"><div class="num">24,616</div><div class="label">مستفيد مستهدف</div></div>
-      <div class="kpi"><div class="num" style="color:#C9702C;">65%</div><div class="label">طلبات بأولوية عالية</div></div>
+      <div class="kpi"><div class="num" id="stat-total">—</div><div class="label">إجمالي الطلبات التدريبية</div></div>
+      <div class="kpi"><div class="num" id="stat-entities">—</div><div class="label">جهة جامعية مشاركة</div></div>
+      <div class="kpi"><div class="num" id="stat-domains">—</div><div class="label">مجال تدريبي رئيسي</div></div>
     </div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <div class="eyebrow">أبرز نتيجة</div>
-    <h2>الذكاء الاصطناعي — الكفاءة الأولى عبر 38 جهة مختلفة</h2>
-    <p class="lead">الكفاءة الأعلى انتشاراً عبر 18 جهة مختلفة تطلب توظيف الذكاء الاصطناعي والبيانات في اتخاذ القرار — بمؤشر أولوية 69.7/100، الأعلى في التحليل بأكمله.</p>
+    <!-- أعلى الجهات: Supabase tna_heatmap GROUP BY entity, SUM(count) DESC LIMIT 10 -->
+    <div class="eyebrow">أعلى الجهات طلباً</div>
+    <h2>الجهات الأعلى في إجمالي الطلبات التدريبية — بيانات مباشرة</h2>
+    <p class="lead">أعلى 10 جهات جامعية وفق إجمالي عدد الطلبات التدريبية، مرتبةً تنازلياً. المصدر: Supabase · جدول tna_heatmap.</p>
+    <p style="font-size:12px;color:var(--b3);margin-bottom:8px" id="top10-updated">جاري التحميل…</p>
     <div class="card"><div class="chart-tall"><canvas id="top10"></canvas></div></div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <div class="eyebrow">تفصيل حسب المجال</div>
+    <div class="eyebrow">تحليل الكفاءات</div>
     <h2>أعلى 5 كفاءات لكل مجال رئيسي</h2>
-    <p class="lead">اختر مجالاً لعرض الكفاءات الأعلى أولويةً فيه وفق المؤشر المركّب.</p>
-    <div class="tabs" id="tabs"></div>
-    <div class="card"><div class="chart-box"><canvas id="domChart"></canvas></div></div>
+    <p class="lead" style="color:var(--b3)">هذا القسم يعتمد على بيانات الكفاءات التفصيلية — غير متوفرة حالياً في tna_heatmap.</p>
+    <div class="card" style="text-align:center;padding:40px;color:var(--b3);font-size:15px;line-height:2">
+      ⏳ بانتظار تحديث البيانات<br>
+      <span style="font-size:12px">سيُفعَّل هذا القسم عند توفر جدول الكفاءات التفصيلية</span>
+    </div>
   </div>
 </section>
 
@@ -160,15 +163,10 @@ const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
         <h3 style="font-size:16px;margin-bottom:14px;">المجالات الرئيسية — عدد الطلبات</h3>
         <div class="chart-box"><canvas id="domDist"></canvas></div>
       </div>
-      <div class="card">
-        <h3 style="font-size:16px;margin-bottom:14px;">طبيعة الاحتياج</h3>
-        <div class="chart-box"><canvas id="needType"></canvas></div>
-        <div class="legend">
-          <span><i class="dot" style="background:#036389"></i>مختلط 65%</span>
-          <span><i class="dot" style="background:#1AA3D6"></i>مهاري 28%</span>
-          <span><i class="dot" style="background:#6FC1E0"></i>معرفي 5%</span>
-          <span><i class="dot" style="background:#B8E2F2"></i>سلوكي 2%</span>
-        </div>
+      <div class="card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:220px;gap:10px;text-align:center;">
+        <h3 style="font-size:16px;margin-bottom:4px;">طبيعة الاحتياج</h3>
+        <p style="color:var(--b3);font-size:14px;">⏳ بانتظار تحديث البيانات</p>
+        <p style="color:var(--b3);font-size:12px;">تصنيف مختلط/مهاري/معرفي/سلوكي غير متوفر في tna_heatmap</p>
       </div>
     </div>
   </div>
@@ -207,10 +205,10 @@ const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
       <h2>اسأل عن نتائج التحليل</h2>
       <p class="lead">اكتب أي سؤال عن الاحتياجات التدريبية وسيجيبك الذكاء الاصطناعي بناءً على بيانات هذا التقرير.</p>
       <div class="presets">
-        <button class="preset" onclick="ask('ما الكفاءات الأعلى أولوية في الذكاء الاصطناعي؟')">الكفاءات الأعلى في الذكاء الاصطناعي؟</button>
-        <button class="preset" onclick="ask('أهم 3 توصيات استراتيجية')">أهم 3 توصيات</button>
-        <button class="preset" onclick="ask('وضع الأمن السيبراني')">وضع الأمن السيبراني</button>
-        <button class="preset" onclick="ask('أكثر الجهات طلباً')">أكثر الجهات طلباً</button>
+        <button class="preset" onclick="ask('ما هي أكثر الجهات طلباً وكم عدد طلباتها؟')">أكثر الجهات طلباً</button>
+        <button class="preset" onclick="ask('ما هو أكثر المجالات التدريبية طلباً؟')">أكثر المجالات طلباً</button>
+        <button class="preset" onclick="ask('ما هي احتياجات عمادة شؤون الطلاب التدريبية؟')">احتياجات عمادة شؤون الطلاب</button>
+        <button class="preset" onclick="ask('ما المجالات التي تحتاجها معظم الجهات؟')">المجالات المشتركة بين الجهات</button>
       </div>
       <div class="ask-row">
         <input class="ask-input" id="inp" placeholder="اكتب سؤالك هنا..." type="text">
@@ -222,135 +220,58 @@ const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
   </div>
 </section>
 
-<footer>لوحة تحليل الاحتياجات التدريبية 2027 · جامعة الملك سعود · بيانات حقيقية من 66 جهة</footer>
+<footer>لوحة تحليل الاحتياجات التدريبية 2027 · جامعة الملك سعود · <span id="footer-stat">جاري التحميل…</span></footer>
 <script>
-const G='rgba(20,30,40,.06)';
-Chart.defaults.font.family="'GE Dinar One',Arial,sans-serif";
-Chart.defaults.color='#63707A';
+// ════════════════════════════════════════════════════════════
+//  مصدر كل رقم: Supabase · جدول tna_heatmap
+//  SUM(count)           → إجمالي الطلبات التدريبية
+//  COUNT(DISTINCT entity) → عدد الجهات
+//  COUNT(DISTINCT domain) → عدد المجالات
+//  GROUP BY domain       → توزيع المجالات (domDist chart)
+//  GROUP BY entity       → أعلى الجهات (top10 chart)
+//  MAX(updated_at)       → آخر مزامنة حقيقية من قاعدة البيانات
+// ════════════════════════════════════════════════════════════
 
-// Top 10
-new Chart(document.getElementById('top10'),{
-  type:'bar',
-  data:{
-    labels:[
-      'تحليل البيانات والذكاء الاصطناعي في اتخاذ القرار (38 جهة)',
-      'الذكاء الاصطناعي التوليدي في بيئة العمل (32 جهة)',
-      'إدارة المشاريع الرشيقة PMP/Agile (23 جهة)',
-      'الذكاء الاصطناعي في الموارد البشرية (18 جهة)',
-      'إدارة المشاريع الاحترافية (13 جهة)',
-      'مؤشرات الأداء KPIs والتحسين المستمر (5 جهات)',
-      'إدارة البيانات وحوكمتها (12 جهة)',
-      'إدارة الوقت وتنظيم الأولويات (9 جهات)',
-      'الأمن السيبراني وحماية البيانات (9 جهات)',
-      'اللغة الإنجليزية في بيئة العمل (8 جهات)'
-    ],
-    datasets:[{
-      data:[40.3,38.0,36.5,35.4,32.3,30.6,29.9,29.0,29.0,28.4],
-      backgroundColor:['#023E56','#036389','#008DC3','#1AA3D6','#1AA3D6','#6FC1E0','#6FC1E0','#6FC1E0','#6FC1E0','#B8E2F2'],
-      borderRadius:4,maxBarThickness:22
-    }]
-  },
-  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'مؤشر الأولوية: '+c.parsed.x}}},
-    scales:{x:{min:0,max:100,grid:{color:G}},y:{grid:{display:false},ticks:{font:{size:11}}}}}
-});
+const G = 'rgba(20,30,40,.06)';
+Chart.defaults.font.family = "'GE Dinar One',Arial,sans-serif";
+Chart.defaults.color = '#63707A';
 
-// Domain tabs
-const DOM={
-  'التحول الرقمي والتقنية':{c:'#008DC3',d:[
-    ['مهارات Microsoft Excel المتقدمة',42.4],
-    ['تحليل البيانات وتطبيقات الذكاء الاصطناعي في اتخاذ القرار',40.3],
-    ['استخدام الذكاء الاصطناعي في الموارد البشرية',38.0],
-    ['التحول الرقمي والذكاء الاصطناعي',36.5],
-    ['الأمن السيبراني وحماية البيانات',29.0]]},
-  'الإدارة والقيادة':{c:'#036389',d:[
-    ['إعداد التقارير التنفيذية وكتابة التقارير الاحترافية',36.5],
-    ['القيادة الاستراتيجية وصنع القرار',35.8],
-    ['إدارة المشاريع الاحترافية',35.4],
-    ['إدارة الوقت وتنظيم الأولويات',35.3],
-    ['ديوان بلس',34.1]]},
-  'الجودة وإدارة المشاريع':{c:'#023E56',d:[
-    ['الإسعافات الأولية (تخصصي طبي)',46.2],
-    ['BLS للإنعاش القلبي والرئوي (تخصصي طبي)',46.2],
-    ['مكافحة العدوى (تخصصي طبي)',46.2],
-    ['مهارات التواصل الفعال مع المرضى',41.3],
-    ['إدارة جودة الخدمات الصحية',36.5]]},
-  'اللغات والتواصل':{c:'#1AA3D6',d:[
-    ['اللغة الإنجليزية في بيئة العمل',43.1],
-    ['اللغة الإنجليزية (مختلف المستويات)',33.4],
-    ['كتابة التقارير والمراسلات الرسمية',33.1],
-    ['الكتابة الإدارية الوظيفية',32.5],
-    ['مهارات العرض والتقديم',29.8]]},
-  'الامتثال والحوكمة':{c:'#6FC1E0',d:[
-    ['الالتزام المؤسسي والامتثال للأنظمة',30.5],
-    ['نظام المنافسات والمشتريات الحكومية',30.5],
-    ['أخلاقيات التعامل مع البيانات',30.5],
-    ['إعداد الجداول على النظام الأكاديمي',21.8],
-    ['مستشار الصياغة التشريعية',21.5]]},
-};
-let dc;
-function rd(k){
-  const d=DOM[k];
-  if(dc) dc.destroy();
-  dc=new Chart(document.getElementById('domChart'),{
-    type:'bar',
-    data:{labels:d.d.map(i=>i[0]),datasets:[{data:d.d.map(i=>i[1]),backgroundColor:d.c,borderRadius:4,maxBarThickness:28}]},
-    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'مؤشر الأولوية: '+c.parsed.x}}},
-      scales:{x:{min:0,max:100,grid:{color:G}},y:{grid:{display:false}}}}
-  });
+// ── Ask AI ────────────────────────────────────────────────────
+async function ask(preset) {
+  const inp = document.getElementById('inp');
+  const q = preset || inp.value.trim();
+  if (!q) return;
+  inp.value = q;
+  const btn = document.getElementById('btn'),
+        load = document.getElementById('load'),
+        ans  = document.getElementById('ans');
+  btn.disabled = true;
+  load.classList.add('show');
+  ans.classList.remove('show');
+  try {
+    const r = await fetch('https://aihaitham.app.n8n.cloud/webhook/tna-chat', {
+      method: 'POST', mode: 'cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question: q })
+    });
+    const d = await r.json();
+    ans.textContent = d.answer || 'لا توجد إجابة.';
+    ans.classList.add('show');
+  } catch(e) {
+    ans.textContent = 'خطأ: ' + String(e);
+    ans.classList.add('show');
+  } finally {
+    btn.disabled = false;
+    load.classList.remove('show');
+  }
 }
-const tabs=document.getElementById('tabs');
-Object.keys(DOM).forEach((k,i)=>{
-  const b=document.createElement('button');
-  b.className='tab-btn'+(i===0?' active':'');
-  b.textContent=k;
-  b.onclick=()=>{document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');rd(k);};
-  tabs.appendChild(b);
-});
-rd('التحول الرقمي والتقنية');
-
-// Domain dist
-new Chart(document.getElementById('domDist'),{
-  type:'bar',
-  data:{
-    labels:['الإدارة والقيادة','التحول الرقمي والتقنية','الجودة وإدارة المشاريع','التخصصي والمهني','اللغات والتواصل','أخرى'],
-    datasets:[{data:[391,284,111,100,19,34],backgroundColor:'#008DC3',borderRadius:4,maxBarThickness:28}]
-  },
-  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{display:false}},scales:{x:{grid:{color:G}},y:{grid:{display:false}}}}
-});
-
-// Need type
-new Chart(document.getElementById('needType'),{
-  type:'doughnut',
-  data:{labels:['مختلط','مهاري','سلوكي','معرفي'],
-    datasets:[{data:[610,261,51,17],backgroundColor:['#036389','#1AA3D6','#6FC1E0','#B8E2F2'],borderWidth:0}]},
-  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}
-});
-
-// Ask AI
-async function ask(preset){
-  const inp=document.getElementById('inp');
-  const q=preset||inp.value.trim(); if(!q) return;
-  inp.value=q;
-  const btn=document.getElementById('btn'),load=document.getElementById('load'),ans=document.getElementById('ans');
-  btn.disabled=true; load.classList.add('show'); ans.classList.remove('show');
-  try{
-    const r=await fetch('https://aihaitham.app.n8n.cloud/webhook/tna-chat',
-      {method:'POST',mode:'cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q})});
-    const d=await r.json();
-    ans.textContent=d.answer||'لا توجد إجابة.'; ans.classList.add('show');
-  }catch(e){ans.textContent='خطأ: '+String(e); ans.classList.add('show');}
-  finally{btn.disabled=false; load.classList.remove('show');}
-}
-document.getElementById('inp').addEventListener('keydown',e=>{if(e.key==='Enter')ask();});
+document.getElementById('inp').addEventListener('keydown', e => { if (e.key === 'Enter') ask(); });
 </script>
 
 <script>
-// ════════════════════════════════════════════════════════
-//  Heatmap — يُحمَّل من Supabase tna_heatmap
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════
+//  مصفوفة الهيتماب + إحصائيات اللوحة — مصدر واحد من Supabase
+// ════════════════════════════════════════════════════════════
 const DOMAINS_ORDER = [
   'الإدارة والقيادة',
   'الامتثال والحوكمة',
@@ -364,98 +285,255 @@ const DOMAINS_ORDER = [
 
 function cellColor(val, maxVal) {
   if (!val || val === 0) return { bg: 'rgb(14,44,62)', txt: 'rgba(104,203,223,0.45)' };
-  const intensity = val / maxVal;
+  const t = val / maxVal;
   let r, g, b;
-  if (intensity <= 0.5) {
-    const t = intensity * 2;
-    r = Math.round(180 * (1 - t));
-    g = Math.round(221 - 80 * t);
-    b = Math.round(255 - 60 * t);
+  if (t <= 0.5) {
+    const s = t * 2;
+    r = Math.round(180 * (1 - s));
+    g = Math.round(221 - 80 * s);
+    b = Math.round(255 - 60 * s);
   } else {
-    const t = (intensity - 0.5) * 2;
+    const s = (t - 0.5) * 2;
     r = 0;
-    g = Math.round(141 - 79 * t);
-    b = Math.round(195 - 109 * t);
+    g = Math.round(141 - 79 * s);
+    b = Math.round(195 - 109 * s);
   }
-  const txt = intensity < 0.38 ? '#023E56' : '#ffffff';
-  return { bg: `rgb(${r},${g},${b})`, txt };
+  return { bg: `rgb(${r},${g},${b})`, txt: t < 0.38 ? '#023E56' : '#ffffff' };
 }
 
-function shortName(name, max=22) {
+function shortName(name, max = 22) {
   return name.length > max ? name.slice(0, max) + '…' : name;
 }
 
-async function loadHeatmap() {
+// ── مصدر واحد: يُحمَّل مرة واحدة ويُغذّي كل عناصر اللوحة ────
+async function initDashboard() {
   try {
+    // الطلب: entity, domain, count, updated_at — كل الحقول المطلوبة
     const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/tna_heatmap?select=entity,domain,count&order=entity`,
+      `${SUPABASE_URL}/rest/v1/tna_heatmap?select=entity,domain,count,updated_at&order=entity`,
       { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
     );
     if (!res.ok) throw new Error(`Supabase ${res.status}`);
     const rows = await res.json();
 
-    // بناء الـ pivot
-    const pivot = {};
-    const totals = {};
-    rows.forEach(({ entity, domain, count }) => {
-      if (!pivot[entity]) { pivot[entity] = {}; totals[entity] = 0; }
-      pivot[entity][domain] = count;
-      totals[entity] += count;
+    // ══ حساب الإحصائيات من البيانات المحمّلة ══════════════
+
+    // إجمالي الطلبات = SUM(count)
+    const totalRequests = rows.reduce((s, r) => s + Number(r.count), 0);
+
+    // الجهات = COUNT(DISTINCT entity)
+    const entitySet = new Set(rows.map(r => r.entity));
+    const entityCount = entitySet.size;
+
+    // المجالات = COUNT(DISTINCT domain)
+    const domainSet = new Set(rows.map(r => r.domain));
+    const domainCount = domainSet.size;
+
+    // آخر تحديث فعلي من قاعدة البيانات = MAX(updated_at)
+    const lastUpdated = rows.reduce((max, r) => {
+      const t = r.updated_at ? new Date(r.updated_at) : new Date(0);
+      return t > max ? t : max;
+    }, new Date(0));
+    const updatedStr = lastUpdated.getFullYear() > 2000
+      ? lastUpdated.toLocaleString('ar-SA', {
+          year: 'numeric', month: 'long', day: 'numeric',
+          hour: '2-digit', minute: '2-digit'
+        })
+      : 'غير محدد';
+
+    // توزيع المجالات = GROUP BY domain, SUM(count)
+    const domainTotals = {};
+    rows.forEach(r => {
+      domainTotals[r.domain] = (domainTotals[r.domain] || 0) + Number(r.count);
     });
 
-    // ترتيب الجهات بالمجموع تنازلياً — أعلى 20
-    const entities = Object.keys(totals)
-      .sort((a, b) => totals[b] - totals[a])
-      .slice(0, 20);
-
-    const maxVal = Math.max(...entities.flatMap(e =>
-      DOMAINS_ORDER.map(d => pivot[e]?.[d] || 0)
-    ));
-
-    // بناء الجدول
-    let html = '<table class="heatmap-table"><thead><tr>';
-    html += '<th class="entity-header">الجهة</th>';
-    DOMAINS_ORDER.forEach(d => {
-      html += `<th class="domain-header"><span>${d}</span></th>`;
-    });
-    html += '<th class="total-header">المجموع</th></tr></thead><tbody>';
-
-    entities.forEach(entity => {
-      html += '<tr>';
-      html += `<td class="entity-cell" title="${entity}">${shortName(entity)}</td>`;
-      DOMAINS_ORDER.forEach(domain => {
-        const val = pivot[entity]?.[domain] || 0;
-        const { bg, txt } = cellColor(val, maxVal);
-        const display = val === 0 ? '—' : val;
-        html += `<td style="background:${bg};color:${txt};font-weight:600">${display}</td>`;
-      });
-      html += `<td class="total-cell">${totals[entity]}</td>`;
-      html += '</tr>';
+    // إجمالي الجهات = GROUP BY entity, SUM(count)
+    const entityTotals = {};
+    rows.forEach(r => {
+      entityTotals[r.entity] = (entityTotals[r.entity] || 0) + Number(r.count);
     });
 
-    html += '</tbody></table>';
+    // ══ تحديث عناصر HTML الثابتة ══════════════════════════
 
-    document.getElementById('heatmap-loading').style.display = 'none';
-    document.getElementById('heatmap-container').innerHTML = html;
+    // KPIs
+    document.getElementById('stat-total').textContent    = totalRequests.toLocaleString('ar-SA');
+    document.getElementById('stat-entities').textContent = entityCount;
+    document.getElementById('stat-domains').textContent  = domainCount;
 
-    // تحديث شارة آخر تحديث
-    const el = document.getElementById('heatmap-updated');
-    if (el) el.textContent = `بيانات مباشرة · ${rows.length} سجل · ${new Date().toLocaleDateString('ar-SA')}`;
+    // الشارة والتاريخ
+    document.getElementById('hero-badge').textContent   = `بيانات مباشرة · ${totalRequests.toLocaleString('ar-SA')} طلب من ${entityCount} جهة`;
+    document.getElementById('hero-updated').textContent = `آخر مزامنة: ${updatedStr}`;
+
+    // التذييل
+    document.getElementById('footer-stat').textContent  = `بيانات مباشرة من ${entityCount} جهة`;
+
+    // ══ رسم توزيع المجالات (domDist) — حساب حقيقي ══════
+
+    const sortedDomains = Object.entries(domainTotals).sort(([, a], [, b]) => b - a);
+    if (window._domDistChart) window._domDistChart.destroy();
+    window._domDistChart = new Chart(document.getElementById('domDist'), {
+      type: 'bar',
+      data: {
+        labels: sortedDomains.map(([d]) => d),
+        datasets: [{
+          data: sortedDomains.map(([, v]) => v),
+          backgroundColor: '#008DC3',
+          borderRadius: 4,
+          maxBarThickness: 28
+        }]
+      },
+      options: {
+        indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: c => 'إجمالي الطلبات: ' + c.parsed.x } }
+        },
+        scales: { x: { grid: { color: G } }, y: { grid: { display: false } } }
+      }
+    });
+
+    // ══ رسم أعلى الجهات (top10) — حساب حقيقي ═══════════
+
+    const topEntities = Object.entries(entityTotals)
+      .sort(([, a], [, b]) => b - a)
+      .slice(0, 10);
+    const barColors = ['#023E56','#036389','#008DC3','#1AA3D6','#1AA3D6',
+                       '#6FC1E0','#6FC1E0','#6FC1E0','#6FC1E0','#B8E2F2'];
+    if (window._top10Chart) window._top10Chart.destroy();
+    window._top10Chart = new Chart(document.getElementById('top10'), {
+      type: 'bar',
+      data: {
+        labels: topEntities.map(([e]) => shortName(e, 30)),
+        datasets: [{
+          data: topEntities.map(([, v]) => v),
+          backgroundColor: barColors.slice(0, topEntities.length),
+          borderRadius: 4,
+          maxBarThickness: 22
+        }]
+      },
+      options: {
+        indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: c => 'إجمالي الطلبات: ' + c.parsed.x } }
+        },
+        scales: {
+          x: { min: 0, grid: { color: G } },
+          y: { grid: { display: false }, ticks: { font: { size: 11 } } }
+        }
+      }
+    });
+    document.getElementById('top10-updated').textContent =
+      `المصدر: Supabase tna_heatmap · آخر مزامنة: ${updatedStr}`;
+
+    // ══ بناء مصفوفة الهيتماب ═══════════════════════════
+
+    renderHeatmap(rows, entityTotals, updatedStr);
 
   } catch(err) {
-    document.getElementById('heatmap-loading').innerHTML =
-      `<span style="color:#f87171">⚠️ تعذّر تحميل البيانات: ${err.message}</span>`;
-    console.error('Heatmap load error:', err);
+    const load = document.getElementById('heatmap-loading');
+    if (load) load.innerHTML = `<span style="color:#f87171">⚠️ تعذّر تحميل البيانات: ${err.message}</span>`;
+    ['stat-total','stat-entities','stat-domains','hero-badge','footer-stat']
+      .forEach(id => { const el = document.getElementById(id); if (el) el.textContent = '—'; });
+    document.getElementById('hero-updated').textContent = 'تعذّر التحميل — راجع الاتصال بقاعدة البيانات';
+    console.error('Dashboard load error:', err);
   }
 }
 
-// spin animation
-const style = document.createElement('style');
-style.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
-document.head.appendChild(style);
+// ── بناء الهيتماب باستخدام DOM (textContent بدل innerHTML) ───
+function renderHeatmap(rows, entityTotals, updatedStr) {
+  try {
+    // pivot: entity → domain → count
+    const pivot = {};
+    rows.forEach(({ entity, domain, count }) => {
+      if (!pivot[entity]) pivot[entity] = {};
+      pivot[entity][domain] = count;
+    });
 
-loadHeatmap();
+    // الجهات مرتبة تنازلياً — أعلى 20
+    const entities = Object.keys(entityTotals)
+      .sort((a, b) => entityTotals[b] - entityTotals[a])
+      .slice(0, 20);
+
+    const maxVal = Math.max(
+      1,
+      ...entities.flatMap(e => DOMAINS_ORDER.map(d => Number(pivot[e]?.[d]) || 0))
+    );
+
+    // إنشاء الجدول بـ DOM (آمن من XSS)
+    const table = document.createElement('table');
+    table.className = 'heatmap-table';
+
+    // رأس الجدول
+    const thead = table.createTHead();
+    const hRow = thead.insertRow();
+    const th0 = document.createElement('th');
+    th0.className = 'entity-header';
+    th0.textContent = 'الجهة';  // textContent — آمن
+    hRow.appendChild(th0);
+    DOMAINS_ORDER.forEach(d => {
+      const th = document.createElement('th');
+      th.className = 'domain-header';
+      const span = document.createElement('span');
+      span.textContent = d;  // textContent — آمن
+      th.appendChild(span);
+      hRow.appendChild(th);
+    });
+    const thTot = document.createElement('th');
+    thTot.className = 'total-header';
+    thTot.textContent = 'المجموع';
+    hRow.appendChild(thTot);
+
+    // صفوف البيانات
+    const tbody = table.createTBody();
+    entities.forEach(entity => {
+      const tr = tbody.insertRow();
+
+      const tdEnt = tr.insertCell();
+      tdEnt.className = 'entity-cell';
+      tdEnt.title = entity;  // title مقبول (text)
+      tdEnt.textContent = shortName(entity);  // textContent — آمن
+
+      DOMAINS_ORDER.forEach(domain => {
+        const val = Number(pivot[entity]?.[domain]) || 0;
+        const { bg, txt } = cellColor(val, maxVal);
+        const td = tr.insertCell();
+        td.style.background = bg;
+        td.style.color = txt;
+        td.style.fontWeight = '600';
+        td.textContent = val === 0 ? '—' : val;  // textContent — آمن
+      });
+
+      const tdTot = tr.insertCell();
+      tdTot.className = 'total-cell';
+      tdTot.textContent = entityTotals[entity] || 0;
+    });
+
+    // إدراج الجدول في الصفحة
+    document.getElementById('heatmap-loading').style.display = 'none';
+    const container = document.getElementById('heatmap-container');
+    container.innerHTML = '';       // فقط لحذف محتوى القديم (لا بيانات غير آمنة)
+    container.appendChild(table);  // DOM آمن
+
+    // وقت المزامنة الحقيقي من قاعدة البيانات
+    const el = document.getElementById('heatmap-updated');
+    if (el) el.textContent =
+      `المصدر: Supabase tna_heatmap · آخر مزامنة: ${updatedStr} · ${rows.length} سجل`;
+
+  } catch(err) {
+    const load = document.getElementById('heatmap-loading');
+    if (load) load.innerHTML = `<span style="color:#f87171">⚠️ خطأ في بناء المصفوفة: ${err.message}</span>`;
+    console.error('Heatmap render error:', err);
+  }
+}
+
+// animation for loading spinner
+const _spinStyle = document.createElement('style');
+_spinStyle.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
+document.head.appendChild(_spinStyle);
+
+// تشغيل اللوحة
+initDashboard();
 </script>
 
 </body>
-</html>
