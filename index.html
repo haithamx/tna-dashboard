@@ -272,16 +272,7 @@ document.getElementById('inp').addEventListener('keydown', e => { if (e.key === 
 // ════════════════════════════════════════════════════════════
 //  مصفوفة الهيتماب + إحصائيات اللوحة — مصدر واحد من Supabase
 // ════════════════════════════════════════════════════════════
-const DOMAINS_ORDER = [
-  'الإدارة والقيادة',
-  'الامتثال والحوكمة',
-  'التحول الرقمي والتقنية',
-  'التخصصي والمهني',
-  'التطوير الذاتي والمهاري',
-  'الجودة وإدارة المشاريع',
-  'اللغات والتواصل',
-  'خدمة المستفيد والتسويق'
-];
+// DOMAINS_ORDER يُبنى ديناميكياً داخل renderHeatmap من البيانات الفعلية
 
 function cellColor(val, maxVal) {
   if (!val || val === 0) return { bg: 'rgb(14,44,62)', txt: 'rgba(104,203,223,0.45)' };
@@ -443,6 +434,15 @@ async function initDashboard() {
 // ── بناء الهيتماب باستخدام DOM (textContent بدل innerHTML) ───
 function renderHeatmap(rows, entityTotals, updatedStr) {
   try {
+    // بناء قائمة المجالات ديناميكياً من البيانات — يشمل أي مجال جديد تلقائياً
+    const domainTotals = {};
+    rows.forEach(({ domain, count }) => {
+      domainTotals[domain] = (domainTotals[domain] || 0) + Number(count);
+    });
+    const DOMAINS_ORDER = Object.entries(domainTotals)
+      .sort(([, a], [, b]) => b - a)
+      .map(([d]) => d);
+
     // pivot: entity → domain → count
     const pivot = {};
     rows.forEach(({ entity, domain, count }) => {
