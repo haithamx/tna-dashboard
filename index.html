@@ -102,7 +102,9 @@ body{color-scheme:dark;font-family:'IBM Plex Sans Arabic',Arial,sans-serif;backg
 .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
 .hero{background:transparent;padding:48px 0 32px;border-bottom:1px solid var(--border2);position:relative;overflow:hidden;}
 .hero-inner{display:flex;flex-direction:column;align-items:stretch;gap:24px;}
-.university-logo{display:block;width:240px;max-width:65vw;height:auto;}
+.university-logo{display:block;width:120px;max-width:100%;height:auto;}
+.university-logo-fallback svg{width:120px;height:auto;}
+.university-brand>span:last-child{font-size:12px!important;white-space:nowrap;}
 .university-logo[hidden],.university-logo-fallback[hidden]{display:none;}
 .university-brand{display:flex;flex-direction:column;align-items:center;align-self:flex-start;gap:6px;flex-shrink:0;}
 .accent-bar{width:48px;height:4px;background:var(--b5);border-radius:2px;margin-bottom:18px;}
@@ -146,7 +148,7 @@ footer{text-align:center;color:var(--faint);font-size:12px;margin-top:32px;}
 /* Heatmap styles */
 .heatmap-table{border-collapse:collapse;width:100%;font-size:12px;direction:rtl;}
 .heatmap-table th,.heatmap-table td{padding:9px 6px;text-align:center;border:1px solid var(--border2);font-size:13px;font-weight:600;}
-.entity-header,.entity-cell{text-align:right;min-width:200px;max-width:220px;padding:8px 12px;}
+.entity-header,.entity-cell{white-space:normal;overflow-wrap:anywhere;text-align:right;min-width:200px;max-width:220px;padding:8px 12px;}
 .entity-cell{background:rgba(5,24,38,0.9);font-size:11.5px;color:#8DD8EC;font-weight:600;border-right:2px solid rgba(0,141,195,0.25);}
 .domain-header{writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);min-width:60px;max-width:70px;font-size:10px;padding:12px 4px;background:linear-gradient(180deg,#062A40,#023E56);color:#68CBDF;white-space:nowrap;border-bottom:2px solid #008DC3;}
 .domain-header span{display:block;}
@@ -193,7 +195,7 @@ const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
 <div class="hero">
   <div class="wrap">
     <div class="hero-inner">
-      <div class="university-brand"><img class="university-logo" src="https://ar.wikipedia.org/wiki/Special:Redirect/file/%D8%B4%D8%B9%D8%A7%D8%B1_%D8%AC%D8%A7%D9%85%D8%B9%D8%A9_%D8%A7%D9%84%D9%85%D9%84%D9%83_%D8%B3%D8%B9%D9%88%D8%AF.svg" alt="شعار جامعة الملك سعود — King Saud University" width="240" height="92" decoding="async" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
+      <div class="university-brand"><img class="university-logo" src="https://ar.wikipedia.org/wiki/Special:Redirect/file/%D8%B4%D8%B9%D8%A7%D8%B1_%D8%AC%D8%A7%D9%85%D8%B9%D8%A9_%D8%A7%D9%84%D9%85%D9%84%D9%83_%D8%B3%D8%B9%D9%88%D8%AF.svg" alt="شعار جامعة الملك سعود — King Saud University" width="120" height="46" decoding="async" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
         <span class="university-logo-fallback" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 60" width="160" height="60" aria-label="جامعة الملك سعود">
   <rect x="0" y="0" width="160" height="3" fill="#008DC3" rx="1.5"/>
   <text x="80" y="25" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial,sans-serif" font-size="14" font-weight="700" fill="#EDF0F7">جامعة الملك سعود</text>
@@ -383,8 +385,14 @@ function cellColor(val, maxVal) {
   return { bg: `rgb(${r},${g},${b})`, txt: t < 0.38 ? '#023E56' : '#ffffff' };
 }
 
-function shortName(name, max = 22) {
-  return name.length > max ? name.slice(0, max) + '…' : name;
+// Wrap display labels without dropping any words or characters.
+function wrapChartLabel(name, max = 30) {
+  const lines = [];
+  for (const word of String(name).split(/\s+/)) {
+    if (!lines.length || lines[lines.length - 1].length + word.length + 1 > max) lines.push(word);
+    else lines[lines.length - 1] += ' ' + word;
+  }
+  return lines;
 }
 
 // ── مصدر واحد: يُحمَّل مرة واحدة ويُغذّي كل عناصر اللوحة ────
@@ -481,11 +489,15 @@ async function initDashboard() {
       .slice(0, 10);
     const barColors = ['#023E56','#036389','#008DC3','#1AA3D6','#1AA3D6',
                        '#6FC1E0','#6FC1E0','#6FC1E0','#6FC1E0','#B8E2F2'];
+    const topChartBox = document.getElementById('top10').parentElement;
+    const labelLength = topChartBox.clientWidth < 500 ? 18 : 32;
+    const entityLabels = topEntities.map(([entity]) => wrapChartLabel(entity, labelLength));
+    topChartBox.style.height = `${Math.max(360, entityLabels.length * (Math.max(1, ...entityLabels.map(lines => lines.length)) * 17 + 22) + 48)}px`;
     if (window._top10Chart) window._top10Chart.destroy();
     window._top10Chart = new Chart(document.getElementById('top10'), {
       type: 'bar',
       data: {
-        labels: topEntities.map(([e]) => shortName(e, 30)),
+        labels: entityLabels,
         datasets: [{
           data: topEntities.map(([, v]) => v),
           backgroundColor: barColors.slice(0, topEntities.length),
@@ -501,7 +513,7 @@ async function initDashboard() {
         },
         scales: {
           x: { min: 0, grid: { color: G } },
-          y: { grid: { display: false }, ticks: { font: { size: 11 } } }
+          y: { grid: { display: false }, ticks: { autoSkip: false, font: { size: 11 } } }
         }
       }
     });
@@ -583,7 +595,7 @@ function renderHeatmap(rows, entityTotals, updatedStr) {
       const tdEnt = tr.insertCell();
       tdEnt.className = 'entity-cell';
       tdEnt.title = entity;  // title مقبول (text)
-      tdEnt.textContent = shortName(entity);  // textContent — آمن
+      tdEnt.textContent = entity;  // textContent — آمن
 
       DOMAINS_ORDER.forEach(domain => {
         const val = Number(pivot[entity]?.[domain]) || 0;
@@ -761,11 +773,11 @@ async function initCompetencies() {
         row.style.cssText = 'margin-bottom:8px;';
 
         const label = document.createElement('div');
-        label.style.cssText = 'font-size:11px;color:var(--b3);margin-bottom:3px;display:flex;justify-content:space-between;';
+        label.style.cssText = 'font-size:12px;color:var(--b3);margin-bottom:6px;display:flex;align-items:flex-start;justify-content:space-between;gap:8px;line-height:1.8;';
         const lname = document.createElement('span');
-        lname.style.cssText = 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:200px;';
+        lname.style.cssText = 'min-width:0;flex:1;white-space:normal;overflow-wrap:anywhere;';
         lname.title = prog;
-        lname.textContent = prog.length > 30 ? prog.slice(0,30)+'…' : prog;
+        lname.textContent = prog;
         const lcount = document.createElement('span');
         lcount.style.cssText = 'flex-shrink:0;margin-right:4px;';
         lcount.textContent = cnt;
