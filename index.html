@@ -77,36 +77,35 @@
   --c-know:#F5C451; --c-know-bg:rgba(245,196,81,.12); --c-know-bd:rgba(245,196,81,.35);
   --c-behav:#5FD4A0; --c-behav-bg:rgba(95,212,160,.12); --c-behav-bd:rgba(95,212,160,.35);
   --c-mixed:#B794F6; --c-mixed-bg:rgba(183,148,246,.12); --c-mixed-bd:rgba(183,148,246,.35);
-  /* Charcoal primary palette */
-  --bg:#000000;
-  --bg2:#252927;
-  --card:#262B28;
-  --card2:#333A36;
-  --border:rgba(167,191,177,0.18);
-  --border2:rgba(167,191,177,0.08);
-  --ink:#EDF2EF;
-  --soft:#BFCAC3;
-  --faint:#A3B1A8;
-  --shadow:0 4px 24px rgba(0,0,0,.45),0 1px 4px rgba(167,191,177,.12);
-  --glow:0 0 20px rgba(167,191,177,.15);
-  /* Neutral interface accents */
-  --b1:rgba(167,191,177,0.1);
-  --b2:rgba(167,191,177,0.25);
-  --b3:#C5D6CC;
-  --b4:#C5D6CC;
-  --b5:#000000;
-  --b6:#B4C7BB;
-  --b7:#39463E;
+  /* Midnight surfaces inspired by the reference; semantic colors stay independent. */
+  --bg:#0B1018;
+  --bg2:#0F1520;
+  --card:#101722;
+  --card2:#182231;
+  --border:#253044;
+  --border2:#1C2635;
+  --ink:#EDF0F7;
+  --soft:#B4BDCC;
+  --faint:#9AA6B8;
+  --shadow:none;
+  --glow:0 0 0 transparent;
+  --b1:rgba(110,168,255,.08);
+  --b2:rgba(110,168,255,.20);
+  --b3:#C3CEDF;
+  --b4:#A6BFE2;
+  --b5:#6EA8FF;
+  --b6:#A6BFE2;
+  --b7:#26364D;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'IBM Plex Sans Arabic',Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;padding-bottom:60px;background-image:radial-gradient(ellipse at 20% 0%,rgba(167,191,177,0.07) 0%,transparent 60%),radial-gradient(ellipse at 80% 100%,rgba(98,120,107,0.15) 0%,transparent 60%);}
+body{color-scheme:dark;font-family:'IBM Plex Sans Arabic',Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;padding-bottom:60px;background-image:linear-gradient(110deg,#0B1018 0%,#0D121D 55%,#101625 100%);}
 .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
-.hero{background:linear-gradient(135deg,#000000 0%,#101211 50%,#191C1A 100%);padding:48px 0 32px;border-bottom:1px solid rgba(167,191,177,0.25);position:relative;overflow:hidden;}
+.hero{background:transparent;padding:48px 0 32px;border-bottom:1px solid var(--border2);position:relative;overflow:hidden;}
 .hero-inner{display:flex;flex-direction:column;align-items:stretch;gap:24px;}
 .university-brand{display:flex;flex-direction:column;align-items:center;align-self:flex-start;gap:6px;flex-shrink:0;}
 .accent-bar{width:48px;height:4px;background:var(--b5);border-radius:2px;margin-bottom:18px;}
-.badge{display:inline-block;background:rgba(167,191,177,0.12);border:1px solid rgba(167,191,177,0.4);color:#C5D6CC;font-size:13px;padding:5px 14px;border-radius:20px;margin-bottom:16px;backdrop-filter:blur(4px);}
-.hero h1{font-size:30px;font-weight:700;margin-bottom:6px;color:#F1F5F2;text-shadow:0 0 20px rgba(167,191,177,0.3);}
+.badge{display:inline-block;background:var(--bg2);border:1px solid var(--border);color:var(--soft);font-size:13px;padding:5px 14px;border-radius:20px;margin-bottom:16px;}
+.hero h1{font-size:30px;font-weight:700;margin-bottom:6px;color:var(--ink);text-shadow:none;}
 .hero .sub{font-size:14px;color:var(--soft);max-width:600px;}
 .updated{font-size:12px;color:var(--faint);margin-top:4px;}
 section{padding:40px 0;}
@@ -114,28 +113,28 @@ section{padding:40px 0;}
 h2{font-size:22px;font-weight:700;margin-bottom:6px;}
 .lead{color:var(--soft);font-size:14px;max-width:640px;margin-bottom:24px;}
 .kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
-.kpi{background:#0D0D0D;border:1px solid rgba(255,255,255,.10);border-radius:14px;padding:24px 20px;box-shadow:none;text-align:center;}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 20px;box-shadow:none;text-align:center;}
 .kpi .num{font-size:32px;font-weight:700;color:#F5F5F5;text-shadow:none;font-variant-numeric:tabular-nums;}
-.kpi .label{font-size:12px;color:#BDBDBD;margin-top:4px;line-height:1.4;}
-.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;box-shadow:var(--shadow),var(--glow);transition:border-color .2s;}
+.kpi .label{font-size:12px;color:var(--soft);margin-top:4px;line-height:1.4;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;box-shadow:none;transition:border-color .2s;}
 .chart-box{position:relative;height:280px;}
 .chart-tall{position:relative;height:360px;}
 .grid-2{display:grid;grid-template-columns:1.3fr 1fr;gap:20px;}
 .tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
-.tab-btn{font-family:inherit;cursor:pointer;border:1px solid rgba(167,191,177,0.2);background:rgba(38,43,40,0.8);color:var(--soft);font-size:14px;padding:9px 18px;border-radius:20px;font-weight:500;transition:.15s;}
-.tab-btn.active{background:linear-gradient(135deg,#000000,#39463E);color:#fff;border-color:#000000;box-shadow:0 0 14px rgba(167,191,177,0.4);}
+.tab-btn{font-family:inherit;cursor:pointer;border:1px solid var(--border);background:var(--bg2);color:var(--soft);font-size:14px;padding:9px 18px;border-radius:20px;font-weight:500;transition:.15s;}
+.tab-btn.active{background:var(--card2);color:var(--ink);border-color:#3D4D67;box-shadow:none;}
 .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:13px;color:var(--soft);}
 .legend span{display:inline-flex;align-items:center;gap:6px;}
 .dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
-.ask-section{background:linear-gradient(135deg,rgba(38,43,40,0.95),rgba(37,41,39,0.95));border:1px solid rgba(167,191,177,0.25);border-radius:18px;padding:32px;box-shadow:var(--shadow);}
+.ask-section{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:32px;box-shadow:var(--shadow);}
 .ask-row{display:flex;gap:10px;margin-top:16px;}
-.ask-input{flex:1;font-family:inherit;font-size:15px;padding:12px 16px;border:1px solid rgba(167,191,177,0.25);border-radius:10px;outline:none;direction:rtl;background:rgba(32,35,34,0.8);color:var(--ink);}
+.ask-input{flex:1;font-family:inherit;font-size:15px;padding:12px 16px;border:1px solid var(--border);border-radius:10px;outline:none;direction:rtl;background:var(--bg);color:var(--ink);}
 .ask-input:focus{border-color:var(--b5);}
-.ask-btn{font-family:inherit;background:linear-gradient(135deg,#000000,#39463E);color:#fff;border:none;border-radius:10px;padding:12px 22px;font-size:15px;font-weight:500;cursor:pointer;box-shadow:0 0 14px rgba(167,191,177,0.35);transition:.15s;}
+.ask-btn{font-family:inherit;background:var(--card2);color:var(--ink);border:1px solid #3D4D67;border-radius:10px;padding:12px 22px;font-size:15px;font-weight:500;cursor:pointer;box-shadow:none;transition:.15s;}
 .ask-btn:disabled{opacity:.5;cursor:not-allowed;}
 .presets{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
 .preset{font-family:inherit;cursor:pointer;font-size:13px;text-align:start;white-space:normal;}
-.answer{background:rgba(167,191,177,0.07);border:1px solid rgba(167,191,177,0.2);border-radius:12px;padding:16px 20px;font-size:14px;line-height:1.8;color:var(--ink);margin-top:16px;display:none;}
+.answer{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px 20px;font-size:14px;line-height:1.8;color:var(--ink);margin-top:16px;display:none;}
 .answer.show{display:block;}
 .loading{font-size:13px;color:var(--faint);margin-top:8px;display:none;}
 .loading.show{display:block;}
@@ -144,7 +143,7 @@ footer{text-align:center;color:var(--faint);font-size:12px;margin-top:32px;}
 
 /* Heatmap styles */
 .heatmap-table{border-collapse:collapse;width:100%;font-size:12px;direction:rtl;}
-.heatmap-table th,.heatmap-table td{padding:9px 6px;text-align:center;border:1px solid rgba(167,191,177,0.12);font-size:13px;font-weight:600;}
+.heatmap-table th,.heatmap-table td{padding:9px 6px;text-align:center;border:1px solid var(--border2);font-size:13px;font-weight:600;}
 .entity-header,.entity-cell{text-align:right;min-width:200px;max-width:220px;padding:8px 12px;}
 .entity-cell{background:rgba(5,24,38,0.9);font-size:11.5px;color:#8DD8EC;font-weight:600;border-right:2px solid rgba(0,141,195,0.25);}
 .domain-header{writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);min-width:60px;max-width:70px;font-size:10px;padding:12px 4px;background:linear-gradient(180deg,#062A40,#023E56);color:#68CBDF;white-space:nowrap;border-bottom:2px solid #008DC3;}
@@ -157,11 +156,11 @@ footer{text-align:center;color:var(--faint);font-size:12px;margin-top:32px;}
 
 /* Dark Mode Scrollbar */
 ::-webkit-scrollbar{width:6px;height:6px;}
-::-webkit-scrollbar-track{background:#000000;}
-::-webkit-scrollbar-thumb{background:#39463E;border-radius:3px;}
-::-webkit-scrollbar-thumb:hover{background:#000000;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:#344158;border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:#4A5B77;}
 
-/* Semantic nature colors are scoped independently from the charcoal interface. */
+/* Semantic colors remain distinct from the midnight surfaces. */
 .chip--skill{--fg:var(--c-skill);--bg:var(--c-skill-bg);--bd:var(--c-skill-bd);}
 .chip--know{--fg:var(--c-know);--bg:var(--c-know-bg);--bd:var(--c-know-bd);}
 .chip--behav{--fg:var(--c-behav);--bg:var(--c-behav-bg);--bd:var(--c-behav-bd);}
@@ -194,8 +193,8 @@ const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
     <div class="hero-inner">
       <div class="university-brand"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 60" width="160" height="60" aria-label="جامعة الملك سعود">
   <rect x="0" y="0" width="160" height="3" fill="#008DC3" rx="1.5"/>
-  <text x="80" y="25" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial,sans-serif" font-size="14" font-weight="700" fill="#F1F5F2">جامعة الملك سعود</text>
-  <text x="80" y="44" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial,sans-serif" font-size="9" font-weight="400" fill="#C5D6CC">King Saud University</text>
+  <text x="80" y="25" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial,sans-serif" font-size="14" font-weight="700" fill="#EDF0F7">جامعة الملك سعود</text>
+  <text x="80" y="44" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial,sans-serif" font-size="9" font-weight="400" fill="#B4BDCC">King Saud University</text>
   <rect x="30" y="52" width="100" height="1.5" fill="#008DC3" opacity="0.45" rx="0.75"/>
 </svg><span style="font-size:11px;color:var(--b3);letter-spacing:.2px;">عمادة تطوير المهارات</span></div>
       <div>
@@ -320,10 +319,10 @@ const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
 //  MAX(updated_at)       → آخر مزامنة حقيقية من قاعدة البيانات
 // ════════════════════════════════════════════════════════════
 
-const G = 'rgba(20,30,40,.06)';
+const G = 'rgba(148,163,184,.12)';
 Chart.defaults.font.family = "'IBM Plex Sans Arabic',Arial,sans-serif";
 Chart.defaults.locale = 'en-US';
-Chart.defaults.color = '#63707A';
+Chart.defaults.color = '#B4BDCC';
 
 // ── Ask AI ────────────────────────────────────────────────────
 async function ask(preset) {
