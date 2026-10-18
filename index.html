@@ -145,12 +145,10 @@ const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
 <section>
   <div class="wrap">
     <div class="eyebrow">تحليل الكفاءات</div>
-    <h2>أعلى 5 كفاءات لكل مجال رئيسي</h2>
-    <p class="lead" style="color:var(--b3)">هذا القسم يعتمد على بيانات الكفاءات التفصيلية — غير متوفرة حالياً في tna_heatmap.</p>
-    <div class="card" style="text-align:center;padding:40px;color:var(--b3);font-size:15px;line-height:2">
-      ⏳ بانتظار تحديث البيانات<br>
-      <span style="font-size:12px">سيُفعَّل هذا القسم عند توفر جدول الكفاءات التفصيلية</span>
-    </div>
+    <h2>أعلى 5 برامج لكل مجال رئيسي</h2>
+    <p class="lead">توزيع الاحتياجات التدريبية حسب المجال والطبيعة — مصدرها <code>tna_competencies_active</code>.</p>
+    <div id="comp-domains-loading" style="text-align:center;padding:40px;color:var(--b3);font-size:14px">جاري تحميل بيانات الكفاءات…</div>
+    <div id="comp-domains-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px"></div>
   </div>
 </section>
 
@@ -163,10 +161,9 @@ const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
         <h3 style="font-size:16px;margin-bottom:14px;">المجالات الرئيسية — عدد الطلبات</h3>
         <div class="chart-box"><canvas id="domDist"></canvas></div>
       </div>
-      <div class="card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:220px;gap:10px;text-align:center;">
-        <h3 style="font-size:16px;margin-bottom:4px;">طبيعة الاحتياج</h3>
-        <p style="color:var(--b3);font-size:14px;">⏳ بانتظار تحديث البيانات</p>
-        <p style="color:var(--b3);font-size:12px;">تصنيف مختلط/مهاري/معرفي/سلوكي غير متوفر في tna_heatmap</p>
+      <div class="card">
+        <h3 style="font-size:16px;margin-bottom:14px;">طبيعة الاحتياج</h3>
+        <div class="chart-box"><canvas id="natureDist"></canvas></div>
       </div>
     </div>
   </div>
@@ -532,8 +529,132 @@ const _spinStyle = document.createElement('style');
 _spinStyle.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
 document.head.appendChild(_spinStyle);
 
+// ════════════════════════════════════════════════════════════
+//  بيانات الكفاءات — مصدرها: tna_competencies_active (security_invoker=true)
+// ════════════════════════════════════════════════════════════
+
+async function initCompetencies() {
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/tna_competencies_active?select=domain,program,nature,beneficiaries`,
+      { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
+    );
+    if (!res.ok) throw new Error(`Supabase ${res.status}`);
+    const rows = await res.json();
+    if (!rows.length) throw new Error('لا توجد بيانات في tna_competencies_active');
+
+    // ── 1. طبيعة الاحتياج — doughnut chart ───────────────
+    const natureCounts = {};
+    rows.forEach(r => {
+      if (r.nature) natureCounts[r.nature] = (natureCounts[r.nature] || 0) + 1;
+    });
+    const natureOrder = ['مهاري','معرفي','سلوكي','مختلط'];
+    const natureColors = ['#008DC3','#023E56','#36B37E','#F59E0B'];
+    const natureLabels = natureOrder.filter(n => natureCounts[n]);
+    const natureData   = natureLabels.map(n => natureCounts[n]);
+    const naturePalette = natureLabels.map(n => natureColors[natureOrder.indexOf(n)]);
+
+    if (window._natureChart) window._natureChart.destroy();
+    window._natureChart = new Chart(document.getElementById('natureDist'), {
+      type: 'doughnut',
+      data: {
+        labels: natureLabels,
+        datasets: [{ data: natureData, backgroundColor: naturePalette, borderWidth: 0, hoverOffset: 6 }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false, cutout: '62%',
+        plugins: {
+          legend: { position: 'bottom', labels: { padding: 14, font: { size: 12 } } },
+          tooltip: {
+            callbacks: {
+              label: ctx => {
+                const total = ctx.dataset.data.reduce((a,b)=>a+b,0);
+                const pct = ((ctx.parsed/total)*100).toFixed(1);
+                return ` ${ctx.label}: ${ctx.parsed} (${pct}%)`;
+              }
+            }
+          }
+        }
+      }
+    });
+
+    // ── 2. أعلى 5 برامج لكل مجال ──────────────────────────
+    const domainMap = {};
+    rows.forEach(r => {
+      if (!r.domain || !r.program) return;
+      if (!domainMap[r.domain]) domainMap[r.domain] = {};
+      domainMap[r.domain][r.program] = (domainMap[r.domain][r.program] || 0) + 1;
+    });
+
+    const grid = document.getElementById('comp-domains-grid');
+    grid.innerHTML = '';
+
+    const sortedDomains = Object.entries(domainMap)
+      .sort(([,a],[,b]) => Object.values(b).reduce((s,v)=>s+v,0) - Object.values(a).reduce((s,v)=>s+v,0));
+
+    sortedDomains.forEach(([domain, programs]) => {
+      const top5 = Object.entries(programs)
+        .sort(([,a],[,b]) => b-a)
+        .slice(0, 5);
+      const total = Object.values(programs).reduce((s,v)=>s+v,0);
+      const maxVal = top5[0]?.[1] || 1;
+
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.style.cssText = 'padding:16px;';
+
+      const title = document.createElement('div');
+      title.style.cssText = 'font-size:13px;font-weight:700;margin-bottom:12px;color:var(--fg);display:flex;justify-content:space-between;align-items:center;gap:8px;';
+      const tname = document.createElement('span');
+      tname.textContent = domain;
+      const tbadge = document.createElement('span');
+      tbadge.style.cssText = 'font-size:11px;font-weight:400;color:var(--b3);white-space:nowrap;';
+      tbadge.textContent = `${total} طلب`;
+      title.appendChild(tname);
+      title.appendChild(tbadge);
+      card.appendChild(title);
+
+      top5.forEach(([prog, cnt], i) => {
+        const row = document.createElement('div');
+        row.style.cssText = 'margin-bottom:8px;';
+
+        const label = document.createElement('div');
+        label.style.cssText = 'font-size:11px;color:var(--b3);margin-bottom:3px;display:flex;justify-content:space-between;';
+        const lname = document.createElement('span');
+        lname.style.cssText = 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:200px;';
+        lname.title = prog;
+        lname.textContent = prog.length > 30 ? prog.slice(0,30)+'…' : prog;
+        const lcount = document.createElement('span');
+        lcount.style.cssText = 'flex-shrink:0;margin-right:4px;';
+        lcount.textContent = cnt;
+        label.appendChild(lname);
+        label.appendChild(lcount);
+        row.appendChild(label);
+
+        const barWrap = document.createElement('div');
+        barWrap.style.cssText = 'height:6px;background:rgba(0,141,195,0.12);border-radius:3px;overflow:hidden;';
+        const bar = document.createElement('div');
+        bar.style.cssText = `height:100%;width:${Math.round((cnt/maxVal)*100)}%;background:#008DC3;border-radius:3px;transition:width .6s ease;`;
+        barWrap.appendChild(bar);
+        row.appendChild(barWrap);
+        card.appendChild(row);
+      });
+
+      grid.appendChild(card);
+    });
+
+    document.getElementById('comp-domains-loading').style.display = 'none';
+
+  } catch(err) {
+    const loading = document.getElementById('comp-domains-loading');
+    if (loading) loading.innerHTML = `<span style="color:#f87171">⚠️ تعذّر تحميل بيانات الكفاءات: ${err.message}</span>`;
+    console.error('Competencies load error:', err);
+  }
+}
+
 // تشغيل اللوحة
 initDashboard();
+initCompetencies();
 </script>
 
 </body>
