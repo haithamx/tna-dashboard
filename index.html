@@ -322,6 +322,7 @@ const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
 
 const G = 'rgba(20,30,40,.06)';
 Chart.defaults.font.family = "'IBM Plex Sans Arabic',Arial,sans-serif";
+Chart.defaults.locale = 'en-US';
 Chart.defaults.color = '#63707A';
 
 // ── Ask AI ────────────────────────────────────────────────────
@@ -414,7 +415,7 @@ async function initDashboard() {
       return t > max ? t : max;
     }, new Date(0));
     const updatedStr = lastUpdated.getFullYear() > 2000
-      ? lastUpdated.toLocaleString('ar-SA', {
+      ? lastUpdated.toLocaleString('ar-SA-u-nu-latn', {
           year: 'numeric', month: 'long', day: 'numeric',
           hour: '2-digit', minute: '2-digit'
         })
@@ -435,12 +436,12 @@ async function initDashboard() {
     // ══ تحديث عناصر HTML الثابتة ══════════════════════════
 
     // KPIs
-    document.getElementById('stat-total').textContent    = totalRequests.toLocaleString('ar-SA');
+    document.getElementById('stat-total').textContent    = totalRequests.toLocaleString('ar-SA-u-nu-latn');
     document.getElementById('stat-entities').textContent = entityCount;
     document.getElementById('stat-domains').textContent  = domainCount;
 
     // الشارة والتاريخ
-    document.getElementById('hero-badge').textContent   = `بيانات مباشرة · ${totalRequests.toLocaleString('ar-SA')} طلب من ${entityCount} جهة`;
+    document.getElementById('hero-badge').textContent   = `بيانات مباشرة · ${totalRequests.toLocaleString('ar-SA-u-nu-latn')} طلب من ${entityCount} جهة`;
     document.getElementById('hero-updated').textContent = `آخر مزامنة: ${updatedStr}`;
 
     // التذييل
