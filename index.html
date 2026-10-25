@@ -182,8 +182,27 @@ footer{text-align:center;color:var(--faint);font-size:12px;margin-top:32px;}
 .competency-heading>span:first-child{min-width:0;overflow-wrap:anywhere;}
 .competency-nature{margin-bottom:12px;font-size:11px;}
 .program-nature{font-size:10px;padding:2px 8px;margin-bottom:4px;}
-.kpi-row{grid-template-columns:repeat(3,minmax(0,1fr));}
-@media(max-width:760px){.kpi-row{grid-template-columns:repeat(2,minmax(0,1fr));}.kpi:last-child{grid-column:1/-1;}.ask-row{flex-wrap:wrap;}.ask-input{min-width:0;width:100%;}.ask-btn{flex:1;}.card{min-width:0;}.wrap{padding-inline:20px;}}
+.kpi-row{grid-template-columns:repeat(4,minmax(0,1fr));}
+.chip--src{font-size:11px;padding:2px 10px;gap:6px;font-weight:500;}
+.src-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
+.src-bar{display:flex;height:6px;border-radius:3px;overflow:hidden;background:rgba(110,168,255,.10);}
+.src-bar>span{display:block;height:100%;}
+.bar-row{margin-bottom:10px;}
+.bar-label{font-size:12px;color:var(--b3);margin-bottom:5px;display:flex;align-items:flex-start;justify-content:space-between;gap:8px;line-height:1.7;}
+.bar-label>span:first-child{min-width:0;flex:1;overflow-wrap:anywhere;}
+.bar-label>span:last-child{flex-shrink:0;font-variant-numeric:tabular-nums;color:var(--ink);}
+.aud-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;}
+.aud-grid .card h3{font-size:15px;margin-bottom:4px;}
+.aud-grid .card .hint{font-size:12px;color:var(--faint);margin-bottom:14px;}
+.aud-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px;}
+.aud-grid .card.span-all{grid-column:1/-1;}
+.single-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:4px 24px;}
+.aud-kpis .kpi{padding:16px 12px;}
+.aud-kpis .kpi .num{font-size:24px;}
+.note{border:1px solid var(--c-know-bd);background:var(--c-know-bg);color:var(--c-know);border-radius:12px;padding:10px 14px;font-size:13px;margin-bottom:16px;}
+.split-list{display:flex;flex-direction:column;gap:6px;margin-top:4px;}
+@media(max-width:760px){.aud-grid{grid-template-columns:1fr;}}
+@media(max-width:760px){.kpi-row{grid-template-columns:repeat(2,minmax(0,1fr));}.ask-row{flex-wrap:wrap;}.ask-input{min-width:0;width:100%;}.ask-btn{flex:1;}.card{min-width:0;}.wrap{padding-inline:20px;}}
 </style>
 <script>
 const SUPABASE_URL="https://kxazsigcenqcrqedygbm.supabase.co";
@@ -206,7 +225,7 @@ const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
         <div class="accent-bar"></div>
         <span class="badge" id="hero-badge">لوحة تحليل الاحتياجات التدريبية 2027</span>
         <h1>لوحة تحليل الاحتياجات التدريبية 2027</h1>
-        <p class="sub">تحليل منهجي شامل لطلبات الجهات — استخراج الكفاءات وتصنيفها وترتيبها بمؤشرات موضوعية وفق المنهجية المعتمدة.</p>
+        <p class="sub">احتياج الجهات مصنّفاً إلى جدارات رئيسية وفرعية من ثلاثة مصادر، واحتياج الأفراد من استبانات الموظفين وأعضاء هيئة التدريس والطلاب.</p>
         <p class="updated" id="hero-updated">جاري تحميل البيانات…</p>
       </div>
 
@@ -220,7 +239,8 @@ const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
     <div class="kpi-row">
       <div class="kpi"><span class="kpi-icon chip--skill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m13 2-9 12h7l-1 8 10-12h-7z"/></svg></span><div class="num" id="stat-total">—</div><div class="label">إجمالي الطلبات التدريبية</div></div>
       <div class="kpi"><span class="kpi-icon chip--behav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg></span><div class="num" id="stat-entities">—</div><div class="label">جهة جامعية مشاركة</div></div>
-      <div class="kpi"><span class="kpi-icon chip--know"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7C9 4 5 4 2 5v14c3-1 7-1 10 2 3-3 7-3 10-2V5c-3-1-7-1-10 2Zm0 0v14"/></svg></span><div class="num" id="stat-domains">—</div><div class="label">مجال تدريبي رئيسي</div></div>
+      <div class="kpi"><span class="kpi-icon chip--know"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7C9 4 5 4 2 5v14c3-1 7-1 10 2 3-3 7-3 10-2V5c-3-1-7-1-10 2Zm0 0v14"/></svg></span><div class="num" id="stat-domains">—</div><div class="label" id="stat-domains-label">جدارة رئيسية</div></div>
+      <div class="kpi"><span class="kpi-icon chip--mixed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm13 10v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><div class="num" id="stat-benef">—</div><div class="label">مستفيد مستهدف</div></div>
     </div>
   </div>
 </section>
@@ -238,11 +258,13 @@ const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
 
 <section>
   <div class="wrap">
-    <div class="eyebrow">تحليل الكفاءات</div>
-    <h2>أعلى 5 برامج لكل مجال رئيسي</h2>
-    <p class="lead">توزيع الاحتياجات التدريبية حسب المجال والطبيعة — مصدرها <code>tna_competencies_active</code>.</p>
-    <div id="comp-domains-loading" style="text-align:center;padding:40px;color:var(--b3);font-size:14px">جاري تحميل بيانات الكفاءات…</div>
+    <div class="eyebrow">تحليل الجدارات</div>
+    <h2>أعلى الجدارات الفرعية في كل جدارة رئيسية</h2>
+    <p class="lead">كل بطاقة جدارة رئيسية مع أكثر خمس جدارات فرعية طلباً فيها، وتوزيع طلباتها على مصادر الاحتياج الثلاثة.</p>
+    <div id="source-key" class="nature-legend" style="margin:0 0 16px" aria-label="مفتاح ألوان مصادر الاحتياج"></div>
+    <div id="comp-domains-loading" style="text-align:center;padding:40px;color:var(--b3);font-size:14px">جاري تحميل بيانات الجدارات…</div>
     <div id="comp-domains-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px"></div>
+    <div style="text-align:center;margin-top:18px"><button id="comp-more" class="tab-btn" hidden></button></div>
   </div>
 </section>
 
@@ -252,13 +274,13 @@ const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
     <h2>توزيع الاحتياجات</h2>
     <div class="grid-2">
       <div class="card">
-        <h3 style="font-size:16px;margin-bottom:14px;">المجالات الرئيسية — عدد الطلبات</h3>
+        <h3 style="font-size:16px;margin-bottom:14px;">الجدارات الرئيسية — عدد الطلبات</h3>
         <div class="chart-box"><canvas id="domDist"></canvas></div>
       </div>
       <div class="card">
-        <h3 style="font-size:16px;margin-bottom:14px;">طبيعة الاحتياج</h3>
-        <div class="chart-box"><canvas id="natureDist" role="img" aria-label="توزيع طبيعة الاحتياج، التفاصيل في القائمة التالية"></canvas></div>
-        <div id="nature-legend" class="nature-legend" aria-label="طبيعة الاحتياج: العدد والنسبة"></div>
+        <h3 style="font-size:16px;margin-bottom:14px;">مصادر الاحتياج</h3>
+        <div class="chart-box"><canvas id="natureDist" role="img" aria-label="توزيع الطلبات على مصادر الاحتياج، التفاصيل في القائمة التالية"></canvas></div>
+        <div id="nature-legend" class="nature-legend" aria-label="مصادر الاحتياج: العدد والنسبة"></div>
       </div>
     </div>
   </div>
@@ -267,8 +289,8 @@ const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
 <section id="heatmap-section">
   <div class="wrap">
     <div class="eyebrow">مصفوفة التوزيع</div>
-    <h2>مصفوفة الاحتياجات التدريبية — الجهة × المجال</h2>
-    <p class="lead">توزيع الاحتياجات التدريبية لأعلى 20 جهة عبر 8 مجالات رئيسية. اللون الأعمق يعني احتياجاً أكبر في ذلك المجال.</p>
+    <h2>مصفوفة الاحتياجات التدريبية — الجهة × الجدارة الرئيسية</h2>
+    <p class="lead">عدد طلبات أعلى 20 جهة في كل جدارة رئيسية. اللون الأعمق يعني طلبات أكثر في تلك الجدارة.</p>
 <p style="font-size:12px;color:var(--b3);margin-bottom:0" id="heatmap-updated">جاري التحميل…</p>
     <div class="card" style="overflow-x:auto;padding:20px;">
       
@@ -289,6 +311,16 @@ const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
   </div>
 </section>
 
+<section id="individuals-section">
+  <div class="wrap">
+    <div class="eyebrow">احتياج الأفراد</div>
+    <h2>نتائج استبانات الاحتياج التدريبي</h2>
+    <p class="lead">أرقام مجمّعة من استبانات الموظفين وأعضاء هيئة التدريس والطلاب، ولا تتضمن أي بيانات شخصية. الأولويات تُحسب بعدد مرات اختيار المجال ضمن الأولويات الثلاث.</p>
+    <div class="tabs" id="aud-tabs" role="tablist" aria-label="الفئة المستهدفة"></div>
+    <div id="aud-loading" style="text-align:center;padding:40px;color:var(--b3);font-size:14px">جاري تحميل نتائج الاستبانات…</div>
+    <div id="aud-panel"></div>
+  </div>
+</section>
 
 <section>
   <div class="wrap">
@@ -298,7 +330,7 @@ const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
       <p class="lead">اكتب أي سؤال عن الاحتياجات التدريبية وسيجيبك الذكاء الاصطناعي بناءً على بيانات هذا التقرير.</p>
       <div class="presets">
         <button class="preset chip chip--skill" onclick="ask('ما هي أكثر الجهات طلباً وكم عدد طلباتها؟')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m13 2-9 12h7l-1 8 10-12h-7z"/></svg>أكثر الجهات طلباً</button>
-        <button class="preset chip chip--know" onclick="ask('ما هو أكثر المجالات التدريبية طلباً؟')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7C9 4 5 4 2 5v14c3-1 7-1 10 2 3-3 7-3 10-2V5c-3-1-7-1-10 2Zm0 0v14"/></svg>أكثر المجالات طلباً</button>
+        <button class="preset chip chip--know" onclick="ask('ما هي أكثر الجدارات الرئيسية طلباً؟')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7C9 4 5 4 2 5v14c3-1 7-1 10 2 3-3 7-3 10-2V5c-3-1-7-1-10 2Zm0 0v14"/></svg>أكثر الجدارات طلباً</button>
         <button class="preset chip chip--behav" onclick="ask('ما هي احتياجات عمادة شؤون الطلاب التدريبية؟')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>احتياجات عمادة شؤون الطلاب</button>
         <button class="preset chip chip--mixed" onclick="ask('ما المجالات التي تحتاجها معظم الجهات؟')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 10 6-10 6L2 8Zm-10 11 10 6 10-6M2 17l10 6 10-6"/></svg>المجالات المشتركة بين الجهات</button>
       </div>
@@ -460,11 +492,15 @@ async function initDashboard() {
     // ══ رسم توزيع المجالات (domDist) — حساب حقيقي ══════
 
     const sortedDomains = Object.entries(domainTotals).sort(([, a], [, b]) => b - a);
+    const domBox = document.getElementById('domDist').parentElement;
+    const domLabelLen = domBox.clientWidth < 420 ? 16 : 26;
+    const domLabels = sortedDomains.map(([d]) => wrapChartLabel(d, domLabelLen));
+    domBox.style.height = `${Math.max(280, domLabels.reduce((h, l) => h + l.length * 15 + 12, 0) + 40)}px`;
     if (window._domDistChart) window._domDistChart.destroy();
     window._domDistChart = new Chart(document.getElementById('domDist'), {
       type: 'bar',
       data: {
-        labels: sortedDomains.map(([d]) => d),
+        labels: domLabels,
         datasets: [{
           data: sortedDomains.map(([, v]) => v),
           backgroundColor: '#008DC3',
@@ -478,7 +514,7 @@ async function initDashboard() {
           legend: { display: false },
           tooltip: { callbacks: { label: c => 'إجمالي الطلبات: ' + c.parsed.x } }
         },
-        scales: { x: { grid: { color: G } }, y: { grid: { display: false } } }
+        scales: { x: { grid: { color: G } }, y: { grid: { display: false }, ticks: { autoSkip: false, font: { size: 11 } } } }
       }
     });
 
@@ -639,181 +675,265 @@ document.head.appendChild(_spinStyle);
 //  بيانات الكفاءات — مصدرها: tna_competencies_active (security_invoker=true)
 // ════════════════════════════════════════════════════════════
 
-// Shared display mapping; data sources and request behavior stay unchanged.
-const NATURE_STYLES = {
-  'مهاري': 'skill', 'معرفي': 'know', 'سلوكي': 'behav', 'مختلط': 'mixed'
+// ── ألوان دلالية ثابتة: كل لون = مصدر احتياج واحد في كل اللوحة ──
+const SOURCE_STYLES = {
+  'احتياج الجهات للدورات':        { kind: 'skill', short: 'الدورات' },
+  'الاحتياجات المرتبطة بالمشاريع': { kind: 'know',  short: 'المشاريع' },
+  'الاحتياج وارد بخطاب - ديوان':   { kind: 'behav', short: 'خطابات الديوان' }
 };
-function natureColor(nature) {
-  const kind = NATURE_STYLES[nature];
-  return kind ? getComputedStyle(document.documentElement).getPropertyValue(`--c-${kind}`).trim() : '#D6EBF5';
-}
-function natureChip(nature, text = nature) {
+const SOURCE_ORDER = Object.keys(SOURCE_STYLES);
+const ICON_PATHS = {'skill': 'm13 2-9 12h7l-1 8 10-12h-7z', 'know': 'M12 7C9 4 5 4 2 5v14c3-1 7-1 10 2 3-3 7-3 10-2V5c-3-1-7-1-10 2Zm0 0v14', 'behav': 'm5 12 4 4L19 6', 'mixed': 'm12 2 10 6-10 6L2 8Zm-10 11 10 6 10-6M2 17l10 6 10-6'};
+function cssVar(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+function kindColor(kind) { return kind ? cssVar(`--c-${kind}`) : '#D6EBF5'; }
+function sourceColor(src) { return kindColor(SOURCE_STYLES[src]?.kind); }
+function makeChip(kind, text, extraClass = '') {
   const chip = document.createElement('span');
-  chip.className = `chip chip--${NATURE_STYLES[nature] || 'unknown'}`;
+  chip.className = `chip chip--${kind || 'unknown'} ${extraClass}`.trim();
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.setAttribute('viewBox', '0 0 24 24');
-  svg.setAttribute('fill', 'none');
-  svg.setAttribute('stroke', 'currentColor');
-  svg.setAttribute('stroke-width', '1.8');
+  svg.setAttribute('viewBox', '0 0 24 24'); svg.setAttribute('fill', 'none');
+  svg.setAttribute('stroke', 'currentColor'); svg.setAttribute('stroke-width', '1.8');
   svg.setAttribute('aria-hidden', 'true');
   const path = document.createElementNS(svg.namespaceURI, 'path');
-  const paths = {'skill': 'm13 2-9 12h7l-1 8 10-12h-7z', 'know': 'M12 7C9 4 5 4 2 5v14c3-1 7-1 10 2 3-3 7-3 10-2V5c-3-1-7-1-10 2Zm0 0v14', 'behav': 'm5 12 4 4L19 6', 'mixed': 'm12 2 10 6-10 6L2 8Zm-10 11 10 6 10-6M2 17l10 6 10-6'};
-  path.setAttribute('d', paths[NATURE_STYLES[nature]] || paths.mixed);
+  path.setAttribute('d', ICON_PATHS[kind] || ICON_PATHS.mixed);
   svg.appendChild(path);
   chip.append(svg, document.createTextNode(text));
   return chip;
 }
-// A tie has no single prevailing nature; show it explicitly as mixed.
-function dominantNature(counts) {
-  const ranked = Object.entries(counts).sort(([,a],[,b]) => b-a);
-  if (!ranked.length) return 'غير محدد';
-  return ranked[1]?.[1] === ranked[0][1] ? 'مختلط' : ranked[0][0];
+const fmt = n => Number(n).toLocaleString('en-US');
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+// سطر بشريط أفقي: الاسم والقيمة فوق، والشريط تحت
+function barRow(label, valueText, pct, color) {
+  const row = el('div', 'bar-row');
+  const lab = el('div', 'bar-label');
+  const name = el('span', null, label); name.title = label;
+  lab.append(name, el('span', null, valueText));
+  const wrap = el('div', 'src-bar');
+  const fill = el('span'); fill.style.width = `${Math.max(2, Math.round(pct))}%`; fill.style.background = color;
+  wrap.appendChild(fill);
+  row.append(lab, wrap);
+  return row;
 }
 
+async function sbGet(path) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`,
+    { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } });
+  if (!res.ok) throw new Error(`Supabase ${res.status}`);
+  return res.json();
+}
+
+// ════════════════════════════════════════════════════════════
+//  الجدارات — مصدرها: tna_competencies_active (security_invoker=true, RLS)
+//  domain = الجدارة الرئيسية · sub_competency = الجدارة الفرعية · source_sheet = المصدر
+// ════════════════════════════════════════════════════════════
 async function initCompetencies() {
   try {
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/tna_competencies_active?select=domain,program,nature,beneficiaries`,
-      { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
-    );
-    if (!res.ok) throw new Error(`Supabase ${res.status}`);
-    const rows = await res.json();
+    const rows = await sbGet('tna_competencies_active?select=domain,sub_competency,source_sheet,beneficiaries');
     if (!rows.length) throw new Error('لا توجد بيانات في tna_competencies_active');
 
-    // ── 1. طبيعة الاحتياج — doughnut chart ───────────────
-    const natureCounts = {};
-    rows.forEach(r => {
-      if (r.nature) natureCounts[r.nature] = (natureCounts[r.nature] || 0) + 1;
-    });
-    const natureOrder = ['مهاري','معرفي','سلوكي','مختلط'];
-    const natureLabels = natureOrder.filter(n => natureCounts[n]);
-    const natureData   = natureLabels.map(n => natureCounts[n]);
-    const naturePalette = natureLabels.map(n => natureColor(n));
+    // مؤشرات عامة
+    const subs = new Set(rows.map(r => r.sub_competency).filter(Boolean));
+    const benef = rows.reduce((s, r) => s + (Number(r.beneficiaries) || 0), 0);
+    document.getElementById('stat-benef').textContent = fmt(benef);
+    document.getElementById('stat-domains-label').textContent = `جدارة رئيسية · ${subs.size} فرعية`;
 
+    // مفتاح ألوان المصادر
+    document.getElementById('source-key').replaceChildren(
+      ...SOURCE_ORDER.map(src => makeChip(SOURCE_STYLES[src].kind, SOURCE_STYLES[src].short, 'chip--src')));
+
+    // ── 1. مصادر الاحتياج — doughnut ───────────────────────
+    const srcCounts = {};
+    rows.forEach(r => { if (r.source_sheet) srcCounts[r.source_sheet] = (srcCounts[r.source_sheet] || 0) + 1; });
+    const srcLabels = SOURCE_ORDER.filter(s => srcCounts[s]);
+    const srcData = srcLabels.map(s => srcCounts[s]);
+    const srcTotal = srcData.reduce((a, b) => a + b, 0);
     if (window._natureChart) window._natureChart.destroy();
     window._natureChart = new Chart(document.getElementById('natureDist'), {
       type: 'doughnut',
       data: {
-        labels: natureLabels,
-        datasets: [{ data: natureData, backgroundColor: naturePalette, borderWidth: 0, hoverOffset: 6 }]
+        labels: srcLabels.map(s => SOURCE_STYLES[s].short),
+        datasets: [{ data: srcData, backgroundColor: srcLabels.map(sourceColor), borderWidth: 0, hoverOffset: 6 }]
       },
       options: {
         responsive: true, maintainAspectRatio: false, cutout: '62%',
         plugins: {
           legend: { display: false },
-          tooltip: {
-            callbacks: {
-              label: ctx => {
-                const total = ctx.dataset.data.reduce((a,b)=>a+b,0);
-                const pct = ((ctx.parsed/total)*100).toFixed(1);
-                return ` ${ctx.label}: ${ctx.parsed} (${pct}%)`;
-              }
-            }
-          }
+          tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed} (${(ctx.parsed / srcTotal * 100).toFixed(1)}%)` } }
         }
       }
     });
+    document.getElementById('nature-legend').replaceChildren(...srcLabels.map(s =>
+      makeChip(SOURCE_STYLES[s].kind, `${SOURCE_STYLES[s].short} · ${srcCounts[s]} (${(srcCounts[s] / srcTotal * 100).toFixed(1)}%)`)));
 
-    const natureTotal = natureData.reduce((sum, count) => sum + count, 0);
-    const legend = document.getElementById('nature-legend');
-    legend.replaceChildren(...natureLabels.map(n => natureChip(n,
-      `${n} · ${natureCounts[n]} (${(natureCounts[n] / natureTotal * 100).toFixed(1)}%)`)));
-
-    // ── 2. أعلى 5 برامج لكل مجال ──────────────────────────
-    const domainMap = {};
-    const domainNatures = {};
-    const programNatures = {};
+    // ── 2. بطاقات الجدارات الرئيسية ────────────────────────
+    const mains = {};
     rows.forEach(r => {
-      if (!r.domain || !r.program) return;
-      if (!domainMap[r.domain]) domainMap[r.domain] = {};
-      domainMap[r.domain][r.program] = (domainMap[r.domain][r.program] || 0) + 1;
-      const nature = r.nature || 'غير محدد';
-      domainNatures[r.domain] ||= {};
-      domainNatures[r.domain][nature] = (domainNatures[r.domain][nature] || 0) + 1;
-      programNatures[r.domain] ||= {};
-      programNatures[r.domain][r.program] ||= {};
-      const counts = programNatures[r.domain][r.program];
-      counts[nature] = (counts[nature] || 0) + 1;
+      if (!r.domain) return;
+      const m = mains[r.domain] ||= { total: 0, benef: 0, src: {}, subs: {} };
+      m.total++; m.benef += Number(r.beneficiaries) || 0;
+      m.src[r.source_sheet] = (m.src[r.source_sheet] || 0) + 1;
+      const sub = m.subs[r.sub_competency || 'غير محدد'] ||= { total: 0, src: {} };
+      sub.total++; sub.src[r.source_sheet] = (sub.src[r.source_sheet] || 0) + 1;
     });
-
+    const sorted = Object.entries(mains).sort(([, a], [, b]) => b.total - a.total);
     const grid = document.getElementById('comp-domains-grid');
-    grid.innerHTML = '';
-
-    const sortedDomains = Object.entries(domainMap)
-      .sort(([,a],[,b]) => Object.values(b).reduce((s,v)=>s+v,0) - Object.values(a).reduce((s,v)=>s+v,0));
-
-    sortedDomains.forEach(([domain, programs]) => {
-      const top5 = Object.entries(programs)
-        .sort(([,a],[,b]) => b-a)
-        .slice(0, 5);
-      const total = Object.values(programs).reduce((s,v)=>s+v,0);
-      const maxVal = top5[0]?.[1] || 1;
-
-      const card = document.createElement('div');
-      card.className = 'card competency-card';
-      const prevailing = dominantNature(domainNatures[domain]);
-      card.style.setProperty('--nature-color', natureColor(prevailing));
-
-      const title = document.createElement('div');
-      title.className = 'competency-heading';
-      const tname = document.createElement('span');
-      tname.textContent = domain;
-      const tbadge = document.createElement('span');
-      tbadge.style.cssText = 'font-size:11px;font-weight:400;color:var(--b3);white-space:nowrap;';
-      tbadge.textContent = `${total} طلب`;
-      title.appendChild(tname);
-      title.appendChild(tbadge);
-      card.appendChild(title);
-      const badge = natureChip(prevailing, `الطبيعة الغالبة: ${prevailing}`);
-      badge.classList.add('competency-nature');
-      card.appendChild(badge);
-
-      top5.forEach(([prog, cnt], i) => {
-        const row = document.createElement('div');
-        row.style.cssText = 'margin-bottom:8px;';
-
-        const label = document.createElement('div');
-        label.style.cssText = 'font-size:12px;color:var(--b3);margin-bottom:6px;display:flex;align-items:flex-start;justify-content:space-between;gap:8px;line-height:1.8;';
-        const lname = document.createElement('span');
-        lname.style.cssText = 'min-width:0;flex:1;white-space:normal;overflow-wrap:anywhere;';
-        lname.title = prog;
-        lname.textContent = prog;
-        const lcount = document.createElement('span');
-        lcount.style.cssText = 'flex-shrink:0;margin-right:4px;';
-        lcount.textContent = cnt;
-        label.appendChild(lname);
-        label.appendChild(lcount);
-        row.appendChild(label);
-
-        const programNature = dominantNature(programNatures[domain][prog]);
-        const programBadge = natureChip(programNature);
-        programBadge.classList.add('program-nature');
-        row.appendChild(programBadge);
-
-        const barWrap = document.createElement('div');
-        barWrap.style.cssText = 'height:6px;background:rgba(0,141,195,0.12);border-radius:3px;overflow:hidden;';
-        const bar = document.createElement('div');
-        bar.style.cssText = `height:100%;width:${Math.round((cnt/maxVal)*100)}%;background:${natureColor(programNature)};border-radius:3px;transition:width .6s ease;`;
-        barWrap.appendChild(bar);
-        row.appendChild(barWrap);
+    const cards = sorted.map(([main, m]) => {
+      const card = el('div', 'card competency-card');
+      card.style.setProperty('--nature-color', cssVar('--b5'));
+      const head = el('div', 'competency-heading');
+      head.append(el('span', null, main), el('span', null, `${m.total} طلب`));
+      head.lastChild.style.cssText = 'font-size:11px;font-weight:400;color:var(--b3);white-space:nowrap;';
+      card.appendChild(head);
+      const meta = el('div', null, `${fmt(m.benef)} مستفيد · ${Object.keys(m.subs).length} جدارة فرعية`);
+      meta.style.cssText = 'font-size:11px;color:var(--faint);margin-bottom:10px;';
+      card.appendChild(meta);
+      const srcRow = el('div', 'src-row');
+      SOURCE_ORDER.filter(s => m.src[s]).forEach(s =>
+        srcRow.appendChild(makeChip(SOURCE_STYLES[s].kind, `${SOURCE_STYLES[s].short} ${m.src[s]}`, 'chip--src')));
+      card.appendChild(srcRow);
+      const top5 = Object.entries(m.subs).sort(([, a], [, b]) => b.total - a.total).slice(0, 5);
+      const maxVal = top5[0]?.[1].total || 1;
+      top5.forEach(([sub, d]) => {
+        const row = el('div', 'bar-row');
+        const lab = el('div', 'bar-label');
+        const nm = el('span', null, sub); nm.title = sub;
+        lab.append(nm, el('span', null, d.total));
+        // شريط مكدّس بألوان المصادر، وطوله نسبةً لأعلى جدارة فرعية في البطاقة
+        const bar = el('div', 'src-bar');
+        bar.style.width = `${Math.max(6, Math.round(d.total / maxVal * 100))}%`;
+        SOURCE_ORDER.filter(s => d.src[s]).forEach(s => {
+          const seg = el('span'); seg.style.width = `${d.src[s] / d.total * 100}%`; seg.style.background = sourceColor(s);
+          seg.title = `${SOURCE_STYLES[s].short}: ${d.src[s]}`;
+          bar.appendChild(seg);
+        });
+        row.append(lab, bar);
         card.appendChild(row);
       });
-
-      grid.appendChild(card);
+      return card;
     });
-
+    const INITIAL = 9;
+    const more = document.getElementById('comp-more');
+    const render = all => {
+      grid.replaceChildren(...(all ? cards : cards.slice(0, INITIAL)));
+      more.hidden = cards.length <= INITIAL;
+      more.textContent = all ? 'عرض أقل' : `عرض كل الجدارات الرئيسية (${cards.length})`;
+      more.onclick = () => render(!all);
+    };
+    render(false);
     document.getElementById('comp-domains-loading').style.display = 'none';
-
-  } catch(err) {
+  } catch (err) {
     const loading = document.getElementById('comp-domains-loading');
-    if (loading) loading.innerHTML = `<span style="color:#f87171">⚠️ تعذّر تحميل بيانات الكفاءات: ${err.message}</span>`;
+    if (loading) loading.innerHTML = `<span style="color:#f87171">⚠️ تعذّر تحميل بيانات الجدارات: ${err.message}</span>`;
     console.error('Competencies load error:', err);
+  }
+}
+
+// ════════════════════════════════════════════════════════════
+//  احتياج الأفراد — مصدره: tna_survey_summary (أرقام مجمّعة فقط)
+// ════════════════════════════════════════════════════════════
+const AUDIENCES = [
+  { key: 'الموظفون', kind: 'skill' },
+  { key: 'أعضاء هيئة التدريس', kind: 'know' },
+  { key: 'الطلاب', kind: 'behav' }
+];
+let SURVEY = [];
+function renderAudience(aud) {
+  const { key } = aud;
+  const color = cssVar('--b4'); // لون محايد: الألوان الدلالية محجوزة لمصادر احتياج الجهات
+  const rows = SURVEY.filter(r => r.audience === key);
+  const panel = document.getElementById('aud-panel');
+  const meta = rows.find(r => r.section === 'meta');
+  const n = meta?.n || 0;
+  const frag = document.createDocumentFragment();
+
+  if (n < 30) frag.appendChild(el('div', 'note', `تنبيه: عدد المستجيبين ${n} فقط، والنتائج مؤشر أولي لا يمكن تعميمه.`));
+
+  // مؤشرات الفئة
+  const pctOf = (q, items) => {
+    const qs = rows.filter(r => r.section === 'single' && r.question === q);
+    const tot = qs.reduce((s, r) => s + r.n, 0);
+    const hit = qs.filter(r => items.some(i => r.item.startsWith(i))).reduce((s, r) => s + r.n, 0);
+    return tot ? Math.round(hit / tot * 100) : null;
+  };
+  const kpis = el('div', 'aud-kpis');
+  const kpi = (num, label) => { const k = el('div', 'kpi'); k.append(el('div', 'num', num), el('div', 'label', label)); return k; };
+  kpis.appendChild(kpi(fmt(n), 'مستجيب'));
+  if (meta?.n_approved != null) kpis.appendChild(kpi(`${Math.round(meta.n_approved / n * 100)}%`, `طلبات معتمدة (${fmt(meta.n_approved)})`));
+  const inPerson = pctOf('أسلوب التدريب المفضل', ['حضوري']);
+  if (inPerson != null) kpis.appendChild(kpi(`${inPerson}%`, 'يفضّلون التدريب الحضوري'));
+  const aiReg = pctOf('معدل استخدام الذكاء الاصطناعي', ['يومي', 'أسبوعي']);
+  if (aiReg != null) kpis.appendChild(kpi(`${aiReg}%`, 'يستخدمون الذكاء الاصطناعي يومياً أو أسبوعياً'));
+  frag.appendChild(kpis);
+
+  const grid = el('div', 'aud-grid');
+  // الأولويات: أعلى 8 لكل سؤال
+  [...new Set(rows.filter(r => r.section === 'priority').map(r => r.question))].forEach(q => {
+    const items = rows.filter(r => r.section === 'priority' && r.question === q).sort((a, b) => b.n - a.n).slice(0, 8);
+    const card = el('div', 'card');
+    card.append(el('h3', null, q), el('div', 'hint', n ? `عدد مرات الاختيار · النسبة من ${fmt(n)} مستجيب` : 'عدد مرات الاختيار'));
+    const max = items[0]?.n || 1;
+    items.forEach(r => card.appendChild(barRow(r.item, `${fmt(r.n)}${n ? ` · ${Math.round(r.n / n * 100)}%` : ''}`, r.n / max * 100, color)));
+    grid.appendChild(card);
+  });
+  // التقييم الذاتي: الأدنى أولاً لأنه يشير إلى فجوة أكبر
+  [...new Set(rows.filter(r => r.section === 'rating').map(r => r.question))].forEach(q => {
+    const items = rows.filter(r => r.section === 'rating' && r.question === q).sort((a, b) => a.avg_score - b.avg_score);
+    const scale = items[0]?.scale_max || 5;
+    const card = el('div', 'card');
+    card.append(el('h3', null, q), el('div', 'hint', `متوسط التقييم من ${scale} · مرتّب من الأدنى (فجوة أكبر) إلى الأعلى`));
+    items.forEach(r => card.appendChild(barRow(r.item, `${Number(r.avg_score).toFixed(2)} من ${scale}`, r.avg_score / scale * 100, cssVar('--c-mixed'))));
+    grid.appendChild(card);
+  });
+  // الأسئلة أحادية الاختيار
+  const singles = [...new Set(rows.filter(r => r.section === 'single').map(r => r.question))];
+  if (singles.length) {
+    const card = el('div', 'card span-all');
+    card.append(el('h3', null, 'خصائص المستجيبين وتفضيلاتهم'), el('div', 'hint', 'النسبة من إجمالي المستجيبين'));
+    const cols = el('div', 'single-cols');
+    card.appendChild(cols);
+    singles.forEach(q => {
+      const colEl = el('div');
+      cols.appendChild(colEl);
+      const items = rows.filter(r => r.section === 'single' && r.question === q).sort((a, b) => a.sort - b.sort);
+      const tot = n || items.reduce((s, r) => s + r.n, 0) || 1; // من إجمالي المستجيبين حتى لو أُخفيت الفئات الصغيرة
+      const t = el('div', null, q); t.style.cssText = 'font-size:13px;font-weight:600;margin:12px 0 6px;color:var(--ink);';
+      colEl.appendChild(t);
+      items.forEach(r => colEl.appendChild(barRow(r.item, `${fmt(r.n)} · ${Math.round(r.n / tot * 100)}%`, r.n / tot * 100, cssVar('--soft'))));
+    });
+    grid.appendChild(card);
+  }
+  frag.appendChild(grid);
+  panel.replaceChildren(frag);
+}
+async function initSurveys() {
+  try {
+    SURVEY = await sbGet('tna_survey_summary?select=audience,section,question,item,n,n_approved,rank1,avg_score,scale_max,sort&order=audience,section,sort');
+    if (!SURVEY.length) throw new Error('لا توجد بيانات في tna_survey_summary');
+    const tabs = document.getElementById('aud-tabs');
+    const buttons = AUDIENCES.filter(a => SURVEY.some(r => r.audience === a.key)).map((a, i) => {
+      const n = SURVEY.find(r => r.audience === a.key && r.section === 'meta')?.n;
+      const b = el('button', 'tab-btn' + (i === 0 ? ' active' : ''), `${a.key}${n ? ` (${fmt(n)})` : ''}`);
+      b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+      b.onclick = () => {
+        buttons.forEach(x => { x.classList.remove('active'); x.setAttribute('aria-selected', 'false'); });
+        b.classList.add('active'); b.setAttribute('aria-selected', 'true');
+        renderAudience(a);
+      };
+      return b;
+    });
+    tabs.replaceChildren(...buttons);
+    document.getElementById('aud-loading').style.display = 'none';
+    renderAudience(AUDIENCES.find(a => SURVEY.some(r => r.audience === a.key)));
+  } catch (err) {
+    const loading = document.getElementById('aud-loading');
+    if (loading) loading.innerHTML = `<span style="color:#f87171">⚠️ تعذّر تحميل نتائج الاستبانات: ${err.message}</span>`;
+    console.error('Survey load error:', err);
   }
 }
 
 // تشغيل اللوحة
 initDashboard();
 initCompetencies();
+initSurveys();
 </script>
 
 </body>
