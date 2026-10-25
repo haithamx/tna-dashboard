@@ -203,6 +203,11 @@ footer{text-align:center;color:var(--faint);font-size:12px;margin-top:32px;}
 .split-list{display:flex;flex-direction:column;gap:6px;margin-top:4px;}
 @media(max-width:760px){.aud-grid{grid-template-columns:1fr;}}
 @media(max-width:760px){.kpi-row{grid-template-columns:repeat(2,minmax(0,1fr));}.ask-row{flex-wrap:wrap;}.ask-input{min-width:0;width:100%;}.ask-btn{flex:1;}.card{min-width:0;}.wrap{padding-inline:20px;}}
+.proposal-tab{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px;background:var(--c-know-bg);border:1px solid var(--c-know-bd);border-right:0;border-radius:12px 0 0 12px;color:var(--c-know);text-decoration:none;font-size:13px;font-weight:700;writing-mode:vertical-rl;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
+.proposal-tab:hover{filter:brightness(1.2);}
+.proposal-tab svg{width:16px;height:16px;writing-mode:horizontal-tb;}
+.proposal-tab small{font-size:10px;font-weight:500;opacity:.85;}
+@media(max-width:760px){.proposal-tab{top:auto;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:none;writing-mode:horizontal-tb;flex-direction:row;padding:8px 14px;border-radius:999px 0 0 999px;}}
 </style>
 <script>
 const SUPABASE_URL="https://kxazsigcenqcrqedygbm.supabase.co";
@@ -210,6 +215,7 @@ const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
 </script>
 </head>
 <body>
+<a class="proposal-tab" href="proposal.html" title="مقترح أولويات التنفيذ — مسودة للنقاش"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2Z"/></svg>مقترح<small>مسودة</small></a>
 
 <div class="hero">
   <div class="wrap">

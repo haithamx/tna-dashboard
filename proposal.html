@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>مقترح أولويات التنفيذ — مسودة · الاحتياجات التدريبية 2027</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="fonts.css">
+<style>
+:root{
+  --c-skill:#6EA8FF; --c-skill-bg:rgba(110,168,255,.12); --c-skill-bd:rgba(110,168,255,.35);
+  --c-know:#F5C451; --c-know-bg:rgba(245,196,81,.12); --c-know-bd:rgba(245,196,81,.35);
+  --c-behav:#5FD4A0; --c-behav-bg:rgba(95,212,160,.12); --c-behav-bd:rgba(95,212,160,.35);
+  --c-mixed:#B794F6; --c-mixed-bg:rgba(183,148,246,.12); --c-mixed-bd:rgba(183,148,246,.35);
+  --bg:#0B1018; --bg2:#0F1520; --card:#101722; --card2:#182231;
+  --border:#253044; --border2:#1C2635;
+  --ink:#EDF0F7; --soft:#B4BDCC; --faint:#9AA6B8;
+  --b3:#C3CEDF; --b4:#A6BFE2; --b5:#6EA8FF;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{color-scheme:dark;font-family:'IBM Plex Sans Arabic',Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;padding-bottom:60px;background-image:linear-gradient(110deg,#0B1018 0%,#0D121D 55%,#101625 100%);}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:24px;}
+a{color:var(--b4);}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:18px;border-bottom:1px solid var(--border2);flex-wrap:wrap;}
+.back{font-size:13px;text-decoration:none;color:var(--soft);border:1px solid var(--border);padding:6px 14px;border-radius:999px;background:var(--bg2);}
+.back:hover{color:var(--ink);}
+.hero{padding-block:36px 8px;}
+.hero h1{font-size:28px;font-weight:700;margin-bottom:8px;text-wrap:balance;}
+.hero p{color:var(--soft);font-size:14px;max-width:680px;}
+.draft-banner{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--c-know-bd);background:var(--c-know-bg);color:var(--c-know);border-radius:14px;padding:14px 18px;margin-top:20px;font-size:13.5px;line-height:1.8;}
+.draft-banner strong{display:block;font-size:14px;margin-bottom:2px;}
+.draft-banner svg{width:22px;height:22px;flex-shrink:0;margin-top:2px;}
+section{padding-block:34px;}
+.eyebrow{color:var(--b4);font-size:13px;font-weight:500;letter-spacing:.3px;margin-bottom:6px;}
+h2{font-size:21px;font-weight:700;margin-bottom:6px;text-wrap:balance;}
+h3{font-size:15px;font-weight:700;margin-bottom:4px;}
+.lead{color:var(--soft);font-size:14px;max-width:680px;margin-bottom:10px;}
+.why{font-size:13px;color:var(--faint);max-width:720px;margin-bottom:18px;border-inline-start:3px solid var(--border);padding-inline-start:12px;}
+.why b{color:var(--soft);font-weight:600;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;min-width:0;}
+.hint{font-size:12px;color:var(--faint);margin-bottom:12px;}
+.kpi-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 16px;text-align:center;}
+.kpi .num{font-size:28px;font-weight:700;font-variant-numeric:tabular-nums;}
+.kpi .label{font-size:12px;color:var(--soft);line-height:1.5;margin-top:2px;}
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;}
+.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:2px 10px;border-radius:999px;border:1px solid var(--bd);background:var(--bgc);color:var(--fg);font-size:11px;font-weight:600;white-space:nowrap;}
+.chip--skill{--fg:var(--c-skill);--bgc:var(--c-skill-bg);--bd:var(--c-skill-bd);}
+.chip--know{--fg:var(--c-know);--bgc:var(--c-know-bg);--bd:var(--c-know-bd);}
+.chip--behav{--fg:var(--c-behav);--bgc:var(--c-behav-bg);--bd:var(--c-behav-bd);}
+.chip--mixed{--fg:var(--c-mixed);--bgc:var(--c-mixed-bg);--bd:var(--c-mixed-bd);}
+.chip--plain{--fg:var(--soft);--bgc:rgba(180,189,204,.08);--bd:var(--border);}
+/* أوزان المؤشر */
+.weights{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px 24px;margin-bottom:6px;}
+.w-item label{display:flex;justify-content:space-between;font-size:13px;color:var(--soft);margin-bottom:4px;}
+.w-item label span:last-child{color:var(--ink);font-variant-numeric:tabular-nums;font-weight:600;}
+.w-item input{width:100%;accent-color:var(--c-skill);}
+.w-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px;font-size:12px;color:var(--faint);}
+.btn{font-family:inherit;cursor:pointer;border:1px solid var(--border);background:var(--bg2);color:var(--soft);font-size:13px;padding:6px 16px;border-radius:999px;}
+.btn:hover{color:var(--ink);border-color:#3D4D67;}
+/* جدول الأولويات */
+.table-wrap{overflow-x:auto;margin-top:16px;border:1px solid var(--border2);border-radius:12px;}
+table{border-collapse:collapse;width:100%;font-size:13px;}
+th,td{padding:10px 12px;text-align:start;border-bottom:1px solid var(--border2);vertical-align:top;}
+th{font-size:12px;color:var(--faint);font-weight:500;background:var(--bg2);white-space:nowrap;position:sticky;top:0;}
+td.num,th.num{text-align:center;font-variant-numeric:tabular-nums;white-space:nowrap;}
+tr:last-child td{border-bottom:0;}
+.rank{color:var(--faint);font-variant-numeric:tabular-nums;width:36px;text-align:center;}
+.sub-name{font-weight:600;color:var(--ink);}
+.main-name{font-size:12px;color:var(--faint);}
+.score-cell{min-width:150px;}
+.score-bar{display:flex;align-items:center;gap:8px;}
+.score-bar .track{flex:1;height:6px;border-radius:3px;background:rgba(110,168,255,.10);overflow:hidden;}
+.score-bar .fill{height:100%;background:var(--c-skill);border-radius:3px;}
+.score-bar b{font-variant-numeric:tabular-nums;min-width:34px;text-align:end;}
+.move{font-size:11px;font-variant-numeric:tabular-nums;}
+.move.up{color:var(--c-behav);} .move.down{color:#F28B82;}
+/* أشرطة */
+.bar-row{margin-bottom:10px;}
+.bar-label{font-size:12.5px;color:var(--b3);margin-bottom:4px;display:flex;justify-content:space-between;gap:8px;line-height:1.6;}
+.bar-label>span:first-child{min-width:0;flex:1;overflow-wrap:anywhere;}
+.bar-label>span:last-child{flex-shrink:0;font-variant-numeric:tabular-nums;color:var(--ink);}
+.track{height:6px;border-radius:3px;background:rgba(110,168,255,.10);overflow:hidden;display:flex;}
+.track>span{display:block;height:100%;}
+.dual .track{margin-bottom:3px;}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--soft);margin-bottom:12px;}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-inline-end:6px;vertical-align:middle;}
+.rec{margin-top:12px;font-size:13px;color:var(--ink);background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;}
+.rec b{color:var(--c-behav);}
+select{font-family:inherit;font-size:14px;background:var(--bg2);color:var(--ink);border:1px solid var(--border);border-radius:10px;padding:8px 12px;max-width:100%;}
+.issue{display:flex;justify-content:space-between;gap:12px;padding-block:10px;border-bottom:1px solid var(--border2);font-size:13px;}
+.issue:last-child{border-bottom:0;}
+.issue .chip{flex-shrink:0;align-self:center;}
+.issue .names{min-width:0;flex:1;}
+.issue .names div{overflow-wrap:anywhere;}
+.coming{border-style:dashed;}
+.coming ul{margin-top:8px;padding-inline-start:20px;font-size:13px;color:var(--soft);}
+.loading{text-align:center;padding:30px;color:var(--faint);font-size:14px;}
+.err{color:#f87171;}
+footer{text-align:center;color:var(--faint);font-size:12px;margin-top:24px;}
+@media(max-width:860px){.weights{grid-template-columns:repeat(2,minmax(0,1fr));}.grid-3{grid-template-columns:1fr;}}
+@media(max-width:760px){.kpi-row{grid-template-columns:repeat(2,minmax(0,1fr));}.grid-2{grid-template-columns:1fr;}.wrap{padding-inline:16px;}.hero h1{font-size:23px;}.hide-sm{display:none;}}
+@media(max-width:480px){.weights{grid-template-columns:1fr;}}
+</style>
+<script>
+const SUPABASE_URL="https://kxazsigcenqcrqedygbm.supabase.co";
+const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt4YXpzaWdjZW5xY3JxZWR5Z2JtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3ODY4MjAsImV4cCI6MjA2OTM2MjgyMH0.rDcH3tfLE2hzKC84PEd3VnUfx0mkY3W8jfFMIIAhjYI";
+</script>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="topbar">
+    <span style="font-size:13px;color:var(--soft)">جامعة الملك سعود · عمادة تطوير المهارات</span>
+    <a class="back" href="./">→ العودة إلى لوحة البيانات</a>
+  </div>
+
+  <div class="hero">
+    <div class="eyebrow">مقترح</div>
+    <h1>أولويات التنفيذ المقترحة للاحتياجات التدريبية 2027</h1>
+    <p>تحويل بيانات اللوحة الرئيسية إلى ترتيب قابل للقرار: ماذا يُنفَّذ أولاً، ولمن، وبأي طريقة. الأرقام حيّة من نفس قاعدة البيانات.</p>
+    <div class="draft-banner" role="note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+      <div><strong>مسودة للنقاش — غير معتمدة</strong>الأوزان وربط الاستبانات بالجدارات اقتراحات أولية تحتاج اعتماد العمادة. تحريك الأوزان هنا لا يغيّر أي بيانات محفوظة.</div>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="kpi-row" id="kpis">
+      <div class="kpi"><div class="num">—</div><div class="label">جدارة فرعية مطلوبة</div></div>
+      <div class="kpi"><div class="num">—</div><div class="label">برنامج مشترك (5 جهات فأكثر)</div></div>
+      <div class="kpi"><div class="num">—</div><div class="label">مستفيد في أعلى 20 أولوية</div></div>
+      <div class="kpi"><div class="num">—</div><div class="label">طلب بلا أولوية معلنة</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="priority">
+  <div class="wrap">
+    <div class="eyebrow">1 · مؤشر الأولوية</div>
+    <h2>أعلى 20 جدارة فرعية للتنفيذ</h2>
+    <p class="lead">درجة من 100 تجمع ستة عوامل لكل جدارة فرعية. حرّك الأوزان لترى كيف يتغيّر الترتيب.</p>
+    <p class="why"><b>لماذا:</b> عدد الطلبات وحده مضلِّل. «الطباعة والإنتاج الطباعي» فيها 17 طلباً من جهة واحدة، بينما جدارات أقل طلباً تمتد لعشرات الجهات وآلاف المستفيدين. القرار يحتاج ترتيباً يوازن الحجم والانتشار والأثر.</p>
+    <div class="card">
+      <h3>أوزان العوامل</h3>
+      <div class="hint">كل عامل مطبَّع من 0 إلى 1 بين الجدارات الـ 130، والدرجة = مجموع (الوزن × العامل) مقسوماً على مجموع الأوزان.</div>
+      <div class="weights" id="weights"></div>
+      <div class="w-actions">
+        <span id="w-note">الأوزان الافتراضية (مسودة).</span>
+        <button class="btn" id="w-reset" type="button">إعادة الأوزان الافتراضية</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th class="rank">#</th><th>الجدارة الفرعية</th><th class="score-cell">الدرجة</th>
+          <th class="num">طلبات</th><th class="num hide-sm">جهات</th><th class="num hide-sm">مستفيدون</th><th class="num hide-sm">النطاق</th>
+        </tr></thead>
+        <tbody id="prio-body"><tr><td colspan="7" class="loading">جاري الحساب…</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="scope">
+  <div class="wrap">
+    <div class="eyebrow">2 · نطاق التنفيذ</div>
+    <h2>برامج مركزية مشتركة مقابل تدريب داخل الجهة</h2>
+    <p class="why"><b>لماذا:</b> جدارة تطلبها عشرات الجهات تُنفَّذ أوفر كبرنامج جامعي واحد بدفعات متعددة، بدل طلبات متفرقة. والجدارات التي تطلبها جهة واحدة أنسب أن تُنفَّذ داخلها أو بالتعاقد المباشر.</p>
+    <div class="grid-3" id="scope-grid"><div class="loading">جاري التحميل…</div></div>
+  </div>
+</section>
+
+<section id="match">
+  <div class="wrap">
+    <div class="eyebrow">3 · تطابق المصادر</div>
+    <h2>أين يتفق احتياج الجهات مع احتياج الأفراد؟</h2>
+    <p class="why"><b>لماذا:</b> حين تطلب الجهات جدارة ويختارها الموظفون وأعضاء هيئة التدريس أيضاً، يكون الاحتياج مؤكداً من جهتين مستقلتين، وهذا أقوى دليل لتبرير الميزانية. <b>الربط بين بنود الاستبانات والجدارات مسودة</b> تحتاج اعتماد العمادة.</p>
+    <div class="card">
+      <div class="legend"><span><i style="background:var(--c-skill)"></i>نسبة من طلبات الجهات</span><span><i style="background:var(--c-know)"></i>نسبة من اختيارات الأفراد (موظفون وأعضاء)</span></div>
+      <div id="match-list" class="dual"><div class="loading">جاري التحميل…</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="delivery">
+  <div class="wrap">
+    <div class="eyebrow">4 · طريقة التقديم</div>
+    <h2>التنفيذ حسب الفئة والجاهزية</h2>
+    <p class="why"><b>لماذا:</b> التفضيلات تختلف بين الفئات، وتوحيد طريقة التقديم يخسر جزءاً من الحضور. والذكاء الاصطناعي أعلى طلب عند الموظفين بينما شريحة منهم لا تستخدمه أصلاً، فبرنامج واحد للجميع لن يناسب المبتدئ ولا المتقدم.</p>
+    <div class="grid-2">
+      <div class="card"><h3>أسلوب التدريب المفضل</h3><div class="hint">النسبة من المستجيبين في كل فئة</div><div id="style-list"><div class="loading">…</div></div></div>
+      <div class="card"><h3>مستويات برنامج الذكاء الاصطناعي المقترحة</h3><div class="hint">حسب معدل الاستخدام الحالي</div><div id="ai-list"><div class="loading">…</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="entity">
+  <div class="wrap">
+    <div class="eyebrow">5 · ملف الجهة</div>
+    <h2>احتياج جهة محددة مقارنة بالجامعة</h2>
+    <p class="why"><b>لماذا:</b> العميد ومدير الإدارة يتخذان قرار جهتهما. هذا العرض يبيّن أين يختلف احتياج الجهة عن متوسط الجامعة، وما الذي يكفي فيه البرنامج المركزي.</p>
+    <div class="card">
+      <label for="entity-select" class="hint" style="display:block">اختر الجهة</label>
+      <select id="entity-select"></select>
+      <div id="entity-body" style="margin-top:18px"></div>
+    </div>
+  </div>
+</section>
+
+<section id="quality">
+  <div class="wrap">
+    <div class="eyebrow">6 · موثوقية البيانات</div>
+    <h2>ما يحتاج معالجة قبل اعتماد الأرقام</h2>
+    <p class="why"><b>لماذا:</b> القائد يحتاج أن يعرف مقدار الثقة في الرقم قبل أن يبني عليه قراراً.</p>
+    <div class="grid-2">
+      <div class="card"><h3>أسماء جهات متشابهة</h3><div class="hint">مرشّحة للدمج بعد مراجعة العمادة (لم يُدمج شيء تلقائياً)</div><div id="issues"><div class="loading">…</div></div></div>
+      <div class="card"><h3>اكتمال البيانات</h3><div class="hint">ما يؤثر على دقة المؤشر</div><div id="completeness"><div class="loading">…</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="tracking">
+  <div class="wrap">
+    <div class="eyebrow">7 · قادم</div>
+    <h2>متابعة التنفيذ</h2>
+    <div class="card coming">
+      <p class="lead" style="margin-bottom:0">بعد اعتماد الأولويات، تتحول هذه الصفحة إلى متابعة: ما خُطِّط، ما نُفِّذ، ونسبة تغطية المستفيدين لكل جدارة. لا توجد بيانات تنفيذ في قاعدة البيانات حالياً، ويحتاج القسم لكل برنامج:</p>
+      <ul><li>الجدارة الفرعية المرتبطة والجهات المستهدفة</li><li>عدد المقاعد المخططة والمنفّذة وتاريخ الدفعات</li><li>الحالة (مخطط / جارٍ / مكتمل) والتكلفة التقديرية</li></ul>
+    </div>
+  </div>
+</section>
+
+<footer>مقترح أولويات التنفيذ · مسودة للنقاش · البيانات حيّة من Supabase · <span id="foot">…</span></footer>
+
+<script>
+// ════════════════════════════════════════════════════════════
+//  المصادر (كلها عروض security_invoker عبر RLS):
+//  tna_priority_active  → العوامل المطبّعة والدرجة الافتراضية (نفس منطق وكيل n8n)
+//  tna_competencies_active · tna_survey_summary · tna_survey_comp_map · tna_entity_name_issues
+// ════════════════════════════════════════════════════════════
+const fmt = n => Number(n).toLocaleString('en-US');
+const pct = (a, b) => b ? Math.round(a / b * 100) : 0;
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+async function sbGet(path) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } });
+  if (!res.ok) throw new Error(`Supabase ${res.status}`);
+  return res.json();
+}
+function chip(kind, text) { return el('span', `chip chip--${kind}`, text); }
+function barRow(label, value, p, color) {
+  const r = el('div', 'bar-row'), l = el('div', 'bar-label');
+  const n = el('span', null, label); n.title = label;
+  l.append(n, el('span', null, value));
+  const t = el('div', 'track'), f = el('span'); f.style.width = `${Math.max(1.5, p)}%`; f.style.background = color;
+  t.appendChild(f); r.append(l, t); return r;
+}
+const SCOPE_KIND = { 'مشترك': 'behav', 'محدود': 'know', 'تخصصي': 'mixed' };
+
+// ── 1. مؤشر الأولوية ─────────────────────────────────────────
+const FACTORS = [
+  { key: 'f_requests', label: 'عدد الطلبات', def: 25 },
+  { key: 'f_entities', label: 'انتشار الجهات', def: 20 },
+  { key: 'f_beneficiaries', label: 'عدد المستفيدين', def: 15 },
+  { key: 'f_priority', label: 'الأولوية المعلنة', def: 15 },
+  { key: 'f_individuals', label: 'احتياج الأفراد', def: 15 },
+  { key: 'f_gap', label: 'فجوة التقييم الذاتي', def: 10 }
+];
+let PRIO = [], DEFAULT_RANK = {};
+const weights = Object.fromEntries(FACTORS.map(f => [f.key, f.def]));
+function scoreOf(r) {
+  const tot = FACTORS.reduce((s, f) => s + weights[f.key], 0) || 1;
+  return FACTORS.reduce((s, f) => s + weights[f.key] * Number(r[f.key] || 0), 0) / tot * 100;
+}
+function renderWeights() {
+  const box = document.getElementById('weights');
+  box.replaceChildren(...FACTORS.map(f => {
+    const w = el('div', 'w-item'), lab = el('label');
+    lab.htmlFor = 'w-' + f.key;
+    const val = el('span', null, weights[f.key]);
+    lab.append(el('span', null, f.label), val);
+    const inp = document.createElement('input');
+    Object.assign(inp, { type: 'range', min: 0, max: 50, step: 5, value: weights[f.key], id: 'w-' + f.key });
+    inp.oninput = () => { weights[f.key] = Number(inp.value); val.textContent = inp.value; renderPriority(); };
+    w.append(lab, inp); return w;
+  }));
+  const isDef = FACTORS.every(f => weights[f.key] === f.def);
+  document.getElementById('w-note').textContent = isDef ? 'الأوزان الافتراضية (مسودة).' : 'أوزان معدّلة — الأسهم تبيّن تغيّر الترتيب عن الافتراضي.';
+}
+function renderPriority() {
+  const ranked = PRIO.map(r => ({ ...r, score: scoreOf(r) })).sort((a, b) => b.score - a.score);
+  const top = ranked.slice(0, 20);
+  const body = document.getElementById('prio-body');
+  body.replaceChildren(...top.map((r, i) => {
+    const tr = document.createElement('tr');
+    const rank = el('td', 'rank', i + 1);
+    const delta = DEFAULT_RANK[r.sub_competency] - (i + 1);
+    if (delta) { const m = el('div', 'move ' + (delta > 0 ? 'up' : 'down'), (delta > 0 ? '▲' : '▼') + Math.abs(delta)); rank.appendChild(m); }
+    const name = el('td'); name.append(el('div', 'sub-name', r.sub_competency), el('div', 'main-name', r.main_competency));
+    const sc = el('td', 'score-cell'), bar = el('div', 'score-bar'), track = el('div', 'track'), fill = el('div', 'fill');
+    fill.style.width = `${r.score}%`; track.appendChild(fill); bar.append(track, el('b', null, r.score.toFixed(1))); sc.appendChild(bar);
+    const scope = el('td', 'num hide-sm'); scope.appendChild(chip(SCOPE_KIND[r.scope], r.scope));
+    tr.append(rank, name, sc, el('td', 'num', r.requests), el('td', 'num hide-sm', r.entities), el('td', 'num hide-sm', fmt(r.beneficiaries)), scope);
+    return tr;
+  }));
+  document.querySelector('#kpis .kpi:nth-child(3) .num').textContent = fmt(top.reduce((s, r) => s + Number(r.beneficiaries), 0));
+  renderWeights();
+}
+document.getElementById('w-reset').onclick = () => { FACTORS.forEach(f => weights[f.key] = f.def); renderPriority(); };
+
+// ── 2. النطاق ────────────────────────────────────────────────
+function renderScope(comp) {
+  const grid = document.getElementById('scope-grid');
+  const groups = { 'مشترك': [], 'محدود': [], 'تخصصي': [] };
+  PRIO.forEach(r => groups[r.scope].push(r));
+  const subEntity = {};
+  comp.forEach(c => { (subEntity[c.sub_competency] ||= new Set()).add(c.entity); });
+  const desc = { 'مشترك': '5 جهات فأكثر — برنامج جامعي مركزي', 'محدود': '2–4 جهات — برنامج مشترك بين الجهات الطالبة', 'تخصصي': 'جهة واحدة — تدريب داخل الجهة أو تعاقد مباشر' };
+  grid.replaceChildren(...Object.entries(groups).map(([k, rows]) => {
+    const card = el('div', 'card'); card.style.borderTop = `3px solid var(--c-${SCOPE_KIND[k]})`;
+    const head = el('div'); head.style.cssText = 'display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:2px';
+    head.append(el('h3', null, `${k} · ${rows.length} جدارة`), chip(SCOPE_KIND[k], `${fmt(rows.reduce((s, r) => s + r.requests, 0))} طلب`));
+    card.append(head, el('div', 'hint', desc[k]));
+    const sorted = rows.sort((a, b) => k === 'تخصصي' ? b.requests - a.requests : b.entities - a.entities).slice(0, 6);
+    const max = Math.max(1, ...sorted.map(r => k === 'تخصصي' ? r.requests : r.entities));
+    sorted.forEach(r => {
+      const val = k === 'تخصصي' ? `${r.requests} طلب` : `${r.entities} جهة`;
+      const label = k === 'تخصصي' ? `${r.sub_competency} — ${[...(subEntity[r.sub_competency] || [])][0] || ''}` : r.sub_competency;
+      card.appendChild(barRow(label, val, (k === 'تخصصي' ? r.requests : r.entities) / max * 100, `var(--c-${SCOPE_KIND[k]})`));
+    });
+    return card;
+  }));
+}
+
+// ── 3. تطابق الجهات والأفراد ─────────────────────────────────
+function renderMatch(comp, survey, map) {
+  const ent = {}; comp.forEach(c => ent[c.domain] = (ent[c.domain] || 0) + 1);
+  const entTot = comp.length;
+  const ind = {}; let indTot = 0;
+  const Q = ['المجالات التدريبية لتحسين الأداء', 'مجالات التطوير ذات الأولوية'];
+  survey.filter(s => s.section === 'priority' && Q.includes(s.question)).forEach(s => {
+    indTot += s.n;
+    const m = map.find(m => m.audience === s.audience && m.section === 'priority' && m.item === s.item);
+    if (m && m.main_competency) ind[m.main_competency] = (ind[m.main_competency] || 0) + s.n;
+  });
+  const mains = Object.keys(ent).map(k => ({ k, e: ent[k] / entTot * 100, i: (ind[k] || 0) / indTot * 100 }))
+    .sort((a, b) => (b.e + b.i) - (a.e + a.i)).slice(0, 12);
+  const max = Math.max(...mains.map(m => Math.max(m.e, m.i)));
+  const box = document.getElementById('match-list');
+  box.replaceChildren(...mains.map(m => {
+    const r = el('div', 'bar-row'), l = el('div', 'bar-label');
+    l.append(el('span', null, m.k), el('span', null, `الجهات ${m.e.toFixed(1)}% · الأفراد ${m.i.toFixed(1)}%`));
+    const t1 = el('div', 'track'), f1 = el('span'); f1.style.cssText = `width:${Math.max(1, m.e / max * 100)}%;background:var(--c-skill)`; t1.appendChild(f1);
+    const t2 = el('div', 'track'), f2 = el('span'); f2.style.cssText = `width:${Math.max(m.i ? 1 : 0, m.i / max * 100)}%;background:var(--c-know)`; t2.appendChild(f2);
+    r.append(l, t1, t2);
+    if (!m.i) r.appendChild(el('div', 'main-name', 'لا يقابلها بند في استبانات الأفراد'));
+    return r;
+  }));
+  const strong = mains.filter(m => m.e >= 5 && m.i >= 10).map(m => m.k);
+  if (strong.length) { const rec = el('div', 'rec'); rec.append(el('b', null, 'احتياج مؤكد من المصدرين: '), document.createTextNode(strong.join('، ') + '.')); box.appendChild(rec); }
+}
+
+// ── 4. طريقة التقديم والجاهزية ───────────────────────────────
+const AUD = [{ k: 'الموظفون', kind: 'skill' }, { k: 'أعضاء هيئة التدريس', kind: 'know' }, { k: 'الطلاب', kind: 'behav' }];
+function renderDelivery(survey) {
+  const style = document.getElementById('style-list'); style.replaceChildren();
+  const ai = document.getElementById('ai-list'); ai.replaceChildren();
+  AUD.forEach(a => {
+    const rows = survey.filter(s => s.audience === a.k);
+    const n = rows.find(s => s.section === 'meta')?.n || 0;
+    const st = rows.filter(s => s.question === 'أسلوب التدريب المفضل');
+    const inP = st.filter(s => s.item.startsWith('حضوري')).reduce((s, r) => s + r.n, 0);
+    const p = pct(inP, n);
+    const h = el('div', null, `${a.k} (${fmt(n)})`); h.style.cssText = 'font-size:13px;font-weight:600;margin:10px 0 4px';
+    style.append(h, barRow('حضوري', `${p}%`, p, `var(--c-${a.kind})`), barRow('عن بُعد', `${100 - p}%`, 100 - p, 'var(--soft)'));
+    const verdict = el('div', 'main-name', p >= 60 ? 'التوصية: حضوري أساساً' : p <= 40 ? 'التوصية: عن بُعد أساساً' : 'التوصية: مدمج (حضوري + عن بُعد)');
+    style.appendChild(verdict);
+
+    const use = rows.filter(s => s.question === 'معدل استخدام الذكاء الاصطناعي');
+    if (!use.length) return;
+    const sum = re => use.filter(s => re.test(s.item)).reduce((s, r) => s + r.n, 0);
+    const tiers = [
+      ['تأسيسي — لا يستخدمونه', sum(/لا أستخدم/)],
+      ['أساسي — يستخدمونه أحياناً', sum(/أحيان/)],
+      ['تطبيقي — يومياً أو أسبوعياً', sum(/يومي|أسبوعي/)]
+    ];
+    const h2 = el('div', null, `${a.k}`); h2.style.cssText = 'font-size:13px;font-weight:600;margin:10px 0 4px';
+    ai.appendChild(h2);
+    tiers.forEach(([lab, v], i) => ai.appendChild(barRow(lab, `${fmt(v)} · ${pct(v, n)}%`, pct(v, n), ['var(--c-mixed)', 'var(--c-know)', 'var(--c-behav)'][i])));
+    if (n < 30) ai.appendChild(el('div', 'main-name', `عينة صغيرة (${n}) — مؤشر أولي`));
+  });
+}
+
+// ── 5. ملف الجهة ─────────────────────────────────────────────
+function renderEntity(comp) {
+  const sel = document.getElementById('entity-select');
+  const byEnt = {}; comp.forEach(c => (byEnt[c.entity] ||= []).push(c));
+  const ents = Object.keys(byEnt).sort((a, b) => byEnt[b].length - byEnt[a].length);
+  sel.replaceChildren(...ents.map(e => { const o = document.createElement('option'); o.value = e; o.textContent = `${e} (${byEnt[e].length})`; return o; }));
+  const uni = {}; comp.forEach(c => uni[c.domain] = (uni[c.domain] || 0) + 1);
+  const scopeOf = Object.fromEntries(PRIO.map(r => [r.sub_competency, r.scope]));
+  const draw = () => {
+    const rows = byEnt[sel.value] || [];
+    const mine = {}; rows.forEach(c => mine[c.domain] = (mine[c.domain] || 0) + 1);
+    const benef = rows.reduce((s, c) => s + (Number(c.beneficiaries) || 0), 0);
+    const body = document.getElementById('entity-body');
+    const summary = el('div', 'hint', `${rows.length} طلب · ${fmt(benef)} مستفيد · ${Object.keys(mine).length} جدارة رئيسية`);
+    const legend = el('div', 'legend'); legend.innerHTML = '<span><i style="background:var(--c-skill)"></i>نسبة في الجهة</span><span><i style="background:var(--soft)"></i>نسبة في الجامعة</span>';
+    const list = el('div', 'dual');
+    Object.entries(mine).sort((a, b) => b[1] - a[1]).slice(0, 8).forEach(([d, c]) => {
+      const pe = c / rows.length * 100, pu = uni[d] / comp.length * 100;
+      const r = el('div', 'bar-row'), l = el('div', 'bar-label');
+      l.append(el('span', null, d), el('span', null, `${c} طلب · الجهة ${pe.toFixed(0)}% · الجامعة ${pu.toFixed(0)}%`));
+      const t1 = el('div', 'track'), f1 = el('span'); f1.style.cssText = `width:${pe}%;background:var(--c-skill)`; t1.appendChild(f1);
+      const t2 = el('div', 'track'), f2 = el('span'); f2.style.cssText = `width:${pu}%;background:var(--soft)`; t2.appendChild(f2);
+      r.append(l, t1, t2); list.appendChild(r);
+    });
+    const shared = rows.filter(c => scopeOf[c.sub_competency] === 'مشترك').length;
+    const rec = el('div', 'rec');
+    rec.append(el('b', null, `${pct(shared, rows.length)}% `), document.createTextNode(`من طلبات الجهة (${shared} من ${rows.length}) تقع في جدارات مشتركة يمكن تغطيتها ببرامج جامعية مركزية، والباقي يحتاج تدريباً موجّهاً للجهة.`));
+    body.replaceChildren(summary, legend, list, rec);
+  };
+  sel.onchange = draw; draw();
+}
+
+// ── 6. موثوقية البيانات ──────────────────────────────────────
+function renderQuality(comp, issues, survey) {
+  const box = document.getElementById('issues');
+  box.replaceChildren(...issues.map(i => {
+    const row = el('div', 'issue'), names = el('div', 'names');
+    names.append(el('div', null, `${i.entity_a} (${i.requests_a})`), el('div', null, `${i.entity_b} (${i.requests_b})`));
+    row.append(names, chip('know', i.reason)); return row;
+  }));
+  if (!issues.length) box.appendChild(el('div', 'hint', 'لا توجد أسماء متشابهة.'));
+  const noPrio = comp.filter(c => !c.priority).length;
+  const bySrc = {}; comp.filter(c => !c.priority).forEach(c => bySrc[c.source_sheet] = (bySrc[c.source_sheet] || 0) + 1);
+  const students = survey.find(s => s.audience === 'الطلاب' && s.section === 'meta')?.n || 0;
+  const metas = ['الموظفون', 'أعضاء هيئة التدريس'].map(a => survey.find(s => s.audience === a && s.section === 'meta')).filter(Boolean);
+  const pending = metas.reduce((s, m) => s + (m.n - (m.n_approved || 0)), 0);
+  const indTotal = metas.reduce((s, m) => s + m.n, 0);
+  const c = document.getElementById('completeness'); c.replaceChildren(
+    barRow('طلبات بلا أولوية معلنة', `${fmt(noPrio)} · ${pct(noPrio, comp.length)}%`, pct(noPrio, comp.length), 'var(--c-know)'),
+    el('div', 'main-name', Object.entries(bySrc).map(([k, v]) => `${k}: ${v}`).join(' · ') + ' — تُعامل في المؤشر كأولوية محايدة (0.5).'),
+    el('div', null, ''),
+    barRow('مستجيبو استبانة الطلاب', `${students}`, Math.min(100, students), 'var(--c-mixed)'),
+    el('div', 'main-name', 'أقل من أن تُبنى عليه ميزانية؛ يُنصح بتكثيف جمع الاستجابات.'),
+    barRow('طلبات أفراد لم تُعتمد بعد', `${fmt(pending)} · ${pct(pending, indTotal)}%`, pct(pending, indTotal), 'var(--soft)'),
+    el('div', 'main-name', 'ما زالت عند المدير المباشر (موظفون وأعضاء).')
+  );
+  [...c.children].forEach(x => { if (x.classList.contains('main-name')) x.style.marginBottom = '12px'; });
+  document.querySelector('#kpis .kpi:nth-child(4) .num').textContent = `${pct(noPrio, comp.length)}%`;
+}
+
+async function init() {
+  try {
+    const [prio, comp, survey, map, issues] = await Promise.all([
+      sbGet('tna_priority_active?select=*'),
+      sbGet('tna_competencies_active?select=entity,domain,sub_competency,beneficiaries,source_sheet,priority'),
+      sbGet('tna_survey_summary?select=audience,section,question,item,n,n_approved,avg_score,scale_max,sort'),
+      sbGet('tna_survey_comp_map?select=audience,section,item,main_competency,status'),
+      sbGet('tna_entity_name_issues?select=*')
+    ]);
+    PRIO = prio.map(r => ({ ...r, requests: Number(r.requests), entities: Number(r.entities), beneficiaries: Number(r.beneficiaries) }));
+    [...PRIO].sort((a, b) => b.default_score - a.default_score).forEach((r, i) => DEFAULT_RANK[r.sub_competency] = i + 1);
+    const k = document.querySelectorAll('#kpis .kpi .num');
+    k[0].textContent = PRIO.length;
+    k[1].textContent = PRIO.filter(r => r.scope === 'مشترك').length;
+    renderPriority();
+    renderScope(comp);
+    renderMatch(comp, survey, map);
+    renderDelivery(survey);
+    renderEntity(comp);
+    renderQuality(comp, issues, survey);
+    document.getElementById('foot').textContent = `${fmt(comp.length)} طلب · ${PRIO.length} جدارة فرعية`;
+  } catch (err) {
+    document.getElementById('prio-body').innerHTML = `<tr><td colspan="7" class="loading err">تعذّر تحميل البيانات: ${err.message}</td></tr>`;
+    console.error(err);
+  }
+}
+init();
+</script>
+</body>
+</html>
