@@ -78,10 +78,11 @@
   --ink:#EDF0F7; --soft:#B4BDCC; --faint:#8E9BAF;
   --accent:#6EA8FF;
   /* priority scale (ordinal, one hue) */
-  --p1:#8DC0FF; --p2:#4F86D6; --p3:#2C4C7A; --p4:#394354;
-  --p1-ink:#0B1018; --p2-ink:#F4F7FC; --p3-ink:#DCE6F5; --p4-ink:#C9D1DD;
+  --c-blue:#6EA8FF; --c-gold:#F5C451; --c-green:#5FD4A0; --c-purple:#B794F6; --c-coral:#FF8F7A;
+  --p1:#F5C451; --p2:#6EA8FF; --p3:#3F6FA6; --p4:#485366;
+  --p1-ink:#1A1405; --p2-ink:#0B1018; --p3-ink:#EAF1FB; --p4-ink:#D3DAE4;
   /* the three approved criteria */
-  --k-strat:#6EA8FF; --k-proj:#3FC6A5; --k-size:#E0A94A;
+  --k-strat:#6EA8FF; --k-proj:#5FD4A0; --k-size:#B794F6;
   --warn:#F5C451; --warn-bg:rgba(245,196,81,.10); --warn-bd:rgba(245,196,81,.35);
   color-scheme:dark;
 }
@@ -94,14 +95,18 @@ body{font-family:'IBM Plex Sans Arabic',Tahoma,Arial,sans-serif;background:var(-
 h1,h2,h3{text-wrap:balance}
 
 /* hero */
-.hero{padding-block:40px 28px;border-bottom:1px solid var(--border2)}
+.hero{padding-block:40px 28px;border-bottom:1px solid var(--border2);background:radial-gradient(900px 320px at 85% -10%,rgba(110,168,255,.16),transparent 60%),radial-gradient(700px 260px at 10% 0%,rgba(183,148,246,.12),transparent 60%),radial-gradient(600px 240px at 50% 120%,rgba(95,212,160,.08),transparent 60%)}
+.accent-bar{width:56px;height:4px;border-radius:2px;margin-bottom:14px;background:linear-gradient(90deg,var(--c-blue),var(--c-purple),var(--c-green))}
 .hero-inner{display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap}
 .university-brand{display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0}
 .university-logo{display:block;width:110px;height:auto}
 .university-logo-fallback svg{width:120px;height:auto}
 .university-logo[hidden],.university-logo-fallback[hidden]{display:none}
 .hero-text{flex:1;min-width:260px}
-.eyebrow{color:#A6BFE2;font-size:13px;font-weight:500;letter-spacing:.3px;margin-bottom:6px}
+.eyebrow{color:var(--sec,#A6BFE2);font-size:13px;font-weight:600;letter-spacing:.3px;margin-bottom:6px;display:inline-flex;align-items:center;gap:8px}
+section .eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--sec,#A6BFE2);box-shadow:0 0 0 4px color-mix(in srgb,var(--sec,#A6BFE2) 18%,transparent)}
+#priorities{--sec:var(--c-gold)}#criteria{--sec:var(--c-blue)}#goals{--sec:var(--c-green)}#competencies{--sec:var(--c-purple)}#sources{--sec:var(--c-blue)}#decisions{--sec:var(--c-coral)}#programs{--sec:var(--c-green)}#ask{--sec:var(--c-purple)}
+section .card{border-top:2px solid color-mix(in srgb,var(--sec,#253044) 55%,transparent)}
 .hero h1{font-size:32px;font-weight:700;line-height:1.35;margin-bottom:6px}
 .hero .sub{font-size:15px;color:var(--soft);max-width:680px}
 .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
@@ -124,21 +129,22 @@ h2{font-size:22px;font-weight:700;margin-bottom:4px}
 
 /* KPIs */
 .kpi-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
-.kpi{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 16px}
+.kpi{background:linear-gradient(180deg,color-mix(in srgb,var(--kc) 9%,var(--card)),var(--card) 70%);border:1px solid color-mix(in srgb,var(--kc) 30%,var(--border));border-radius:14px;padding:18px 16px;position:relative;overflow:hidden}
+.kpi::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--kc)}
+.kpi .ico{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:11px;margin-bottom:8px;color:var(--kc);background:color-mix(in srgb,var(--kc) 14%,transparent);border:1px solid color-mix(in srgb,var(--kc) 40%,transparent)}
+.kpi .ico svg{width:20px;height:20px}
+.kpi .num{color:var(--kc)}
 .kpi .num{font-size:30px;font-weight:700;line-height:1.2}
 .kpi .label{font-size:13px;color:var(--soft);margin-top:4px;line-height:1.5}
 .kpi .foot{font-size:12px;color:var(--faint);margin-top:6px;line-height:1.5}
-.kpi.hl{border-color:#3E5C86;background:linear-gradient(180deg,#14223A,#111925)}
-.kpi.hl .num{color:var(--p1)}
+.kpi.hl{box-shadow:0 0 0 1px color-mix(in srgb,var(--kc) 35%,transparent),0 8px 30px -12px color-mix(in srgb,var(--kc) 45%,transparent)}
 
 /* key messages */
 .msgs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.msg{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
-.msg b.big{font-size:24px;font-weight:700;color:var(--p1);min-width:72px;line-height:1.2}
+.msg{display:flex;gap:14px;align-items:flex-start;background:linear-gradient(90deg,var(--card),color-mix(in srgb,var(--mc) 8%,var(--card)));border:1px solid var(--border);border-inline-start:4px solid var(--mc);border-radius:12px;padding:16px 18px}
+.msg b.big{font-size:26px;font-weight:700;color:var(--mc);min-width:72px;line-height:1.2}
 .msg p{font-size:14px;color:var(--soft)}
 .msg p strong{color:var(--ink);font-weight:600}
-.msg.warn{border-color:var(--warn-bd);background:var(--warn-bg)}
-.msg.warn b.big{color:var(--warn)}
 
 /* priority badges */
 .pb{display:inline-flex;align-items:center;justify-content:center;min-width:64px;font-size:12px;font-weight:600;padding:2px 10px;border-radius:999px;white-space:nowrap}
@@ -187,6 +193,9 @@ td.empty{opacity:.45}
 table.t{border-collapse:collapse;width:100%;font-size:13px}
 table.t th{font-size:12px;color:var(--faint);font-weight:500;text-align:right;padding:8px 10px;border-bottom:1px solid var(--border);white-space:nowrap}
 table.t td{padding:9px 10px;border-bottom:1px solid var(--border2);vertical-align:middle}
+td.bn{position:relative}
+td.bn .bg{position:absolute;inset:6px auto 6px 0;border-radius:4px;background:color-mix(in srgb,var(--sec,#6EA8FF) 22%,transparent)}
+td.bn b{position:relative}
 table.t td.n,table.t th.n{text-align:left;font-variant-numeric:tabular-nums;white-space:nowrap}
 table.t tr.click{cursor:pointer}
 table.t tr.click:hover td{background:var(--card2)}
@@ -203,7 +212,8 @@ th.sortable.asc::after{content:" ↑";opacity:1} th.sortable.desc::after{content
 .name-cell small{display:block;color:var(--faint);font-size:11.5px}
 
 /* sources */
-.src-card .big{font-size:32px;font-weight:700;line-height:1.2}
+.src-card{border-top:4px solid var(--sc)!important}
+.src-card .big{font-size:32px;font-weight:700;line-height:1.2;color:var(--sc)}
 .src-card .sub{font-size:13px;color:var(--soft);margin-bottom:12px}
 .src-card .stack{height:14px;margin-bottom:8px}
 .src-card dl{display:grid;grid-template-columns:auto auto;gap:2px 12px;font-size:13px}
@@ -284,6 +294,7 @@ footer .wrap{display:flex;flex-direction:column;gap:6px}
   <rect x="30" y="52" width="100" height="1.5" fill="#008DC3" opacity="0.45" rx="0.75"/>
 </svg></span><span style="font-size:11px;color:var(--b3);letter-spacing:.2px;">عمادة تطوير المهارات</span></div>
     <div class="hero-text">
+      <div class="accent-bar"></div>
       <div class="eyebrow">عمادة تطوير المهارات · النتائج النهائية المعتمدة</div>
       <h1>نتائج تحليل الاحتياج التدريبي 2027</h1>
       <p class="sub">مصفوفة أولويات البرامج التدريبية الموحدة لاحتياجات الجهات والأفراد، وفق ثلاثة معايير معتمدة: الارتباط بالأهداف الاستراتيجية، والارتباط بالمشاريع والمبادرات، وحجم المستفيدين.</p>
@@ -437,6 +448,7 @@ const $=s=>document.querySelector(s);
 const fmt=n=>(n==null||isNaN(n))?'—':Number(n).toLocaleString('en-US');
 const pct=(a,b)=>b?Math.round(a/b*100):0;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ICONS={"grid": "<path d=\"M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z\"/>", "users": "<path d=\"M16 19v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1\"/><circle cx=\"9\" cy=\"7\" r=\"3.5\"/><path d=\"M22 19v-1a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8\"/>", "inbox": "<path d=\"M22 12h-6l-2 3h-4l-2-3H2\"/><path d=\"M5.5 5h13L22 12v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6z\"/>", "signal": "<path d=\"M2 20h.01M7 20v-4M12 20v-8M17 20V8M22 4v16\"/>", "star": "<path d=\"m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z\"/>"};
 const PN={1:'الأولى',2:'الثانية',3:'الثالثة',4:'الرابعة'};
 const PL={1:'الأولى (قصوى)',2:'الثانية (عالية)',3:'الثالثة (متوسطة)',4:'الرابعة (حسب الموارد)'};
 const prg=n=>n===1?'برنامج واحد':n===2?'برنامجان':(n>=3&&n<=10)?`${n} برامج`:`${fmt(n)} برنامجاً`;
@@ -483,12 +495,12 @@ function renderKPIs(){
   const ents=new Set(D.reqs.map(r=>r.entity)).size;
   const people=D.ind.filter(r=>r.link_type==='__entity_total__').reduce((a,r)=>a+r.respondents,0);
   $('#kpis').innerHTML=[
-    {n:S('عدد البرامج في الملف المدمج'),l:'برنامجاً تدريبياً موحداً',f:`${fmt(S('برامج الجهات الموحدة'))} موحد · ${fmt(S('برامج الجهات المنفردة'))} منفرد · ${fmt(S('برامج جديدة من احتياجات الأفراد'))} جديد من الأفراد`},
-    {n:tot,l:'إجمالي المستفيدين المخطط',f:`الجهات ${fmt(S('مستفيدو الجهات بعد استبعاد التكرار المحتمل'))} + الأفراد ${fmt(S('مستفيدو الأفراد (مجموع عبر البرامج)'))}`},
-    {n:S('طلبات الجهات'),l:`طلباً تدريبياً من ${fmt(ents)} جهة`,f:`${fmt(S('مستفيدو الجهات (إجمالي)'))} مستفيداً كما وردوا في الطلبات`},
-    {n:S('إشارات احتياج الأفراد'),l:`إشارة احتياج من ${fmt(people)} فرداً`,f:`موظفون وأعضاء هيئة تدريس وطلاب`},
-    {n:bp[1].n,l:'برنامجاً في الأولوية الأولى',f:`تخدم ${fmt(bp[1].b)} مستفيداً (${pct(bp[1].b,tot)}% من الإجمالي)`,hl:1},
-  ].map(k=>`<div class="kpi${k.hl?' hl':''}"><div class="num" data-v="${k.n}">${fmt(k.n)}</div><div class="label">${k.l}</div><div class="foot">${k.f}</div></div>`).join('');
+    {n:S('عدد البرامج في الملف المدمج'),l:'برنامجاً تدريبياً موحداً',c:'var(--c-blue)',i:'grid',f:`${fmt(S('برامج الجهات الموحدة'))} موحد · ${fmt(S('برامج الجهات المنفردة'))} منفرد · ${fmt(S('برامج جديدة من احتياجات الأفراد'))} جديد من الأفراد`},
+    {n:tot,l:'إجمالي المستفيدين المخطط',c:'var(--c-green)',i:'users',f:`الجهات ${fmt(S('مستفيدو الجهات بعد استبعاد التكرار المحتمل'))} + الأفراد ${fmt(S('مستفيدو الأفراد (مجموع عبر البرامج)'))}`},
+    {n:S('طلبات الجهات'),l:`طلباً تدريبياً من ${fmt(ents)} جهة`,c:'var(--c-purple)',i:'inbox',f:`${fmt(S('مستفيدو الجهات (إجمالي)'))} مستفيداً كما وردوا في الطلبات`},
+    {n:S('إشارات احتياج الأفراد'),l:`إشارة احتياج من ${fmt(people)} فرداً`,c:'var(--c-coral)',i:'signal',f:`موظفون وأعضاء هيئة تدريس وطلاب`},
+    {n:bp[1].n,l:'برنامجاً في الأولوية الأولى',c:'var(--c-gold)',i:'star',f:`تخدم ${fmt(bp[1].b)} مستفيداً (${pct(bp[1].b,tot)}% من الإجمالي)`,hl:1},
+  ].map(k=>`<div class="kpi${k.hl?' hl':''}" style="--kc:${k.c}"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k.i]}</svg></span><div class="num" data-v="${k.n}">${fmt(k.n)}</div><div class="label">${k.l}</div><div class="foot">${k.f}</div></div>`).join('');
 }
 
 function renderMsgs(){
@@ -504,7 +516,8 @@ function renderMsgs(){
     {b:fmt(p3over300.length),t:`${p3over300.length>10?'برنامجاً':'برامج'} في <strong>الأولوية الثالثة</strong> طلب كل منها 300 مستفيد فأكثر (أعلاها ${esc(p3big[0].name)} بـ${fmt(p3big[0].total_benef)})، وهي مرشحة لقرار رفع موثق وفق التوصية الثالثة.`,w:1},
     {b:fmt(goalTop.total),t:`برنامجاً ترتبط بالهدف <strong>«${esc(goalTop.goal_name)}»</strong>، وهو الأعلى في البرامج والمستفيدين (${fmt(goalTop.total_benef)}).`},
   ];
-  $('#msgs').innerHTML=msgs.map(m=>`<div class="msg${m.w?' warn':''}"><b class="big tnum">${m.b}</b><p>${m.t}</p></div>`).join('');
+  const MC=['var(--c-gold)','var(--c-blue)','var(--c-coral)','var(--c-green)'];
+  $('#msgs').innerHTML=msgs.map((m,i)=>`<div class="msg" style="--mc:${MC[i]}"><b class="big tnum">${m.b}</b><p>${m.t}</p></div>`).join('');
 }
 
 function renderPrio(){
@@ -555,10 +568,11 @@ function prioStack(list){const n=list.length||1,c=[1,2,3,4].map(k=>list.filter(p
 
 function renderGoals(){
   const P=D.programs;
+  const maxGB=Math.max(...D.goals.map(g=>g.total_benef));
   const rows=[...D.goals].sort((a,b)=>(a.goal_no==='0')-(b.goal_no==='0')||b.total_benef-a.total_benef);
   $('#goals-tbl').innerHTML=`<thead><tr><th>الهدف الاستراتيجي</th><th class="n">مباشر</th><th class="n">غير مباشر</th><th class="n">كل البرامج</th><th class="n">في الأولى</th><th class="n">في الثانية</th><th>توزيع الأولويات</th><th class="n">المستفيدون</th></tr></thead><tbody>`+
   rows.map(g=>{const L=P.filter(p=>g.goal_no==='0'?p.goal_no==null:p.goal_no===+g.goal_no);
-    return `<tr class="click" data-goal="${g.goal_no}"><td>${g.goal_no!=='0'?`<span class="mute tnum">${g.goal_no}</span> `:''}${esc(g.goal_name)}</td><td class="n">${fmt(g.direct)}</td><td class="n">${fmt(g.indirect)}</td><td class="n"><b>${fmt(g.total)}</b></td><td class="n">${L.filter(p=>p.priority===1).length}</td><td class="n">${L.filter(p=>p.priority===2).length}</td><td>${prioStack(L)}</td><td class="n">${fmt(g.total_benef)}</td></tr>`}).join('')+'</tbody>';
+    return `<tr class="click" data-goal="${g.goal_no}"><td>${g.goal_no!=='0'?`<span class="mute tnum">${g.goal_no}</span> `:''}${esc(g.goal_name)}</td><td class="n">${fmt(g.direct)}</td><td class="n">${fmt(g.indirect)}</td><td class="n"><b>${fmt(g.total)}</b></td><td class="n">${L.filter(p=>p.priority===1).length}</td><td class="n">${L.filter(p=>p.priority===2).length}</td><td>${prioStack(L)}</td><td class="n bn"><span class="bg" style="width:${g.total_benef/maxGB*100}%"></span><b>${fmt(g.total_benef)}</b></td></tr>`}).join('')+'</tbody>';
   document.querySelectorAll('#goals-tbl tr[data-goal]').forEach(tr=>tr.onclick=()=>{resetFilters(false);$('#f-goal').value=tr.dataset.goal;T.page=0;renderTable();$('#programs').scrollIntoView()});
 }
 
@@ -566,10 +580,11 @@ let compSort={k:'total_benef',d:-1};
 function renderComps(){
   const P=D.programs;
   const rows=D.comps.map(c=>{const L=P.filter(p=>p.main_comp===c.main_comp);return {...c,p1:L.filter(p=>p.priority===1).length,p2:L.filter(p=>p.priority===2).length,L}});
+  const maxCB=Math.max(...rows.map(r=>r.total_benef));
   rows.sort((a,b)=>compSort.k==='main_comp'?compSort.d*a.main_comp.localeCompare(b.main_comp,'ar'):compSort.d*(a[compSort.k]-b[compSort.k]));
   const th=(k,l,n)=>`<th class="sortable${n?' n':''}${compSort.k===k?(compSort.d>0?' asc':' desc'):''}" data-k="${k}">${l}</th>`;
   $('#comp-tbl').innerHTML=`<thead><tr>${th('main_comp','الجدارة الرئيسية')}${th('programs','البرامج',1)}${th('p1','في الأولى',1)}${th('p2','في الثانية',1)}<th>توزيع الأولويات</th>${th('ent_requests','طلبات الجهات',1)}${th('ent_benef','مستفيدو الجهات',1)}${th('ind_benef','مستفيدو الأفراد',1)}${th('total_benef','الإجمالي',1)}</tr></thead><tbody>`+
-  rows.map(r=>`<tr class="click" data-comp="${esc(r.main_comp)}"><td>${esc(r.main_comp)}${r.new_from_individuals?` <span class="mute">(${r.new_from_individuals} جديد من الأفراد)</span>`:''}</td><td class="n">${fmt(r.programs)}</td><td class="n">${r.p1}</td><td class="n">${r.p2}</td><td>${prioStack(r.L)}</td><td class="n">${fmt(r.ent_requests)}</td><td class="n">${fmt(r.ent_benef)}</td><td class="n">${fmt(r.ind_benef)}</td><td class="n"><b>${fmt(r.total_benef)}</b></td></tr>`).join('')+'</tbody>';
+  rows.map(r=>`<tr class="click" data-comp="${esc(r.main_comp)}"><td>${esc(r.main_comp)}${r.new_from_individuals?` <span class="mute">(${r.new_from_individuals} جديد من الأفراد)</span>`:''}</td><td class="n">${fmt(r.programs)}</td><td class="n">${r.p1}</td><td class="n">${r.p2}</td><td>${prioStack(r.L)}</td><td class="n">${fmt(r.ent_requests)}</td><td class="n">${fmt(r.ent_benef)}</td><td class="n">${fmt(r.ind_benef)}</td><td class="n bn"><span class="bg" style="width:${r.total_benef/maxCB*100}%"></span><b>${fmt(r.total_benef)}</b></td></tr>`).join('')+'</tbody>';
   document.querySelectorAll('#comp-tbl th.sortable').forEach(th=>th.onclick=()=>{const k=th.dataset.k;compSort={k,d:compSort.k===k?-compSort.d:(k==='main_comp'?1:-1)};renderComps()});
   document.querySelectorAll('#comp-tbl tr[data-comp]').forEach(tr=>tr.onclick=()=>{resetFilters(false);$('#f-comp').value=tr.dataset.comp;T.page=0;renderTable();$('#programs').scrollIntoView()});
 }
@@ -578,13 +593,13 @@ function renderSources(){
   const P=D.programs;
   const srcs=[['الجهات والأفراد','برامج اجتمع عليها طلب الجهات واحتياج الأفراد'],['الجهات فقط','برامج طلبتها الجهات ولم تظهر في احتياج الأفراد'],['الأفراد فقط','برامج جديدة أُضيفت من احتياج الأفراد']];
   $('#src-cards').innerHTML=srcs.map(([s,d])=>{const L=P.filter(p=>p.need_source===s),c=[1,2,3,4].map(k=>L.filter(p=>p.priority===k).length);
-    return `<div class="card src-card"><h3>${s==='الأفراد فقط'?s+' (برامج جديدة)':s}</h3><div class="big tnum">${fmt(L.length)}</div><div class="sub">${d}</div>${prioStack(L)}
+    return `<div class="card src-card" style="--sc:${{'الجهات والأفراد':'var(--c-purple)','الجهات فقط':'var(--c-blue)','الأفراد فقط':'var(--c-green)'}[s]}"><h3>${s==='الأفراد فقط'?s+' (برامج جديدة)':s}</h3><div class="big tnum">${fmt(L.length)}</div><div class="sub">${d}</div>${prioStack(L)}
     <dl>${c.map((v,i)=>`<dt>الأولوية ${PN[i+1]}</dt><dd>${v}</dd>`).join('')}<dt>المستفيدون</dt><dd>${fmt(L.reduce((a,p)=>a+p.total_benef,0))}</dd></dl></div>`}).join('');
 
   const ent={};D.reqs.forEach(r=>{(ent[r.entity]??={n:0,b:0,codes:new Set()});ent[r.entity].n++;ent[r.entity].b+=r.beneficiaries;ent[r.entity].codes.add(r.program_code)});
   D.ent=ent;
   const top=Object.entries(ent).sort((a,b)=>b[1].b-a[1].b).slice(0,15), mx=top[0][1].b;
-  $('#top-entities').innerHTML=top.map(([e,v])=>`<div class="hbar" title="${esc(e)}: ${v.n} طلب"><span class="lbl">${esc(e)}</span><div class="track"><div class="fill" style="width:${v.b/mx*100}%;background:var(--accent)"></div></div><span class="v">${fmt(v.b)}</span></div>`).join('');
+  $('#top-entities').innerHTML=top.map(([e,v])=>`<div class="hbar" title="${esc(e)}: ${v.n} طلب"><span class="lbl">${esc(e)}</span><div class="track"><div class="fill" style="width:${v.b/mx*100}%;background:linear-gradient(270deg,var(--c-blue),var(--c-purple))"></div></div><span class="v">${fmt(v.b)}</span></div>`).join('');
 
   const tot=D.ind.filter(r=>r.link_type==='__entity_total__'), cats=['موظفون','هيئة التدريس','طلاب'];
   const benefKey={'موظفون':'ind_staff','هيئة التدريس':'ind_faculty','طلاب':'ind_students'};
@@ -593,7 +608,7 @@ function renderSources(){
     `<tr><td><b>الإجمالي</b></td><td class="n"><b>${fmt(tot.reduce((a,x)=>a+x.respondents,0))}</b></td><td class="n"><b>${fmt(tot.reduce((a,x)=>a+x.signals,0))}</b></td></tr></tbody>`;
   const ie={};tot.forEach(r=>{ie[r.entity]=(ie[r.entity]||0)+r.signals});
   const itop=Object.entries(ie).sort((a,b)=>b[1]-a[1]).slice(0,8), imx=itop[0][1];
-  $('#ind-entities').innerHTML=itop.map(([e,v])=>`<div class="hbar"><span class="lbl">${esc(e)}</span><div class="track"><div class="fill" style="width:${v/imx*100}%;background:var(--k-proj)"></div></div><span class="v">${fmt(v)}</span></div>`).join('');
+  $('#ind-entities').innerHTML=itop.map(([e,v])=>`<div class="hbar"><span class="lbl">${esc(e)}</span><div class="track"><div class="fill" style="width:${v/imx*100}%;background:linear-gradient(270deg,var(--c-green),#3FB8C9)"></div></div><span class="v">${fmt(v)}</span></div>`).join('');
 
   const sel=$('#entity-sel');
   sel.innerHTML='<option value="">— اختر جهة (مرتبة حسب عدد الطلبات) —</option>'+Object.entries(ent).sort((a,b)=>b[1].n-a[1].n).map(([e,v])=>`<option value="${esc(e)}">${esc(e)} (${v.n} طلب)</option>`).join('');
