@@ -2,9 +2,9 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>لوحة تحليل الاحتياجات التدريبية 2027 — جامعة الملك سعود</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>نتائج الاحتياج التدريبي 2027 — جامعة الملك سعود</title>
+<meta name="description" content="لوحة قرار: مصفوفة أولويات البرامج التدريبية الموحدة 2027 وفق المعايير المعتمدة.">
 <style>
 /* IBM Plex Sans Arabic, Fontsource 5.3.0; SIL Open Font License. */
 @font-face {
@@ -73,879 +73,645 @@
 }
 
 :root{
-  --c-skill:#6EA8FF; --c-skill-bg:rgba(110,168,255,.12); --c-skill-bd:rgba(110,168,255,.35);
-  --c-know:#F5C451; --c-know-bg:rgba(245,196,81,.12); --c-know-bd:rgba(245,196,81,.35);
-  --c-behav:#5FD4A0; --c-behav-bg:rgba(95,212,160,.12); --c-behav-bd:rgba(95,212,160,.35);
-  --c-mixed:#B794F6; --c-mixed-bg:rgba(183,148,246,.12); --c-mixed-bd:rgba(183,148,246,.35);
-  /* Midnight surfaces inspired by the reference; semantic colors stay independent. */
-  --bg:#0B1018;
-  --bg2:#0F1520;
-  --card:#101722;
-  --card2:#182231;
-  --border:#253044;
-  --border2:#1C2635;
-  --ink:#EDF0F7;
-  --soft:#B4BDCC;
-  --faint:#9AA6B8;
-  --shadow:none;
-  --glow:0 0 0 transparent;
-  --b1:rgba(110,168,255,.08);
-  --b2:rgba(110,168,255,.20);
-  --b3:#C3CEDF;
-  --b4:#A6BFE2;
-  --b5:#6EA8FF;
-  --b6:#A6BFE2;
-  --b7:#26364D;
+  --bg:#0B1018; --bg2:#0F1520; --card:#111925; --card2:#172131;
+  --border:#243045; --border2:#1B2534;
+  --ink:#EDF0F7; --soft:#B4BDCC; --faint:#8E9BAF;
+  --accent:#6EA8FF;
+  /* priority scale (ordinal, one hue) */
+  --p1:#8DC0FF; --p2:#4F86D6; --p3:#2C4C7A; --p4:#394354;
+  --p1-ink:#0B1018; --p2-ink:#F4F7FC; --p3-ink:#DCE6F5; --p4-ink:#C9D1DD;
+  /* the three approved criteria */
+  --k-strat:#6EA8FF; --k-proj:#3FC6A5; --k-size:#E0A94A;
+  --warn:#F5C451; --warn-bg:rgba(245,196,81,.10); --warn-bd:rgba(245,196,81,.35);
+  color-scheme:dark;
 }
-*{box-sizing:border-box;margin:0;padding:0;}
-body{color-scheme:dark;font-family:'IBM Plex Sans Arabic',Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;padding-bottom:60px;background-image:linear-gradient(110deg,#0B1018 0%,#0D121D 55%,#101625 100%);}
-.wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
-.hero{background:transparent;padding:48px 0 32px;border-bottom:1px solid var(--border2);position:relative;overflow:hidden;}
-.hero-inner{display:flex;flex-direction:column;align-items:stretch;gap:24px;}
-.university-logo{display:block;width:120px;max-width:100%;height:auto;}
-.university-logo-fallback svg{width:120px;height:auto;}
-.university-brand>span:last-child{font-size:12px!important;white-space:nowrap;}
-.university-logo[hidden],.university-logo-fallback[hidden]{display:none;}
-.university-brand{display:flex;flex-direction:column;align-items:center;align-self:flex-start;gap:6px;flex-shrink:0;}
-.accent-bar{width:48px;height:4px;background:var(--b5);border-radius:2px;margin-bottom:18px;}
-.badge{display:inline-block;background:var(--bg2);border:1px solid var(--border);color:var(--soft);font-size:13px;padding:5px 14px;border-radius:20px;margin-bottom:16px;}
-.hero h1{font-size:30px;font-weight:700;margin-bottom:6px;color:var(--ink);text-shadow:none;}
-.hero .sub{font-size:14px;color:var(--soft);max-width:600px;}
-.updated{font-size:12px;color:var(--faint);margin-top:4px;}
-section{padding:40px 0;}
-.eyebrow{color:var(--b6);font-size:13px;font-weight:500;letter-spacing:.3px;margin-bottom:6px;}
-h2{font-size:22px;font-weight:700;margin-bottom:6px;}
-.lead{color:var(--soft);font-size:14px;max-width:640px;margin-bottom:24px;}
-.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
-.kpi{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 20px;box-shadow:none;text-align:center;}
-.kpi .num{font-size:32px;font-weight:700;color:#F5F5F5;text-shadow:none;font-variant-numeric:tabular-nums;}
-.kpi .label{font-size:12px;color:var(--soft);margin-top:4px;line-height:1.4;}
-.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;box-shadow:none;transition:border-color .2s;}
-.chart-box{position:relative;height:280px;}
-.chart-tall{position:relative;height:360px;}
-.grid-2{display:grid;grid-template-columns:1.3fr 1fr;gap:20px;}
-.tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
-.tab-btn{font-family:inherit;cursor:pointer;border:1px solid var(--border);background:var(--bg2);color:var(--soft);font-size:14px;padding:9px 18px;border-radius:20px;font-weight:500;transition:.15s;}
-.tab-btn.active{background:var(--card2);color:var(--ink);border-color:#3D4D67;box-shadow:none;}
-.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:13px;color:var(--soft);}
-.legend span{display:inline-flex;align-items:center;gap:6px;}
-.dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
-.ask-section{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:32px;box-shadow:var(--shadow);}
-.ask-row{display:flex;gap:10px;margin-top:16px;}
-.ask-input{flex:1;font-family:inherit;font-size:15px;padding:12px 16px;border:1px solid var(--border);border-radius:10px;outline:none;direction:rtl;background:var(--bg);color:var(--ink);}
-.ask-input:focus{border-color:var(--b5);}
-.ask-btn{font-family:inherit;background:var(--card2);color:var(--ink);border:1px solid #3D4D67;border-radius:10px;padding:12px 22px;font-size:15px;font-weight:500;cursor:pointer;box-shadow:none;transition:.15s;}
-.ask-btn:disabled{opacity:.5;cursor:not-allowed;}
-.presets{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
-.preset{font-family:inherit;cursor:pointer;font-size:13px;text-align:start;white-space:normal;}
-.answer{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px 20px;font-size:14px;line-height:1.8;color:var(--ink);margin-top:16px;display:none;}
-.answer.show{display:block;}
-.loading{font-size:13px;color:var(--faint);margin-top:8px;display:none;}
-.loading.show{display:block;}
-footer{text-align:center;color:var(--faint);font-size:12px;margin-top:32px;}
-@media(max-width:760px){.kpi-row{grid-template-columns:repeat(2,1fr);}.grid-2{grid-template-columns:1fr;}}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'IBM Plex Sans Arabic',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;padding-bottom:48px;
+  background-image:linear-gradient(110deg,#0B1018 0%,#0D121D 55%,#101625 100%)}
+.wrap{max-width:1160px;margin:0 auto;padding-inline:24px}
+.num,td.n,.tnum{font-variant-numeric:tabular-nums}
+h1,h2,h3{text-wrap:balance}
 
-/* Heatmap styles */
-.heatmap-table{border-collapse:collapse;width:100%;font-size:12px;direction:rtl;}
-.heatmap-table th,.heatmap-table td{padding:9px 6px;text-align:center;border:1px solid var(--border2);font-size:13px;font-weight:600;}
-.entity-header,.entity-cell{white-space:normal;overflow-wrap:anywhere;text-align:right;min-width:200px;max-width:220px;padding:8px 12px;}
-.entity-cell{background:rgba(5,24,38,0.9);font-size:11.5px;color:#8DD8EC;font-weight:600;border-right:2px solid rgba(0,141,195,0.25);}
-.domain-header{writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);min-width:60px;max-width:70px;font-size:10px;padding:12px 4px;background:linear-gradient(180deg,#062A40,#023E56);color:#68CBDF;white-space:nowrap;border-bottom:2px solid #008DC3;}
-.domain-header span{display:block;}
-.total-header{background:linear-gradient(135deg,#008DC3,#0095C8);color:#fff;min-width:60px;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.3);}
-.total-cell{background:rgba(0,141,195,0.15);font-weight:700;color:#68CBDF;border-right:2px solid rgba(0,141,195,0.3);}
-.heatmap-legend{display:flex;align-items:center;gap:12px;margin-top:16px;justify-content:flex-end;}
-.legend-bar{width:180px;height:14px;border-radius:4px;background:linear-gradient(to left,rgb(0,62,86),rgb(0,141,195),rgb(180,221,255));}
-.legend-label{font-size:11px;color:var(--soft);}
+/* hero */
+.hero{padding-block:40px 28px;border-bottom:1px solid var(--border2)}
+.hero-inner{display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap}
+.university-brand{display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0}
+.university-logo{display:block;width:110px;height:auto}
+.university-logo-fallback svg{width:120px;height:auto}
+.university-logo[hidden],.university-logo-fallback[hidden]{display:none}
+.hero-text{flex:1;min-width:260px}
+.eyebrow{color:#A6BFE2;font-size:13px;font-weight:500;letter-spacing:.3px;margin-bottom:6px}
+.hero h1{font-size:32px;font-weight:700;line-height:1.35;margin-bottom:6px}
+.hero .sub{font-size:15px;color:var(--soft);max-width:680px}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--soft);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:999px}
+.pill.ok::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--k-proj)}
+.pill.warn{color:var(--warn);border-color:var(--warn-bd);background:var(--warn-bg)}
+nav.toc{position:sticky;top:0;z-index:20;background:rgba(11,16,24,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--border2)}
+nav.toc .wrap{display:flex;gap:4px;overflow-x:auto;padding-block:8px;scrollbar-width:none}
+nav.toc a{color:var(--soft);text-decoration:none;font-size:13px;padding:6px 12px;border-radius:8px;white-space:nowrap}
+nav.toc a:hover{background:var(--card2);color:var(--ink)}
 
-/* Dark Mode Scrollbar */
-::-webkit-scrollbar{width:6px;height:6px;}
-::-webkit-scrollbar-track{background:var(--bg);}
-::-webkit-scrollbar-thumb{background:#344158;border-radius:3px;}
-::-webkit-scrollbar-thumb:hover{background:#4A5B77;}
+section{padding-block:36px}
+h2{font-size:22px;font-weight:700;margin-bottom:4px}
+.lead{color:var(--soft);font-size:14px;max-width:720px;margin-bottom:20px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;min-width:0}
+.card h3{font-size:15px;font-weight:700;margin-bottom:12px}
+.hint{font-size:12px;color:var(--faint)}
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 
-/* Semantic colors remain distinct from the midnight surfaces. */
-.chip--skill{--fg:var(--c-skill);--bg:var(--c-skill-bg);--bd:var(--c-skill-bd);}
-.chip--know{--fg:var(--c-know);--bg:var(--c-know-bg);--bd:var(--c-know-bd);}
-.chip--behav{--fg:var(--c-behav);--bg:var(--c-behav-bg);--bd:var(--c-behav-bd);}
-.chip--mixed{--fg:var(--c-mixed);--bg:var(--c-mixed-bg);--bd:var(--c-mixed-bd);}
-.chip--unknown{--fg:var(--ink);--bg:rgba(214,235,245,.08);--bd:rgba(214,235,245,.3);}
-.chip{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;border:1px solid var(--bd);background:var(--bg);color:var(--fg);font-weight:600;line-height:1.6;max-width:100%;}
-.chip svg{width:16px;height:16px;flex-shrink:0;}
-.preset:hover{filter:brightness(1.15);}
-.preset:focus-visible{outline:2px solid var(--fg);outline-offset:3px;}
-.nature-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;font-size:12px;}
-.kpi-icon{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;margin-bottom:8px;background:var(--bg);border:1px solid var(--bd);color:var(--fg);}
-.kpi-icon svg{width:22px;height:22px;}
-.competency-card{min-width:0;padding:16px;border-top:3px solid var(--nature-color);}
-.competency-heading{font-size:13px;font-weight:700;margin-bottom:8px;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:8px;}
-.competency-heading>span:first-child{min-width:0;overflow-wrap:anywhere;}
-.competency-nature{margin-bottom:12px;font-size:11px;}
-.program-nature{font-size:10px;padding:2px 8px;margin-bottom:4px;}
-.kpi-row{grid-template-columns:repeat(4,minmax(0,1fr));}
-.chip--src{font-size:11px;padding:2px 10px;gap:6px;font-weight:500;}
-.src-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
-.src-bar{display:flex;height:6px;border-radius:3px;overflow:hidden;background:rgba(110,168,255,.10);}
-.src-bar>span{display:block;height:100%;}
-.bar-row{margin-bottom:10px;}
-.bar-label{font-size:12px;color:var(--b3);margin-bottom:5px;display:flex;align-items:flex-start;justify-content:space-between;gap:8px;line-height:1.7;}
-.bar-label>span:first-child{min-width:0;flex:1;overflow-wrap:anywhere;}
-.bar-label>span:last-child{flex-shrink:0;font-variant-numeric:tabular-nums;color:var(--ink);}
-.aud-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;}
-.aud-grid .card h3{font-size:15px;margin-bottom:4px;}
-.aud-grid .card .hint{font-size:12px;color:var(--faint);margin-bottom:14px;}
-.aud-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px;}
-.aud-grid .card.span-all{grid-column:1/-1;}
-.single-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:4px 24px;}
-.aud-kpis .kpi{padding:16px 12px;}
-.aud-kpis .kpi .num{font-size:24px;}
-.note{border:1px solid var(--c-know-bd);background:var(--c-know-bg);color:var(--c-know);border-radius:12px;padding:10px 14px;font-size:13px;margin-bottom:16px;}
-.split-list{display:flex;flex-direction:column;gap:6px;margin-top:4px;}
-@media(max-width:760px){.aud-grid{grid-template-columns:1fr;}}
-@media(max-width:760px){.kpi-row{grid-template-columns:repeat(2,minmax(0,1fr));}.ask-row{flex-wrap:wrap;}.ask-input{min-width:0;width:100%;}.ask-btn{flex:1;}.card{min-width:0;}.wrap{padding-inline:20px;}}
-.hero .wrap{position:relative;}
-.proposal-btn{position:absolute;top:0;left:24px;z-index:5;display:inline-flex;align-items:center;gap:12px;padding:14px 22px;border-radius:16px;background:var(--c-know-bg);border:1px solid var(--c-know-bd);color:var(--c-know);text-decoration:none;box-shadow:0 0 0 4px rgba(245,196,81,.05);transition:filter .15s, transform .15s;}
-.proposal-btn:hover{filter:brightness(1.18);transform:translateY(-1px);}
-.proposal-btn:focus-visible{outline:2px solid var(--c-know);outline-offset:3px;}
-.proposal-btn svg{width:26px;height:26px;flex-shrink:0;}
-.proposal-btn .t{display:flex;flex-direction:column;line-height:1.3;}
-.proposal-btn .t b{font-size:18px;font-weight:700;}
-.proposal-btn .t small{font-size:12px;font-weight:500;opacity:.85;}
-@media(max-width:760px){.proposal-btn{left:16px;padding:10px 14px;gap:8px;border-radius:12px;}.proposal-btn svg{width:20px;height:20px;}.proposal-btn .t b{font-size:15px;}.proposal-btn .t small{font-size:10.5px;}}
+/* KPIs */
+.kpi-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 16px}
+.kpi .num{font-size:30px;font-weight:700;line-height:1.2}
+.kpi .label{font-size:13px;color:var(--soft);margin-top:4px;line-height:1.5}
+.kpi .foot{font-size:12px;color:var(--faint);margin-top:6px;line-height:1.5}
+.kpi.hl{border-color:#3E5C86;background:linear-gradient(180deg,#14223A,#111925)}
+.kpi.hl .num{color:var(--p1)}
+
+/* key messages */
+.msgs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.msg{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.msg b.big{font-size:24px;font-weight:700;color:var(--p1);min-width:72px;line-height:1.2}
+.msg p{font-size:14px;color:var(--soft)}
+.msg p strong{color:var(--ink);font-weight:600}
+.msg.warn{border-color:var(--warn-bd);background:var(--warn-bg)}
+.msg.warn b.big{color:var(--warn)}
+
+/* priority badges */
+.pb{display:inline-flex;align-items:center;justify-content:center;min-width:64px;font-size:12px;font-weight:600;padding:2px 10px;border-radius:999px;white-space:nowrap}
+.pb.p1{background:var(--p1);color:var(--p1-ink)} .pb.p2{background:var(--p2);color:var(--p2-ink)}
+.pb.p3{background:var(--p3);color:var(--p3-ink)} .pb.p4{background:var(--p4);color:var(--p4-ink)}
+
+/* priority distribution */
+.prio-rows{display:flex;flex-direction:column;gap:14px}
+.prio-row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:16px;align-items:center;cursor:pointer;border-radius:10px;padding:8px;margin:-8px}
+.prio-row:hover{background:var(--card2)}
+.prio-name b{display:block;font-size:15px}
+.prio-name span{font-size:12px;color:var(--faint)}
+.dual{display:flex;flex-direction:column;gap:6px}
+.barline{display:grid;grid-template-columns:70px minmax(0,1fr) 120px;gap:10px;align-items:center;font-size:12px;color:var(--faint)}
+.track{height:12px;background:rgba(110,168,255,.07);border-radius:6px;overflow:hidden}
+.fill{height:100%;border-radius:6px}
+.barline .v{color:var(--ink);font-size:13px;text-align:left}
+.p1f{background:var(--p1)}.p2f{background:var(--p2)}.p3f{background:var(--p3)}.p4f{background:var(--p4)}
+.rule{display:flex;gap:6px;flex-wrap:wrap;margin-top:18px;font-size:12px;color:var(--faint)}
+.rule span{border:1px solid var(--border);border-radius:8px;padding:3px 10px}
+
+/* criteria */
+.crit{border-top:4px solid var(--c);}
+.crit .w{font-size:40px;font-weight:700;color:var(--c);line-height:1.1}
+.crit h3{margin:6px 0 8px}
+.crit ul{list-style:none;font-size:13px;color:var(--soft);display:flex;flex-direction:column;gap:4px}
+.crit li{display:flex;justify-content:space-between;gap:8px;border-bottom:1px dashed var(--border2);padding-bottom:3px}
+.crit li span:last-child{color:var(--ink);font-variant-numeric:tabular-nums}
+.formula{margin-top:16px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px 18px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+.formula code{direction:ltr;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px;color:var(--ink);unicode-bidi:isolate}
+.formula span{font-size:13px;color:var(--soft)}
+
+.matrix-wrap{overflow-x:auto;margin-top:18px}
+table.matrix{border-collapse:separate;border-spacing:4px;width:100%;min-width:640px}
+table.matrix th{font-size:12px;color:var(--faint);font-weight:500;padding:4px 6px;text-align:center}
+table.matrix th.rowh{text-align:right;color:var(--soft);font-size:13px;white-space:nowrap}
+table.matrix td{border-radius:8px;text-align:center;padding:8px 4px;font-size:12px;line-height:1.35}
+table.matrix td b{display:block;font-size:17px}
+table.matrix td.tot{background:none;color:var(--ink);font-weight:700;font-size:15px}
+.cell-p1{background:var(--p1);color:var(--p1-ink)}.cell-p2{background:var(--p2);color:var(--p2-ink)}
+.cell-p3{background:var(--p3);color:var(--p3-ink)}.cell-p4{background:var(--p4);color:var(--p4-ink)}
+td.empty{opacity:.45}
+
+/* generic tables */
+.tbl-wrap{overflow-x:auto}
+table.t{border-collapse:collapse;width:100%;font-size:13px}
+table.t th{font-size:12px;color:var(--faint);font-weight:500;text-align:right;padding:8px 10px;border-bottom:1px solid var(--border);white-space:nowrap}
+table.t td{padding:9px 10px;border-bottom:1px solid var(--border2);vertical-align:middle}
+table.t td.n,table.t th.n{text-align:left;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.t tr.click{cursor:pointer}
+table.t tr.click:hover td{background:var(--card2)}
+th.sortable{cursor:pointer;user-select:none}
+th.sortable::after{content:" ↕";opacity:.4}
+th.sortable.asc::after{content:" ↑";opacity:1} th.sortable.desc::after{content:" ↓";opacity:1}
+.stack{display:flex;height:10px;border-radius:5px;overflow:hidden;background:rgba(110,168,255,.07);min-width:120px}
+.stack>span{display:block;height:100%}
+.ks{background:var(--k-strat)}.kp{background:var(--k-proj)}.kz{background:var(--k-size)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--soft);margin-top:10px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-left:6px;vertical-align:middle}
+.mute{color:var(--faint)}
+.name-cell{min-width:240px}
+.name-cell small{display:block;color:var(--faint);font-size:11.5px}
+
+/* sources */
+.src-card .big{font-size:32px;font-weight:700;line-height:1.2}
+.src-card .sub{font-size:13px;color:var(--soft);margin-bottom:12px}
+.src-card .stack{height:14px;margin-bottom:8px}
+.src-card dl{display:grid;grid-template-columns:auto auto;gap:2px 12px;font-size:13px}
+.src-card dt{color:var(--faint)} .src-card dd{text-align:left;font-variant-numeric:tabular-nums}
+
+.hbars{display:flex;flex-direction:column;gap:8px}
+.hbar{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) 64px;gap:10px;align-items:center;font-size:13px}
+.hbar .lbl{overflow-wrap:anywhere;line-height:1.45}
+.hbar .v{text-align:left;font-variant-numeric:tabular-nums}
+
+/* controls */
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.controls input,.controls select{font-family:inherit;font-size:13px;background:var(--bg);color:var(--ink);border:1px solid var(--border);border-radius:10px;padding:9px 12px;min-width:0}
+.controls input{flex:1 1 240px}
+.controls select{flex:0 1 190px}
+.btn{font-family:inherit;font-size:13px;cursor:pointer;background:var(--card2);color:var(--ink);border:1px solid #3D4D67;border-radius:10px;padding:8px 14px}
+.btn:disabled{opacity:.4;cursor:default}
+.pager{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:12px;font-size:13px;color:var(--soft);flex-wrap:wrap}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.fchip{font-family:inherit;font-size:12px;cursor:pointer;border:1px solid var(--border);background:var(--bg2);color:var(--soft);padding:4px 12px;border-radius:999px}
+.fchip.on{background:var(--card2);color:var(--ink);border-color:#4A6187}
+
+/* drawer */
+.overlay{position:fixed;inset:0;background:rgba(3,6,12,.6);z-index:40}
+.drawer{position:fixed;top:0;bottom:0;left:0;width:min(560px,100%);background:var(--bg2);border-right:1px solid var(--border);z-index:41;overflow-y:auto;padding:24px;padding-top:calc(24px + env(safe-area-inset-top,0px))}
+.drawer h3{font-size:19px;line-height:1.45;margin-bottom:8px}
+.drawer .close{position:sticky;top:0;float:left}
+.drawer .blk{margin-top:18px}
+.drawer .blk h4{font-size:13px;color:var(--faint);font-weight:500;margin-bottom:6px}
+.drawer .blk p,.drawer .blk li{font-size:13.5px;color:var(--soft);white-space:pre-line}
+.calc{display:grid;grid-template-columns:1fr auto auto;gap:4px 14px;font-size:13px}
+.calc .h{color:var(--faint);font-size:12px}
+.calc .tot{border-top:1px solid var(--border);padding-top:6px;font-weight:700}
+.kv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.kv div{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px}
+.kv b{display:block;font-size:18px} .kv span{font-size:11.5px;color:var(--faint)}
+
+.note{border:1px solid var(--warn-bd);background:var(--warn-bg);color:var(--warn);border-radius:12px;padding:10px 14px;font-size:13px;margin-bottom:16px}
+
+/* ask */
+.ask-section{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:28px}
+.ask-row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.ask-input{flex:1 1 260px;min-width:0;font-family:inherit;font-size:15px;padding:12px 16px;border:1px solid var(--border);border-radius:10px;outline:none;background:var(--bg);color:var(--ink)}
+.ask-input:focus{border-color:var(--accent)}
+.presets{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.answer{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px 20px;font-size:14px;line-height:1.9;margin-top:16px;white-space:pre-line}
+.loading{font-size:13px;color:var(--faint);margin-top:8px}
+.state{text-align:center;padding:28px;color:var(--faint);font-size:14px}
+.error{color:#FF9C9C}
+footer{color:var(--faint);font-size:12px;margin-top:20px}
+footer .wrap{display:flex;flex-direction:column;gap:6px}
+
+::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:#344158;border-radius:3px}
+
+@media(max-width:980px){.kpi-row{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){
+  .wrap{padding-inline:16px}
+  .kpi-row{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpi.hl{grid-column:1/-1}
+  .grid-2,.grid-3,.msgs{grid-template-columns:1fr}
+  .prio-row{grid-template-columns:1fr}
+  .barline{grid-template-columns:60px minmax(0,1fr) 96px}
+  .hero h1{font-size:25px}
+  .kv{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hbar{grid-template-columns:minmax(0,1fr) 80px 52px}
+}
 </style>
-<script>
-const SUPABASE_URL="https://kxazsigcenqcrqedygbm.supabase.co";
-const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt4YXpzaWdjZW5xY3JxZWR5Z2JtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3ODY4MjAsImV4cCI6MjA2OTM2MjgyMH0.rDcH3tfLE2hzKC84PEd3VnUfx0mkY3W8jfFMIIAhjYI";
-</script>
 </head>
 <body>
 
-<div class="hero">
-  <div class="wrap">
-    <a class="proposal-btn" href="proposal.html" title="مقترح أولويات التنفيذ — مسودة للنقاش"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2Z"/></svg><span class="t"><b>مقترح</b><small>أولويات التنفيذ · مسودة</small></span></a>
-    <div class="hero-inner">
-      <div class="university-brand"><img class="university-logo" src="https://ar.wikipedia.org/wiki/Special:Redirect/file/%D8%B4%D8%B9%D8%A7%D8%B1_%D8%AC%D8%A7%D9%85%D8%B9%D8%A9_%D8%A7%D9%84%D9%85%D9%84%D9%83_%D8%B3%D8%B9%D9%88%D8%AF.svg" alt="شعار جامعة الملك سعود — King Saud University" width="120" height="46" decoding="async" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
+<header class="hero">
+  <div class="wrap hero-inner">
+    <div class="university-brand"><img class="university-logo" src="https://ar.wikipedia.org/wiki/Special:Redirect/file/%D8%B4%D8%B9%D8%A7%D8%B1_%D8%AC%D8%A7%D9%85%D8%B9%D8%A9_%D8%A7%D9%84%D9%85%D9%84%D9%83_%D8%B3%D8%B9%D9%88%D8%AF.svg" alt="شعار جامعة الملك سعود — King Saud University" width="120" height="46" decoding="async" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
         <span class="university-logo-fallback" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 60" width="160" height="60" aria-label="جامعة الملك سعود">
   <rect x="0" y="0" width="160" height="3" fill="#008DC3" rx="1.5"/>
   <text x="80" y="25" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial,sans-serif" font-size="14" font-weight="700" fill="#EDF0F7">جامعة الملك سعود</text>
   <text x="80" y="44" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial,sans-serif" font-size="9" font-weight="400" fill="#B4BDCC">King Saud University</text>
   <rect x="30" y="52" width="100" height="1.5" fill="#008DC3" opacity="0.45" rx="0.75"/>
 </svg></span><span style="font-size:11px;color:var(--b3);letter-spacing:.2px;">عمادة تطوير المهارات</span></div>
-      <div>
-        <div class="accent-bar"></div>
-        <span class="badge" id="hero-badge">لوحة تحليل الاحتياجات التدريبية 2027</span>
-        <h1>لوحة تحليل الاحتياجات التدريبية 2027</h1>
-        <p class="sub">احتياج الجهات مصنّفاً إلى جدارات رئيسية وفرعية من ثلاثة مصادر، واحتياج الأفراد من استبانات الموظفين وأعضاء هيئة التدريس والطلاب.</p>
-        <p class="updated" id="hero-updated">جاري تحميل البيانات…</p>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<section>
-  <div class="wrap">
-    <!-- KPIs: Supabase tna_heatmap — SUM(count), COUNT(DISTINCT entity), COUNT(DISTINCT domain) -->
-    <div class="kpi-row">
-      <div class="kpi"><span class="kpi-icon chip--skill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m13 2-9 12h7l-1 8 10-12h-7z"/></svg></span><div class="num" id="stat-total">—</div><div class="label">إجمالي الطلبات التدريبية</div></div>
-      <div class="kpi"><span class="kpi-icon chip--behav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg></span><div class="num" id="stat-entities">—</div><div class="label">جهة جامعية مشاركة</div></div>
-      <div class="kpi"><span class="kpi-icon chip--know"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7C9 4 5 4 2 5v14c3-1 7-1 10 2 3-3 7-3 10-2V5c-3-1-7-1-10 2Zm0 0v14"/></svg></span><div class="num" id="stat-domains">—</div><div class="label" id="stat-domains-label">جدارة رئيسية</div></div>
-      <div class="kpi"><span class="kpi-icon chip--mixed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm13 10v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><div class="num" id="stat-benef">—</div><div class="label">مستفيد مستهدف</div></div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <!-- أعلى الجهات: Supabase tna_heatmap GROUP BY entity, SUM(count) DESC LIMIT 10 -->
-    <div class="eyebrow">أعلى الجهات طلباً</div>
-    <h2>الجهات الأعلى في إجمالي الطلبات التدريبية — بيانات مباشرة</h2>
-    <p class="lead">أعلى 10 جهات جامعية وفق إجمالي عدد الطلبات التدريبية، مرتبةً تنازلياً. المصدر: Supabase · جدول tna_heatmap.</p>
-    <p style="font-size:12px;color:var(--b3);margin-bottom:8px" id="top10-updated">جاري التحميل…</p>
-    <div class="card"><div class="chart-tall"><canvas id="top10"></canvas></div></div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="eyebrow">تحليل الجدارات</div>
-    <h2>أعلى الجدارات الفرعية في كل جدارة رئيسية</h2>
-    <p class="lead">كل بطاقة جدارة رئيسية مع أكثر خمس جدارات فرعية طلباً فيها، وتوزيع طلباتها على مصادر الاحتياج الثلاثة.</p>
-    <div id="source-key" class="nature-legend" style="margin:0 0 16px" aria-label="مفتاح ألوان مصادر الاحتياج"></div>
-    <div id="comp-domains-loading" style="text-align:center;padding:40px;color:var(--b3);font-size:14px">جاري تحميل بيانات الجدارات…</div>
-    <div id="comp-domains-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px"></div>
-    <div style="text-align:center;margin-top:18px"><button id="comp-more" class="tab-btn" hidden></button></div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="eyebrow">صورة أوسع</div>
-    <h2>توزيع الاحتياجات</h2>
-    <div class="grid-2">
-      <div class="card">
-        <h3 style="font-size:16px;margin-bottom:14px;">الجدارات الرئيسية — عدد الطلبات</h3>
-        <div class="chart-box"><canvas id="domDist"></canvas></div>
-      </div>
-      <div class="card">
-        <h3 style="font-size:16px;margin-bottom:14px;">مصادر الاحتياج</h3>
-        <div class="chart-box"><canvas id="natureDist" role="img" aria-label="توزيع الطلبات على مصادر الاحتياج، التفاصيل في القائمة التالية"></canvas></div>
-        <div id="nature-legend" class="nature-legend" aria-label="مصادر الاحتياج: العدد والنسبة"></div>
+    <div class="hero-text">
+      <div class="eyebrow">عمادة تطوير المهارات · النتائج النهائية المعتمدة</div>
+      <h1>نتائج تحليل الاحتياج التدريبي 2027</h1>
+      <p class="sub">مصفوفة أولويات البرامج التدريبية الموحدة لاحتياجات الجهات والأفراد، وفق ثلاثة معايير معتمدة: الارتباط بالأهداف الاستراتيجية، والارتباط بالمشاريع والمبادرات، وحجم المستفيدين.</p>
+      <div class="meta">
+        <span class="pill ok" id="src-pill">المصدر: ملف نتائج الاحتياج التدريبي 2027 — النسخة النهائية</span>
+        <span class="pill warn">الربط الاستراتيجي بصفة «مقترح» حتى الاعتماد النهائي</span>
       </div>
     </div>
   </div>
-</section>
+</header>
 
-<section id="heatmap-section">
-  <div class="wrap">
-    <div class="eyebrow">مصفوفة التوزيع</div>
-    <h2>مصفوفة الاحتياجات التدريبية — الجهة × الجدارة الرئيسية</h2>
-    <p class="lead">عدد طلبات أعلى 20 جهة في كل جدارة رئيسية. اللون الأعمق يعني طلبات أكثر في تلك الجدارة.</p>
-<p style="font-size:12px;color:var(--b3);margin-bottom:0" id="heatmap-updated">جاري التحميل…</p>
-    <div class="card" style="overflow-x:auto;padding:20px;">
-      
-<div id="heatmap-loading" style="text-align:center;padding:40px;color:var(--b3)">
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite;display:inline-block">
-    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
-  </svg>
-  <span style="margin-right:10px;font-size:14px">جاري تحميل البيانات من قاعدة البيانات…</span>
-</div>
-<div id="heatmap-container"></div>
+<nav class="toc" aria-label="أقسام اللوحة"><div class="wrap">
+  <a href="#summary">الخلاصة</a><a href="#priorities">الأولويات</a><a href="#criteria">المعايير</a>
+  <a href="#goals">الأهداف الاستراتيجية</a><a href="#competencies">الجدارات</a><a href="#sources">مصادر الاحتياج</a>
+  <a href="#decisions">حالات للقرار</a><a href="#programs">جميع البرامج</a><a href="#ask">اسأل</a>
+</div></nav>
 
-      <div class="heatmap-legend">
-        <span class="legend-label">احتياج منخفض</span>
-        <div class="legend-bar"></div>
-        <span class="legend-label">احتياج عالٍ</span>
-      </div>
+<main>
+<section id="summary"><div class="wrap">
+  <div class="kpi-row" id="kpis"><div class="state">جاري تحميل البيانات…</div></div>
+  <h2 style="margin-top:28px">الخلاصة لمتخذ القرار</h2>
+  <p class="lead">أبرز ما تقوله النتائج المعتمدة، محسوبة مباشرة من بيانات الملف.</p>
+  <div class="msgs" id="msgs"></div>
+</div></section>
+
+<section id="priorities"><div class="wrap">
+  <div class="eyebrow">مستويات الأولوية</div>
+  <h2>توزيع البرامج والمستفيدين على الأولويات</h2>
+  <p class="lead">لكل مستوى: عدد البرامج وعدد المستفيدين ونسبتهما من الإجمالي. اضغط على أي مستوى لعرض برامجه.</p>
+  <div class="card"><div class="prio-rows" id="prio-rows"></div>
+    <div class="rule"><span>الأولى: 75 فأكثر — تنفذ في بداية الخطة</span><span>الثانية: من 55 إلى أقل من 75</span><span>الثالثة: من 40 إلى أقل من 55</span><span>الرابعة: أقل من 40 — حسب الموارد المتاحة</span></div>
+  </div>
+</div></section>
+
+<section id="criteria"><div class="wrap">
+  <div class="eyebrow">منهجية المصفوفة المعتمدة</div>
+  <h2>ثلاثة معايير مرجحة تحدد أولوية كل برنامج</h2>
+  <p class="lead">كل معيار يُحوّل إلى مقياس من 0 إلى 1 ثم يُضرب في وزنه، ومجموع الإسهامات هو درجة البرنامج من 100.</p>
+  <div class="grid-3" id="crit-cards"></div>
+  <div class="formula"><span>المعادلة المعتمدة (S الدرجة الاستراتيجية 0–3 · P المشاريع 0 أو 1 · D مستوى الطلب 1–5)</span><code>100 × [0.45 × (S ÷ 3) + 0.35 × P + 0.20 × (D − 1) ÷ 4]</code></div>
+  <div class="card" style="margin-top:18px">
+    <h3>منطق المصفوفة: عدد البرامج في كل توليفة</h3>
+    <p class="hint">الرقم الكبير عدد البرامج، وتحته الدرجة. لون الخلية يمثل مستوى الأولوية الناتج.</p>
+    <div class="matrix-wrap"><table class="matrix" id="matrix"></table></div>
+  </div>
+</div></section>
+
+<section id="goals"><div class="wrap">
+  <div class="eyebrow">الارتباط بالأهداف الاستراتيجية</div>
+  <h2>توزيع البرامج والأولويات على الأهداف الاستراتيجية</h2>
+  <p class="lead">مرتبة حسب إجمالي المستفيدين. الربط بعد المراجعة والتدقيق، وصفته «مقترح» حتى الاعتماد.</p>
+  <div class="card tbl-wrap"><table class="t" id="goals-tbl"></table>
+    <div class="legend"><span><i class="p1f"></i>الأولى</span><span><i class="p2f"></i>الثانية</span><span><i class="p3f"></i>الثالثة</span><span><i class="p4f"></i>الرابعة</span></div>
+  </div>
+</div></section>
+
+<section id="competencies"><div class="wrap">
+  <div class="eyebrow">الجدارات الرئيسية</div>
+  <h2>الجدارات الرئيسية حسب الأولوية والمستفيدين</h2>
+  <p class="lead">29 جدارة رئيسية. اضغط على عنوان العمود للترتيب، وعلى الجدارة لعرض برامجها.</p>
+  <div class="card tbl-wrap"><table class="t" id="comp-tbl"></table></div>
+</div></section>
+
+<section id="sources"><div class="wrap">
+  <div class="eyebrow">مصادر الاحتياج</div>
+  <h2>من أين جاء الاحتياج؟ الجهات والأفراد</h2>
+  <p class="lead">البرامج حسب مصدرها، ثم تفاصيل الجهات الطالبة وفئات الأفراد.</p>
+  <div class="grid-3" id="src-cards"></div>
+  <div class="grid-2" style="margin-top:18px">
+    <div class="card">
+      <h3>الجهات الأعلى في عدد المستفيدين المطلوبين</h3>
+      <p class="hint" style="margin-bottom:12px">أعلى 15 جهة من 80 جهة، بعدد المستفيدين كما ورد في الطلبات.</p>
+      <div class="hbars" id="top-entities"></div>
+    </div>
+    <div class="card">
+      <h3>احتياج الأفراد حسب الفئة</h3>
+      <p class="hint" style="margin-bottom:12px">أعداد مجمّعة من الاستبانات، دون أي بيانات شخصية.</p>
+      <div class="tbl-wrap"><table class="t" id="ind-tbl"></table></div>
+      <h3 style="margin-top:18px">أكثر الجهات والكليات إرسالاً لإشارات الاحتياج</h3>
+      <div class="hbars" id="ind-entities"></div>
     </div>
   </div>
-</section>
-
-<section id="individuals-section">
-  <div class="wrap">
-    <div class="eyebrow">احتياج الأفراد</div>
-    <h2>نتائج استبانات الاحتياج التدريبي</h2>
-    <p class="lead">أرقام مجمّعة من استبانات الموظفين وأعضاء هيئة التدريس والطلاب، ولا تتضمن أي بيانات شخصية. الأولويات تُحسب بعدد مرات اختيار المجال ضمن الأولويات الثلاث.</p>
-    <div class="tabs" id="aud-tabs" role="tablist" aria-label="الفئة المستهدفة"></div>
-    <div id="aud-loading" style="text-align:center;padding:40px;color:var(--b3);font-size:14px">جاري تحميل نتائج الاستبانات…</div>
-    <div id="aud-panel"></div>
+  <div class="card" style="margin-top:18px">
+    <h3>ملف جهة</h3>
+    <div class="controls"><select id="entity-sel" style="flex:1 1 320px" aria-label="اختر جهة"></select></div>
+    <div id="entity-panel" class="hint">اختر جهة لعرض طلباتها والبرامج الموحدة التي دخلت فيها وأولوياتها.</div>
   </div>
-</section>
+</div></section>
 
-<section>
-  <div class="wrap">
-    <div class="eyebrow">اسأل عن البيانات</div>
-    <div class="ask-section">
-      <h2>اسأل عن نتائج التحليل</h2>
-      <p class="lead">اكتب أي سؤال عن الاحتياجات التدريبية وسيجيبك الذكاء الاصطناعي بناءً على بيانات هذا التقرير.</p>
-      <div class="presets">
-        <button class="preset chip chip--skill" onclick="ask('ما هي أكثر الجهات طلباً وكم عدد طلباتها؟')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m13 2-9 12h7l-1 8 10-12h-7z"/></svg>أكثر الجهات طلباً</button>
-        <button class="preset chip chip--know" onclick="ask('ما هي أكثر الجدارات الرئيسية طلباً؟')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7C9 4 5 4 2 5v14c3-1 7-1 10 2 3-3 7-3 10-2V5c-3-1-7-1-10 2Zm0 0v14"/></svg>أكثر الجدارات طلباً</button>
-        <button class="preset chip chip--behav" onclick="ask('ما هي احتياجات عمادة شؤون الطلاب التدريبية؟')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>احتياجات عمادة شؤون الطلاب</button>
-        <button class="preset chip chip--mixed" onclick="ask('ما المجالات التي تحتاجها معظم الجهات؟')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 10 6-10 6L2 8Zm-10 11 10 6 10-6M2 17l10 6 10-6"/></svg>المجالات المشتركة بين الجهات</button>
-      </div>
-      <div class="ask-row">
-        <input class="ask-input" id="inp" placeholder="اكتب سؤالك هنا..." type="text">
-        <button class="ask-btn" id="btn" onclick="ask()">اسأل</button>
-      </div>
-      <div class="loading" id="load">جاري التحليل...</div>
-      <div class="answer" id="ans"></div>
+<section id="decisions"><div class="wrap">
+  <div class="eyebrow">حالات تحتاج قراراً</div>
+  <h2>برامج الأولوية الثالثة الأعلى طلباً</h2>
+  <p class="lead">توصية التقرير رقم 3: دراسة رفع البرامج مرتفعة الطلب في الأولوية الثالثة بمبرر موثق. الرفع اليدوي مسموح للأعلى فقط، بمبرر موثق وصاحب قرار وتاريخ.</p>
+  <div class="card"><p class="hint" id="dec-note" style="margin-bottom:10px"></p><div class="tbl-wrap"><table class="t" id="dec-tbl"></table></div></div>
+</div></section>
+
+<section id="programs"><div class="wrap">
+  <div class="eyebrow">المرجع الكامل</div>
+  <h2>جميع البرامج الموحدة (435)</h2>
+  <p class="lead">ابحث وصفِّ ورتّب. اضغط على أي برنامج لعرض سبب أولويته وتفاصيل الجهات والأفراد.</p>
+  <div class="card">
+    <div class="controls">
+      <input id="f-q" type="search" placeholder="ابحث باسم البرنامج أو الرمز أو الجهة…" aria-label="بحث">
+      <select id="f-comp" aria-label="الجدارة الرئيسية"></select>
+      <select id="f-goal" aria-label="الهدف الاستراتيجي"></select>
+      <select id="f-src" aria-label="مصدر الاحتياج"></select>
+      <select id="f-proj" aria-label="الارتباط بالمشاريع"><option value="">كل البرامج: مرتبطة وغير مرتبطة بمشروع</option><option value="1">مرتبطة بمشروع أو مبادرة</option><option value="0">غير مرتبطة بمشروع</option></select>
     </div>
+    <div class="controls"><div class="chips" id="f-prio"></div><button class="btn" id="f-reset" style="margin-inline-start:auto">مسح التصفية</button></div>
+    <div class="tbl-wrap"><table class="t" id="prog-tbl"></table></div>
+    <div class="pager"><span id="pg-info"></span><span style="display:flex;gap:8px"><button class="btn" id="pg-prev">السابق</button><button class="btn" id="pg-next">التالي</button></span></div>
+    <div class="legend"><span><i class="ks"></i>إسهام الارتباط الاستراتيجي (من 45)</span><span><i class="kp"></i>إسهام المشاريع والمبادرات (من 35)</span><span><i class="kz"></i>إسهام حجم المستفيدين (من 20)</span></div>
   </div>
-</section>
+</div></section>
 
-<footer>لوحة تحليل الاحتياجات التدريبية 2027 · جامعة الملك سعود · <span id="footer-stat">جاري التحميل…</span></footer>
-<script>
-// ════════════════════════════════════════════════════════════
-//  مصدر كل رقم: Supabase · جدول tna_heatmap
-//  SUM(count)           → إجمالي الطلبات التدريبية
-//  COUNT(DISTINCT entity) → عدد الجهات
-//  COUNT(DISTINCT domain) → عدد المجالات
-//  GROUP BY domain       → توزيع المجالات (domDist chart)
-//  GROUP BY entity       → أعلى الجهات (top10 chart)
-//  MAX(updated_at)       → آخر مزامنة حقيقية من قاعدة البيانات
-// ════════════════════════════════════════════════════════════
+<section id="ask"><div class="wrap">
+  <div class="ask-section">
+    <div class="eyebrow">اسأل عن النتائج</div>
+    <h2>اسأل عن نتائج التحليل</h2>
+    <p class="lead" style="margin-bottom:0">يجيب المساعد من بيانات النتائج المعتمدة نفسها، ويلتزم بالأولويات كما هي.</p>
+    <div class="presets">
+      <button class="fchip" data-q="ما برامج الأولوية الأولى الأعلى في عدد المستفيدين؟">برامج الأولوية الأولى</button>
+      <button class="fchip" data-q="ما توزيع البرامج على الأهداف الاستراتيجية؟">التوزيع على الأهداف</button>
+      <button class="fchip" data-q="ما احتياجات عمادة شؤون الطلاب وما أولوياتها؟">احتياجات عمادة شؤون الطلاب</button>
+      <button class="fchip" data-q="ما برامج الأولوية الثالثة ذات الطلب المرتفع؟">الأولوية الثالثة مرتفعة الطلب</button>
+    </div>
+    <div class="ask-row">
+      <input class="ask-input" id="inp" placeholder="اكتب سؤالك هنا…" type="text" aria-label="سؤالك">
+      <button class="btn" id="ask-btn" style="padding:12px 22px;font-size:15px">اسأل</button>
+    </div>
+    <div class="loading" id="load" hidden>جاري التحليل…</div>
+    <div class="answer" id="ans" hidden></div>
+  </div>
+</div></section>
+</main>
 
-const G = 'rgba(148,163,184,.12)';
-Chart.defaults.font.family = "'IBM Plex Sans Arabic',Arial,sans-serif";
-Chart.defaults.locale = 'en-US';
-Chart.defaults.color = '#B4BDCC';
+<footer><div class="wrap">
+  <span>ملاحظة على الأرقام: إجمالي المستفيدين المعتمد (34,768) = مستفيدو الجهات بعد استبعاد 401 مكرراً محتملاً (26,181) + مستفيدو الأفراد (8,587). أرقام البرامج في اللوحة بعد الاستبعاد، ويظهر «حجم الطلب» الذي بُنيت عليه الأولوية في تفاصيل كل برنامج.</span>
+  <span>لوحة تحليل الاحتياج التدريبي 2027 · عمادة تطوير المهارات · جامعة الملك سعود · <a href="archive/2026-10-v1/index.html" style="color:var(--faint)">النسخة السابقة (أرشيف)</a></span>
+</div></footer>
 
-// ── Ask AI ────────────────────────────────────────────────────
-async function ask(preset) {
-  const inp = document.getElementById('inp');
-  const q = preset || inp.value.trim();
-  if (!q) return;
-  inp.value = q;
-  const btn = document.getElementById('btn'),
-        load = document.getElementById('load'),
-        ans  = document.getElementById('ans');
-  btn.disabled = true;
-  load.classList.add('show');
-  ans.classList.remove('show');
-  try {
-    const r = await fetch('https://aihaitham.app.n8n.cloud/webhook/tna-chat', {
-      method: 'POST', mode: 'cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ question: q })
-    });
-    const d = await r.json();
-    ans.textContent = d.answer || 'لا توجد إجابة.';
-    ans.classList.add('show');
-  } catch(e) {
-    ans.textContent = 'خطأ: ' + String(e);
-    ans.classList.add('show');
-  } finally {
-    btn.disabled = false;
-    load.classList.remove('show');
-  }
-}
-document.getElementById('inp').addEventListener('keydown', e => { if (e.key === 'Enter') ask(); });
-</script>
+<div class="overlay" id="overlay" hidden></div>
+<aside class="drawer" id="drawer" hidden aria-modal="true" role="dialog" aria-label="تفاصيل البرنامج"></aside>
 
 <script>
-// ════════════════════════════════════════════════════════════
-//  مصفوفة الهيتماب + إحصائيات اللوحة — مصدر واحد من Supabase
-// ════════════════════════════════════════════════════════════
-// DOMAINS_ORDER يُبنى ديناميكياً داخل renderHeatmap من البيانات الفعلية
+const SUPABASE_URL="https://kxazsigcenqcrqedygbm.supabase.co";
+const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt4YXpzaWdjZW5xY3JxZWR5Z2JtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3ODY4MjAsImV4cCI6MjA2OTM2MjgyMH0.rDcH3tfLE2hzKC84PEd3VnUfx0mkY3W8jfFMIIAhjYI";
+const WEBHOOK="https://aihaitham.app.n8n.cloud/webhook/tna-chat";
 
-function cellColor(val, maxVal) {
-  if (!val || val === 0) return { bg: 'rgb(14,44,62)', txt: 'rgba(104,203,223,0.45)' };
-  const t = val / maxVal;
-  let r, g, b;
-  if (t <= 0.5) {
-    const s = t * 2;
-    r = Math.round(180 * (1 - s));
-    g = Math.round(221 - 80 * s);
-    b = Math.round(255 - 60 * s);
-  } else {
-    const s = (t - 0.5) * 2;
-    r = 0;
-    g = Math.round(141 - 79 * s);
-    b = Math.round(195 - 109 * s);
-  }
-  return { bg: `rgb(${r},${g},${b})`, txt: t < 0.38 ? '#023E56' : '#ffffff' };
-}
+const $=s=>document.querySelector(s);
+const fmt=n=>(n==null||isNaN(n))?'—':Number(n).toLocaleString('en-US');
+const pct=(a,b)=>b?Math.round(a/b*100):0;
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const PN={1:'الأولى',2:'الثانية',3:'الثالثة',4:'الرابعة'};
+const PL={1:'الأولى (قصوى)',2:'الثانية (عالية)',3:'الثالثة (متوسطة)',4:'الرابعة (حسب الموارد)'};
+const prg=n=>n===1?'برنامج واحد':n===2?'برنامجان':(n>=3&&n<=10)?`${n} برامج`:`${fmt(n)} برنامجاً`;
+const ltr=s=>`<span dir="ltr">${s}</span>`;
+const pb=p=>`<span class="pb p${p}">${PN[p]}</span>`;
 
-// Wrap display labels without dropping any words or characters.
-function wrapChartLabel(name, max = 30) {
-  const lines = [];
-  for (const word of String(name).split(/\s+/)) {
-    if (!lines.length || lines[lines.length - 1].length + word.length + 1 > max) lines.push(word);
-    else lines[lines.length - 1] += ' ' + word;
-  }
-  return lines;
-}
-
-// ── مصدر واحد: يُحمَّل مرة واحدة ويُغذّي كل عناصر اللوحة ────
-async function initDashboard() {
-  try {
-    // الطلب: entity, domain, count, updated_at — كل الحقول المطلوبة
-    const rows = await sbGet('tna_heatmap?select=entity,domain,count,updated_at&order=entity,domain');
-
-    // ══ حساب الإحصائيات من البيانات المحمّلة ══════════════
-
-    // إجمالي الطلبات = SUM(count)
-    const totalRequests = rows.reduce((s, r) => s + Number(r.count), 0);
-
-    // الجهات = COUNT(DISTINCT entity)
-    const entitySet = new Set(rows.map(r => r.entity));
-    const entityCount = entitySet.size;
-
-    // المجالات = COUNT(DISTINCT domain)
-    const domainSet = new Set(rows.map(r => r.domain));
-    const domainCount = domainSet.size;
-
-    // آخر تحديث فعلي من قاعدة البيانات = MAX(updated_at)
-    const lastUpdated = rows.reduce((max, r) => {
-      const t = r.updated_at ? new Date(r.updated_at) : new Date(0);
-      return t > max ? t : max;
-    }, new Date(0));
-    const updatedStr = lastUpdated.getFullYear() > 2000
-      ? lastUpdated.toLocaleString('ar-SA-u-nu-latn', {
-          year: 'numeric', month: 'long', day: 'numeric',
-          hour: '2-digit', minute: '2-digit'
-        })
-      : 'غير محدد';
-
-    // توزيع المجالات = GROUP BY domain, SUM(count)
-    const domainTotals = {};
-    rows.forEach(r => {
-      domainTotals[r.domain] = (domainTotals[r.domain] || 0) + Number(r.count);
-    });
-
-    // إجمالي الجهات = GROUP BY entity, SUM(count)
-    const entityTotals = {};
-    rows.forEach(r => {
-      entityTotals[r.entity] = (entityTotals[r.entity] || 0) + Number(r.count);
-    });
-
-    // ══ تحديث عناصر HTML الثابتة ══════════════════════════
-
-    // KPIs
-    document.getElementById('stat-total').textContent    = totalRequests.toLocaleString('ar-SA-u-nu-latn');
-    document.getElementById('stat-entities').textContent = entityCount;
-    document.getElementById('stat-domains').textContent  = domainCount;
-
-    // الشارة والتاريخ
-    document.getElementById('hero-badge').textContent   = `بيانات مباشرة · ${totalRequests.toLocaleString('ar-SA-u-nu-latn')} طلب من ${entityCount} جهة`;
-    document.getElementById('hero-updated').textContent = `آخر مزامنة: ${updatedStr}`;
-
-    // التذييل
-    document.getElementById('footer-stat').textContent  = `بيانات مباشرة من ${entityCount} جهة`;
-
-    // ══ رسم توزيع المجالات (domDist) — حساب حقيقي ══════
-
-    const sortedDomains = Object.entries(domainTotals).sort(([, a], [, b]) => b - a);
-    const domBox = document.getElementById('domDist').parentElement;
-    const domLabelLen = domBox.clientWidth < 420 ? 16 : 26;
-    const domLabels = sortedDomains.map(([d]) => wrapChartLabel(d, domLabelLen));
-    domBox.style.height = `${Math.max(280, domLabels.reduce((h, l) => h + l.length * 15 + 12, 0) + 40)}px`;
-    if (window._domDistChart) window._domDistChart.destroy();
-    window._domDistChart = new Chart(document.getElementById('domDist'), {
-      type: 'bar',
-      data: {
-        labels: domLabels,
-        datasets: [{
-          data: sortedDomains.map(([, v]) => v),
-          backgroundColor: '#008DC3',
-          borderRadius: 4,
-          maxBarThickness: 28
-        }]
-      },
-      options: {
-        indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: { callbacks: { label: c => 'إجمالي الطلبات: ' + c.parsed.x } }
-        },
-        scales: { x: { grid: { color: G } }, y: { grid: { display: false }, ticks: { autoSkip: false, font: { size: 11 } } } }
-      }
-    });
-
-    // ══ رسم أعلى الجهات (top10) — حساب حقيقي ═══════════
-
-    const topEntities = Object.entries(entityTotals)
-      .sort(([, a], [, b]) => b - a)
-      .slice(0, 10);
-    const barColors = ['#023E56','#036389','#008DC3','#1AA3D6','#1AA3D6',
-                       '#6FC1E0','#6FC1E0','#6FC1E0','#6FC1E0','#B8E2F2'];
-    const topChartBox = document.getElementById('top10').parentElement;
-    const labelLength = topChartBox.clientWidth < 500 ? 18 : 32;
-    const entityLabels = topEntities.map(([entity]) => wrapChartLabel(entity, labelLength));
-    topChartBox.style.height = `${Math.max(360, entityLabels.length * (Math.max(1, ...entityLabels.map(lines => lines.length)) * 17 + 22) + 48)}px`;
-    if (window._top10Chart) window._top10Chart.destroy();
-    window._top10Chart = new Chart(document.getElementById('top10'), {
-      type: 'bar',
-      data: {
-        labels: entityLabels,
-        datasets: [{
-          data: topEntities.map(([, v]) => v),
-          backgroundColor: barColors.slice(0, topEntities.length),
-          borderRadius: 4,
-          maxBarThickness: 22
-        }]
-      },
-      options: {
-        indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: { callbacks: { label: c => 'إجمالي الطلبات: ' + c.parsed.x } }
-        },
-        scales: {
-          x: { min: 0, grid: { color: G } },
-          y: { grid: { display: false }, ticks: { autoSkip: false, font: { size: 11 } } }
-        }
-      }
-    });
-    document.getElementById('top10-updated').textContent =
-      `المصدر: Supabase tna_heatmap · آخر مزامنة: ${updatedStr}`;
-
-    // ══ بناء مصفوفة الهيتماب ═══════════════════════════
-
-    renderHeatmap(rows, entityTotals, updatedStr);
-
-  } catch(err) {
-    const load = document.getElementById('heatmap-loading');
-    if (load) load.innerHTML = `<span style="color:#f87171">⚠️ تعذّر تحميل البيانات: ${err.message}</span>`;
-    ['stat-total','stat-entities','stat-domains','hero-badge','footer-stat']
-      .forEach(id => { const el = document.getElementById(id); if (el) el.textContent = '—'; });
-    document.getElementById('hero-updated').textContent = 'تعذّر التحميل — راجع الاتصال بقاعدة البيانات';
-    console.error('Dashboard load error:', err);
+async function sbGet(path,pageSize=1000){
+  const out=[];
+  for(let from=0;;from+=pageSize){
+    const res=await fetch(`${SUPABASE_URL}/rest/v1/${path}`,{headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${SUPABASE_KEY}`,'Range-Unit':'items',Range:`${from}-${from+pageSize-1}`}});
+    if(!res.ok&&res.status!==206) throw new Error(`Supabase ${res.status}`);
+    const rows=await res.json(); out.push(...rows);
+    if(rows.length<pageSize) return out;
   }
 }
 
-// ── بناء الهيتماب باستخدام DOM (textContent بدل innerHTML) ───
-function renderHeatmap(rows, entityTotals, updatedStr) {
-  try {
-    // بناء قائمة المجالات ديناميكياً من البيانات — يشمل أي مجال جديد تلقائياً
-    const domainTotals = {};
-    rows.forEach(({ domain, count }) => {
-      domainTotals[domain] = (domainTotals[domain] || 0) + Number(count);
-    });
-    const DOMAINS_ORDER = Object.entries(domainTotals)
-      .sort(([, a], [, b]) => b - a)
-      .map(([d]) => d);
+let D={};
+const PROG_COLS='code,name,need_source,main_comp,sub_comp,ent_requests,ent_entities,ent_benef,ind_benef,ind_signals,total_benef,strat_status,goal_no,goal_name,project_link,demand_size,size_level,c_strat,c_proj,c_size,score,rank_score,priority,entities_text';
 
-    // pivot: entity → domain → count
-    const pivot = {};
-    rows.forEach(({ entity, domain, count }) => {
-      if (!pivot[entity]) pivot[entity] = {};
-      pivot[entity][domain] = count;
-    });
-
-    // الجهات مرتبة تنازلياً — أعلى 20
-    const entities = Object.keys(entityTotals)
-      .sort((a, b) => entityTotals[b] - entityTotals[a])
-      .slice(0, 20);
-
-    const maxVal = Math.max(
-      1,
-      ...entities.flatMap(e => DOMAINS_ORDER.map(d => Number(pivot[e]?.[d]) || 0))
-    );
-
-    // إنشاء الجدول بـ DOM (آمن من XSS)
-    const table = document.createElement('table');
-    table.className = 'heatmap-table';
-
-    // رأس الجدول
-    const thead = table.createTHead();
-    const hRow = thead.insertRow();
-    const th0 = document.createElement('th');
-    th0.className = 'entity-header';
-    th0.textContent = 'الجهة';  // textContent — آمن
-    hRow.appendChild(th0);
-    DOMAINS_ORDER.forEach(d => {
-      const th = document.createElement('th');
-      th.className = 'domain-header';
-      const span = document.createElement('span');
-      span.textContent = d;  // textContent — آمن
-      th.appendChild(span);
-      hRow.appendChild(th);
-    });
-    const thTot = document.createElement('th');
-    thTot.className = 'total-header';
-    thTot.textContent = 'المجموع';
-    hRow.appendChild(thTot);
-
-    // صفوف البيانات
-    const tbody = table.createTBody();
-    entities.forEach(entity => {
-      const tr = tbody.insertRow();
-
-      const tdEnt = tr.insertCell();
-      tdEnt.className = 'entity-cell';
-      tdEnt.title = entity;  // title مقبول (text)
-      tdEnt.textContent = entity;  // textContent — آمن
-
-      DOMAINS_ORDER.forEach(domain => {
-        const val = Number(pivot[entity]?.[domain]) || 0;
-        const { bg, txt } = cellColor(val, maxVal);
-        const td = tr.insertCell();
-        td.style.background = bg;
-        td.style.color = txt;
-        td.style.fontWeight = '600';
-        td.textContent = val === 0 ? '—' : val;  // textContent — آمن
-      });
-
-      const tdTot = tr.insertCell();
-      tdTot.className = 'total-cell';
-      tdTot.textContent = entityTotals[entity] || 0;
-    });
-
-    // إدراج الجدول في الصفحة
-    document.getElementById('heatmap-loading').style.display = 'none';
-    const container = document.getElementById('heatmap-container');
-    container.innerHTML = '';       // فقط لحذف محتوى القديم (لا بيانات غير آمنة)
-    container.appendChild(table);  // DOM آمن
-
-    // وقت المزامنة الحقيقي من قاعدة البيانات
-    const el = document.getElementById('heatmap-updated');
-    if (el) el.textContent =
-      `المصدر: Supabase tna_heatmap · آخر مزامنة: ${updatedStr} · ${rows.length} سجل`;
-
-  } catch(err) {
-    const load = document.getElementById('heatmap-loading');
-    if (load) load.innerHTML = `<span style="color:#f87171">⚠️ خطأ في بناء المصفوفة: ${err.message}</span>`;
-    console.error('Heatmap render error:', err);
+async function load(){
+  try{
+    const [programs,summary,goals,comps,reqs,ind]=await Promise.all([
+      sbGet(`tna27_programs?select=${PROG_COLS}&order=code`),
+      sbGet('tna27_summary?select=*&order=sort'),
+      sbGet('tna27_goals?select=*&order=sort'),
+      sbGet('tna27_competencies?select=*'),
+      sbGet('tna27_entity_requests?select=row_no,entity,program_code,beneficiaries,source_sheet,linked_project,title_as_submitted&order=row_no'),
+      sbGet('tna27_individual_agg?select=entity,category,program_code,link_type,signals,respondents'),
+    ]);
+    D={programs,summary,goals,comps,reqs,ind,byCode:Object.fromEntries(programs.map(p=>[p.code,p]))};
+    const S=l=>{const r=summary.find(x=>x.label===l);return r?Number(r.value):null};
+    D.S=S;
+    renderKPIs();renderMsgs();renderPrio();renderCriteria();renderGoals();renderComps();renderSources();renderDecisions();initTable();
+  }catch(e){
+    $('#kpis').innerHTML=`<div class="state error">تعذّر تحميل البيانات (${esc(e.message)}). حدّث الصفحة بعد قليل.</div>`;
+    console.error(e);
   }
 }
 
-// animation for loading spinner
-const _spinStyle = document.createElement('style');
-_spinStyle.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
-document.head.appendChild(_spinStyle);
+function byPrio(list){const o={1:{n:0,b:0},2:{n:0,b:0},3:{n:0,b:0},4:{n:0,b:0}};list.forEach(p=>{o[p.priority].n++;o[p.priority].b+=p.total_benef||0});return o;}
 
-// ════════════════════════════════════════════════════════════
-//  بيانات الكفاءات — مصدرها: tna_competencies_active (security_invoker=true)
-// ════════════════════════════════════════════════════════════
-
-// ── ألوان دلالية ثابتة: كل لون = مصدر احتياج واحد في كل اللوحة ──
-const SOURCE_STYLES = {
-  'احتياج الجهات للدورات':        { kind: 'skill', short: 'الدورات' },
-  'الاحتياجات المرتبطة بالمشاريع': { kind: 'know',  short: 'المشاريع' },
-  'الاحتياج وارد بخطاب - ديوان':   { kind: 'behav', short: 'خطابات الديوان' }
-};
-const SOURCE_ORDER = Object.keys(SOURCE_STYLES);
-const ICON_PATHS = {'skill': 'm13 2-9 12h7l-1 8 10-12h-7z', 'know': 'M12 7C9 4 5 4 2 5v14c3-1 7-1 10 2 3-3 7-3 10-2V5c-3-1-7-1-10 2Zm0 0v14', 'behav': 'm5 12 4 4L19 6', 'mixed': 'm12 2 10 6-10 6L2 8Zm-10 11 10 6 10-6M2 17l10 6 10-6'};
-function cssVar(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
-function kindColor(kind) { return kind ? cssVar(`--c-${kind}`) : '#D6EBF5'; }
-function sourceColor(src) { return kindColor(SOURCE_STYLES[src]?.kind); }
-function makeChip(kind, text, extraClass = '') {
-  const chip = document.createElement('span');
-  chip.className = `chip chip--${kind || 'unknown'} ${extraClass}`.trim();
-  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.setAttribute('viewBox', '0 0 24 24'); svg.setAttribute('fill', 'none');
-  svg.setAttribute('stroke', 'currentColor'); svg.setAttribute('stroke-width', '1.8');
-  svg.setAttribute('aria-hidden', 'true');
-  const path = document.createElementNS(svg.namespaceURI, 'path');
-  path.setAttribute('d', ICON_PATHS[kind] || ICON_PATHS.mixed);
-  svg.appendChild(path);
-  chip.append(svg, document.createTextNode(text));
-  return chip;
-}
-const fmt = n => Number(n).toLocaleString('en-US');
-function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
-// سطر بشريط أفقي: الاسم والقيمة فوق، والشريط تحت
-function barRow(label, valueText, pct, color) {
-  const row = el('div', 'bar-row');
-  const lab = el('div', 'bar-label');
-  const name = el('span', null, label); name.title = label;
-  lab.append(name, el('span', null, valueText));
-  const wrap = el('div', 'src-bar');
-  const fill = el('span'); fill.style.width = `${Math.max(2, Math.round(pct))}%`; fill.style.background = color;
-  wrap.appendChild(fill);
-  row.append(lab, wrap);
-  return row;
+function renderKPIs(){
+  const S=D.S, P=D.programs, bp=byPrio(P), tot=S('إجمالي المستفيدين المخطط (الجهات بعد الاستبعاد + الأفراد)');
+  const ents=new Set(D.reqs.map(r=>r.entity)).size;
+  const people=D.ind.filter(r=>r.link_type==='__entity_total__').reduce((a,r)=>a+r.respondents,0);
+  $('#kpis').innerHTML=[
+    {n:S('عدد البرامج في الملف المدمج'),l:'برنامجاً تدريبياً موحداً',f:`${fmt(S('برامج الجهات الموحدة'))} موحد · ${fmt(S('برامج الجهات المنفردة'))} منفرد · ${fmt(S('برامج جديدة من احتياجات الأفراد'))} جديد من الأفراد`},
+    {n:tot,l:'إجمالي المستفيدين المخطط',f:`الجهات ${fmt(S('مستفيدو الجهات بعد استبعاد التكرار المحتمل'))} + الأفراد ${fmt(S('مستفيدو الأفراد (مجموع عبر البرامج)'))}`},
+    {n:S('طلبات الجهات'),l:`طلباً تدريبياً من ${fmt(ents)} جهة`,f:`${fmt(S('مستفيدو الجهات (إجمالي)'))} مستفيداً كما وردوا في الطلبات`},
+    {n:S('إشارات احتياج الأفراد'),l:`إشارة احتياج من ${fmt(people)} فرداً`,f:`موظفون وأعضاء هيئة تدريس وطلاب`},
+    {n:bp[1].n,l:'برنامجاً في الأولوية الأولى',f:`تخدم ${fmt(bp[1].b)} مستفيداً (${pct(bp[1].b,tot)}% من الإجمالي)`,hl:1},
+  ].map(k=>`<div class="kpi${k.hl?' hl':''}"><div class="num" data-v="${k.n}">${fmt(k.n)}</div><div class="label">${k.l}</div><div class="foot">${k.f}</div></div>`).join('');
 }
 
-// يقرأ كل الصفوف على دفعات: Supabase يُرجع 1000 صف كحد أقصى في الطلب الواحد
-async function sbGet(path, pageSize = 1000) {
-  const out = [];
-  for (let from = 0; ; from += pageSize) {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, { headers: {
-      apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`,
-      'Range-Unit': 'items', Range: `${from}-${from + pageSize - 1}` } });
-    if (!res.ok && res.status !== 206) throw new Error(`Supabase ${res.status}`);
-    const rows = await res.json();
-    out.push(...rows);
-    if (rows.length < pageSize) return out;
-  }
+function renderMsgs(){
+  const P=D.programs, tot=D.S('إجمالي المستفيدين المخطط (الجهات بعد الاستبعاد + الأفراد)'), bp=byPrio(P);
+  const p1=P.filter(p=>p.priority===1), p1Linked=p1.filter(p=>p.project_link==='مرتبط بمشروع/مبادرة').length;
+  const top2=bp[1].n+bp[2].n, top2b=bp[1].b+bp[2].b;
+  const p3big=P.filter(p=>p.priority===3).sort((a,b)=>b.total_benef-a.total_benef);
+  const p3over300=p3big.filter(p=>p.total_benef>=300);
+  const goalTop=[...D.goals].filter(g=>g.goal_no!=='0').sort((a,b)=>b.total-a.total)[0];
+  const msgs=[
+    {b:`${pct(bp[1].b,tot)}%`,t:`من المستفيدين تخدمهم <strong>${bp[1].n} برنامجاً في الأولوية الأولى</strong> (${fmt(bp[1].b)} مستفيداً)، وجميعها (${p1Linked} من ${p1.length}) مرتبطة بمشروع أو مبادرة.`},
+    {b:fmt(top2),t:`برنامجاً في <strong>الأولويتين الأولى والثانية</strong> (${pct(top2,P.length)}% من البرامج) تخدم ${fmt(top2b)} مستفيداً (${pct(top2b,tot)}%)، وهي نواة خطة 2027 وفق التوصية الثانية.`},
+    {b:fmt(p3over300.length),t:`${p3over300.length>10?'برنامجاً':'برامج'} في <strong>الأولوية الثالثة</strong> طلب كل منها 300 مستفيد فأكثر (أعلاها ${esc(p3big[0].name)} بـ${fmt(p3big[0].total_benef)})، وهي مرشحة لقرار رفع موثق وفق التوصية الثالثة.`,w:1},
+    {b:fmt(goalTop.total),t:`برنامجاً ترتبط بالهدف <strong>«${esc(goalTop.goal_name)}»</strong>، وهو الأعلى في البرامج والمستفيدين (${fmt(goalTop.total_benef)}).`},
+  ];
+  $('#msgs').innerHTML=msgs.map(m=>`<div class="msg${m.w?' warn':''}"><b class="big tnum">${m.b}</b><p>${m.t}</p></div>`).join('');
 }
 
-// ════════════════════════════════════════════════════════════
-//  الجدارات — مصدرها: tna_competencies_active (security_invoker=true, RLS)
-//  domain = الجدارة الرئيسية · sub_competency = الجدارة الفرعية · source_sheet = المصدر
-// ════════════════════════════════════════════════════════════
-async function initCompetencies() {
-  try {
-    const rows = await sbGet('tna_competencies_active?select=domain,sub_competency,source_sheet,beneficiaries');
-    if (!rows.length) throw new Error('لا توجد بيانات في tna_competencies_active');
-
-    // مؤشرات عامة
-    const subs = new Set(rows.map(r => r.sub_competency).filter(Boolean));
-    const benef = rows.reduce((s, r) => s + (Number(r.beneficiaries) || 0), 0);
-    document.getElementById('stat-benef').textContent = fmt(benef);
-    document.getElementById('stat-domains-label').textContent = `جدارة رئيسية · ${subs.size} فرعية`;
-
-    // مفتاح ألوان المصادر
-    document.getElementById('source-key').replaceChildren(
-      ...SOURCE_ORDER.map(src => makeChip(SOURCE_STYLES[src].kind, SOURCE_STYLES[src].short, 'chip--src')));
-
-    // ── 1. مصادر الاحتياج — doughnut ───────────────────────
-    const srcCounts = {};
-    rows.forEach(r => { if (r.source_sheet) srcCounts[r.source_sheet] = (srcCounts[r.source_sheet] || 0) + 1; });
-    const srcLabels = SOURCE_ORDER.filter(s => srcCounts[s]);
-    const srcData = srcLabels.map(s => srcCounts[s]);
-    const srcTotal = srcData.reduce((a, b) => a + b, 0);
-    if (window._natureChart) window._natureChart.destroy();
-    window._natureChart = new Chart(document.getElementById('natureDist'), {
-      type: 'doughnut',
-      data: {
-        labels: srcLabels.map(s => SOURCE_STYLES[s].short),
-        datasets: [{ data: srcData, backgroundColor: srcLabels.map(sourceColor), borderWidth: 0, hoverOffset: 6 }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false, cutout: '62%',
-        plugins: {
-          legend: { display: false },
-          tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed} (${(ctx.parsed / srcTotal * 100).toFixed(1)}%)` } }
-        }
-      }
-    });
-    document.getElementById('nature-legend').replaceChildren(...srcLabels.map(s =>
-      makeChip(SOURCE_STYLES[s].kind, `${SOURCE_STYLES[s].short} · ${srcCounts[s]} (${(srcCounts[s] / srcTotal * 100).toFixed(1)}%)`)));
-
-    // ── 2. بطاقات الجدارات الرئيسية ────────────────────────
-    const mains = {};
-    rows.forEach(r => {
-      if (!r.domain) return;
-      const m = mains[r.domain] ||= { total: 0, benef: 0, src: {}, subs: {} };
-      m.total++; m.benef += Number(r.beneficiaries) || 0;
-      m.src[r.source_sheet] = (m.src[r.source_sheet] || 0) + 1;
-      const sub = m.subs[r.sub_competency || 'غير محدد'] ||= { total: 0, src: {} };
-      sub.total++; sub.src[r.source_sheet] = (sub.src[r.source_sheet] || 0) + 1;
-    });
-    const sorted = Object.entries(mains).sort(([, a], [, b]) => b.total - a.total);
-    const grid = document.getElementById('comp-domains-grid');
-    const cards = sorted.map(([main, m]) => {
-      const card = el('div', 'card competency-card');
-      card.style.setProperty('--nature-color', cssVar('--b5'));
-      const head = el('div', 'competency-heading');
-      head.append(el('span', null, main), el('span', null, `${m.total} طلب`));
-      head.lastChild.style.cssText = 'font-size:11px;font-weight:400;color:var(--b3);white-space:nowrap;';
-      card.appendChild(head);
-      const meta = el('div', null, `${fmt(m.benef)} مستفيد · ${Object.keys(m.subs).length} جدارة فرعية`);
-      meta.style.cssText = 'font-size:11px;color:var(--faint);margin-bottom:10px;';
-      card.appendChild(meta);
-      const srcRow = el('div', 'src-row');
-      SOURCE_ORDER.filter(s => m.src[s]).forEach(s =>
-        srcRow.appendChild(makeChip(SOURCE_STYLES[s].kind, `${SOURCE_STYLES[s].short} ${m.src[s]}`, 'chip--src')));
-      card.appendChild(srcRow);
-      const top5 = Object.entries(m.subs).sort(([, a], [, b]) => b.total - a.total).slice(0, 5);
-      const maxVal = top5[0]?.[1].total || 1;
-      top5.forEach(([sub, d]) => {
-        const row = el('div', 'bar-row');
-        const lab = el('div', 'bar-label');
-        const nm = el('span', null, sub); nm.title = sub;
-        lab.append(nm, el('span', null, d.total));
-        // شريط مكدّس بألوان المصادر، وطوله نسبةً لأعلى جدارة فرعية في البطاقة
-        const bar = el('div', 'src-bar');
-        bar.style.width = `${Math.max(6, Math.round(d.total / maxVal * 100))}%`;
-        SOURCE_ORDER.filter(s => d.src[s]).forEach(s => {
-          const seg = el('span'); seg.style.width = `${d.src[s] / d.total * 100}%`; seg.style.background = sourceColor(s);
-          seg.title = `${SOURCE_STYLES[s].short}: ${d.src[s]}`;
-          bar.appendChild(seg);
-        });
-        row.append(lab, bar);
-        card.appendChild(row);
-      });
-      return card;
-    });
-    const INITIAL = 9;
-    const more = document.getElementById('comp-more');
-    const render = all => {
-      grid.replaceChildren(...(all ? cards : cards.slice(0, INITIAL)));
-      more.hidden = cards.length <= INITIAL;
-      more.textContent = all ? 'عرض أقل' : `عرض كل الجدارات الرئيسية (${cards.length})`;
-      more.onclick = () => render(!all);
-    };
-    render(false);
-    document.getElementById('comp-domains-loading').style.display = 'none';
-  } catch (err) {
-    const loading = document.getElementById('comp-domains-loading');
-    if (loading) loading.innerHTML = `<span style="color:#f87171">⚠️ تعذّر تحميل بيانات الجدارات: ${err.message}</span>`;
-    console.error('Competencies load error:', err);
-  }
-}
-
-// ════════════════════════════════════════════════════════════
-//  احتياج الأفراد — مصدره: tna_survey_summary (أرقام مجمّعة فقط)
-// ════════════════════════════════════════════════════════════
-const AUDIENCES = [
-  { key: 'الموظفون', kind: 'skill' },
-  { key: 'أعضاء هيئة التدريس', kind: 'know' },
-  { key: 'الطلاب', kind: 'behav' }
-];
-let SURVEY = [];
-function renderAudience(aud) {
-  const { key } = aud;
-  const color = cssVar('--b4'); // لون محايد: الألوان الدلالية محجوزة لمصادر احتياج الجهات
-  const rows = SURVEY.filter(r => r.audience === key);
-  const panel = document.getElementById('aud-panel');
-  const meta = rows.find(r => r.section === 'meta');
-  const n = meta?.n || 0;
-  const frag = document.createDocumentFragment();
-
-  if (n < 30) frag.appendChild(el('div', 'note', `تنبيه: عدد المستجيبين ${n} فقط، والنتائج مؤشر أولي لا يمكن تعميمه.`));
-
-  // مؤشرات الفئة
-  const pctOf = (q, items) => {
-    const qs = rows.filter(r => r.section === 'single' && r.question === q);
-    const tot = qs.reduce((s, r) => s + r.n, 0);
-    const hit = qs.filter(r => items.some(i => r.item.startsWith(i))).reduce((s, r) => s + r.n, 0);
-    return tot ? Math.round(hit / tot * 100) : null;
-  };
-  const kpis = el('div', 'aud-kpis');
-  const kpi = (num, label) => { const k = el('div', 'kpi'); k.append(el('div', 'num', num), el('div', 'label', label)); return k; };
-  kpis.appendChild(kpi(fmt(n), 'مستجيب'));
-  if (meta?.n_approved != null) kpis.appendChild(kpi(`${Math.round(meta.n_approved / n * 100)}%`, `طلبات معتمدة (${fmt(meta.n_approved)})`));
-  const inPerson = pctOf('أسلوب التدريب المفضل', ['حضوري']);
-  if (inPerson != null) kpis.appendChild(kpi(`${inPerson}%`, 'يفضّلون التدريب الحضوري'));
-  const aiReg = pctOf('معدل استخدام الذكاء الاصطناعي', ['يومي', 'أسبوعي']);
-  if (aiReg != null) kpis.appendChild(kpi(`${aiReg}%`, 'يستخدمون الذكاء الاصطناعي يومياً أو أسبوعياً'));
-  frag.appendChild(kpis);
-
-  const grid = el('div', 'aud-grid');
-  // الأولويات: أعلى 8 لكل سؤال
-  [...new Set(rows.filter(r => r.section === 'priority').map(r => r.question))].forEach(q => {
-    const items = rows.filter(r => r.section === 'priority' && r.question === q).sort((a, b) => b.n - a.n).slice(0, 8);
-    const card = el('div', 'card');
-    card.append(el('h3', null, q), el('div', 'hint', n ? `عدد مرات الاختيار · النسبة من ${fmt(n)} مستجيب` : 'عدد مرات الاختيار'));
-    const max = items[0]?.n || 1;
-    items.forEach(r => card.appendChild(barRow(r.item, `${fmt(r.n)}${n ? ` · ${Math.round(r.n / n * 100)}%` : ''}`, r.n / max * 100, color)));
-    grid.appendChild(card);
+function renderPrio(){
+  const P=D.programs, bp=byPrio(P), totB=P.reduce((a,p)=>a+p.total_benef,0), maxN=Math.max(...[1,2,3,4].map(k=>bp[k].n)), maxB=Math.max(...[1,2,3,4].map(k=>bp[k].b));
+  $('#prio-rows').innerHTML=[1,2,3,4].map(k=>`
+    <div class="prio-row" data-p="${k}" role="button" tabindex="0" aria-label="عرض برامج الأولوية ${PN[k]}">
+      <div class="prio-name"><b>${PL[k]}</b><span>${k===1?'تنفذ في بداية الخطة':k===4?'حسب الموارد المتاحة':''}</span></div>
+      <div class="dual">
+        <div class="barline"><span>البرامج</span><div class="track"><div class="fill p${k}f" style="width:${bp[k].n/maxN*100}%"></div></div><span class="v tnum">${fmt(bp[k].n)} · ${pct(bp[k].n,P.length)}%</span></div>
+        <div class="barline"><span>المستفيدون</span><div class="track"><div class="fill p${k}f" style="width:${bp[k].b/maxB*100}%"></div></div><span class="v tnum">${fmt(bp[k].b)} · ${pct(bp[k].b,totB)}%</span></div>
+      </div>
+    </div>`).join('');
+  document.querySelectorAll('.prio-row').forEach(el=>{
+    const go=()=>{T.prio=new Set([+el.dataset.p]);syncPrioChips();T.page=0;renderTable();$('#programs').scrollIntoView()};
+    el.onclick=go;el.onkeydown=e=>{if(e.key==='Enter')go()};
   });
-  // التقييم الذاتي: الأدنى أولاً لأنه يشير إلى فجوة أكبر
-  [...new Set(rows.filter(r => r.section === 'rating').map(r => r.question))].forEach(q => {
-    const items = rows.filter(r => r.section === 'rating' && r.question === q).sort((a, b) => a.avg_score - b.avg_score);
-    const scale = items[0]?.scale_max || 5;
-    const card = el('div', 'card');
-    card.append(el('h3', null, q), el('div', 'hint', `متوسط التقييم من ${scale} · مرتّب من الأدنى (فجوة أكبر) إلى الأعلى`));
-    items.forEach(r => card.appendChild(barRow(r.item, `${Number(r.avg_score).toFixed(2)} من ${scale}`, r.avg_score / scale * 100, cssVar('--c-mixed'))));
-    grid.appendChild(card);
-  });
-  // الأسئلة أحادية الاختيار
-  const singles = [...new Set(rows.filter(r => r.section === 'single').map(r => r.question))];
-  if (singles.length) {
-    const card = el('div', 'card span-all');
-    card.append(el('h3', null, 'خصائص المستجيبين وتفضيلاتهم'), el('div', 'hint', 'النسبة من إجمالي المستجيبين'));
-    const cols = el('div', 'single-cols');
-    card.appendChild(cols);
-    singles.forEach(q => {
-      const colEl = el('div');
-      cols.appendChild(colEl);
-      const items = rows.filter(r => r.section === 'single' && r.question === q).sort((a, b) => a.sort - b.sort);
-      const tot = n || items.reduce((s, r) => s + r.n, 0) || 1; // من إجمالي المستجيبين حتى لو أُخفيت الفئات الصغيرة
-      const t = el('div', null, q); t.style.cssText = 'font-size:13px;font-weight:600;margin:12px 0 6px;color:var(--ink);';
-      colEl.appendChild(t);
-      items.forEach(r => colEl.appendChild(barRow(r.item, `${fmt(r.n)} · ${Math.round(r.n / tot * 100)}%`, r.n / tot * 100, cssVar('--soft'))));
-    });
-    grid.appendChild(card);
-  }
-  frag.appendChild(grid);
-  panel.replaceChildren(frag);
-}
-async function initSurveys() {
-  try {
-    SURVEY = await sbGet('tna_survey_summary?select=audience,section,question,item,n,n_approved,rank1,avg_score,scale_max,sort&order=audience,section,sort');
-    if (!SURVEY.length) throw new Error('لا توجد بيانات في tna_survey_summary');
-    const tabs = document.getElementById('aud-tabs');
-    const buttons = AUDIENCES.filter(a => SURVEY.some(r => r.audience === a.key)).map((a, i) => {
-      const n = SURVEY.find(r => r.audience === a.key && r.section === 'meta')?.n;
-      const b = el('button', 'tab-btn' + (i === 0 ? ' active' : ''), `${a.key}${n ? ` (${fmt(n)})` : ''}`);
-      b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
-      b.onclick = () => {
-        buttons.forEach(x => { x.classList.remove('active'); x.setAttribute('aria-selected', 'false'); });
-        b.classList.add('active'); b.setAttribute('aria-selected', 'true');
-        renderAudience(a);
-      };
-      return b;
-    });
-    tabs.replaceChildren(...buttons);
-    document.getElementById('aud-loading').style.display = 'none';
-    renderAudience(AUDIENCES.find(a => SURVEY.some(r => r.audience === a.key)));
-  } catch (err) {
-    const loading = document.getElementById('aud-loading');
-    if (loading) loading.innerHTML = `<span style="color:#f87171">⚠️ تعذّر تحميل نتائج الاستبانات: ${err.message}</span>`;
-    console.error('Survey load error:', err);
-  }
 }
 
-// تشغيل اللوحة
-initDashboard();
-initCompetencies();
-initSurveys();
+function renderCriteria(){
+  const P=D.programs, c=(f)=>P.filter(f).length;
+  const linked=c(p=>p.project_link==='مرتبط بمشروع/مبادرة');
+  const lv=[1,2,3,4,5].map(l=>c(p=>p.size_level===l));
+  const cards=[
+    {w:'45%',c:'var(--k-strat)',t:'الارتباط بالأهداف الاستراتيجية',rows:[['مباشر = 3 (إسهام 45)',c(p=>p.strat_status==='مباشر')],['غير مباشر = 2 (إسهام 30)',c(p=>p.strat_status==='غير مباشر')],['لا يظهر ارتباط واضح = 0',c(p=>p.strat_status==='لا يظهر ارتباط واضح')]]},
+    {w:'35%',c:'var(--k-proj)',t:'الارتباط بالمشاريع والمبادرات',rows:[['مرتبط بمشروع أو مبادرة = 1 (إسهام 35)',linked],['غير مرتبط = 0',P.length-linked]]},
+    {w:'20%',c:'var(--k-size)',t:'حجم المستفيدين',rows:[[ltr('1–5')+' (إسهام 0)',lv[0]],[ltr('6–15')+' (إسهام 5)',lv[1]],[ltr('16–50')+' (إسهام 10)',lv[2]],[ltr('51–150')+' (إسهام 15)',lv[3]],['151 فأكثر (إسهام 20)',lv[4]]]},
+  ];
+  $('#crit-cards').innerHTML=cards.map(k=>`<div class="card crit" style="--c:${k.c}"><div class="w tnum">${k.w}</div><h3>${k.t}</h3><ul>${k.rows.map(r=>`<li><span>${r[0]}</span><span>${prg(r[1])}</span></li>`).join('')}</ul></div>`).join('');
+
+  const combos=[['مباشر',1,'مباشر + مرتبط بمشروع'],['غير مباشر',1,'غير مباشر + مرتبط بمشروع'],['مباشر',0,'مباشر + غير مرتبط'],['غير مباشر',0,'غير مباشر + غير مرتبط'],['لا يظهر ارتباط واضح',1,'لا ارتباط واضح + مرتبط'],['لا يظهر ارتباط واضح',0,'لا ارتباط واضح + غير مرتبط']];
+  const S={'مباشر':3,'غير مباشر':2,'لا يظهر ارتباط واضح':0};
+  const prioOf=s=>s>=75?1:s>=55?2:s>=40?3:4;
+  let h='<thead><tr><th></th>'+['1–5','6–15','16–50','51–150','151+'].map((x,i)=>`<th>طلب ${i+1}<br><span class="mute" dir="ltr">${x}</span></th>`).join('')+'<th>البرامج</th></tr></thead><tbody>';
+  combos.forEach(([st,pj,lbl])=>{
+    const inRow=P.filter(p=>p.strat_status===st&&((p.project_link==='مرتبط بمشروع/مبادرة')?1:0)===pj);
+    h+=`<tr><th class="rowh">${lbl}</th>`;
+    for(let d=1;d<=5;d++){
+      const score=Math.round(100*(0.45*S[st]/3+0.35*pj+0.2*(d-1)/4));
+      const n=inRow.filter(p=>p.size_level===d).length;
+      h+=`<td class="cell-p${prioOf(score)}${n?'':' empty'}" title="الدرجة ${score} — الأولوية ${PN[prioOf(score)]}"><b class="tnum">${n}</b>${score} درجة</td>`;
+    }
+    h+=`<td class="tot tnum">${inRow.length}</td></tr>`;
+  });
+  $('#matrix').innerHTML=h+'</tbody>';
+}
+
+function prioStack(list){const n=list.length||1,c=[1,2,3,4].map(k=>list.filter(p=>p.priority===k).length);return `<div class="stack" title="${c.map((v,i)=>PN[i+1]+': '+v).join(' · ')}">${c.map((v,i)=>v?`<span class="p${i+1}f" style="width:${v/n*100}%"></span>`:'').join('')}</div>`}
+
+function renderGoals(){
+  const P=D.programs;
+  const rows=[...D.goals].sort((a,b)=>(a.goal_no==='0')-(b.goal_no==='0')||b.total_benef-a.total_benef);
+  $('#goals-tbl').innerHTML=`<thead><tr><th>الهدف الاستراتيجي</th><th class="n">مباشر</th><th class="n">غير مباشر</th><th class="n">كل البرامج</th><th class="n">في الأولى</th><th class="n">في الثانية</th><th>توزيع الأولويات</th><th class="n">المستفيدون</th></tr></thead><tbody>`+
+  rows.map(g=>{const L=P.filter(p=>g.goal_no==='0'?p.goal_no==null:p.goal_no===+g.goal_no);
+    return `<tr class="click" data-goal="${g.goal_no}"><td>${g.goal_no!=='0'?`<span class="mute tnum">${g.goal_no}</span> `:''}${esc(g.goal_name)}</td><td class="n">${fmt(g.direct)}</td><td class="n">${fmt(g.indirect)}</td><td class="n"><b>${fmt(g.total)}</b></td><td class="n">${L.filter(p=>p.priority===1).length}</td><td class="n">${L.filter(p=>p.priority===2).length}</td><td>${prioStack(L)}</td><td class="n">${fmt(g.total_benef)}</td></tr>`}).join('')+'</tbody>';
+  document.querySelectorAll('#goals-tbl tr[data-goal]').forEach(tr=>tr.onclick=()=>{resetFilters(false);$('#f-goal').value=tr.dataset.goal;T.page=0;renderTable();$('#programs').scrollIntoView()});
+}
+
+let compSort={k:'total_benef',d:-1};
+function renderComps(){
+  const P=D.programs;
+  const rows=D.comps.map(c=>{const L=P.filter(p=>p.main_comp===c.main_comp);return {...c,p1:L.filter(p=>p.priority===1).length,p2:L.filter(p=>p.priority===2).length,L}});
+  rows.sort((a,b)=>compSort.k==='main_comp'?compSort.d*a.main_comp.localeCompare(b.main_comp,'ar'):compSort.d*(a[compSort.k]-b[compSort.k]));
+  const th=(k,l,n)=>`<th class="sortable${n?' n':''}${compSort.k===k?(compSort.d>0?' asc':' desc'):''}" data-k="${k}">${l}</th>`;
+  $('#comp-tbl').innerHTML=`<thead><tr>${th('main_comp','الجدارة الرئيسية')}${th('programs','البرامج',1)}${th('p1','في الأولى',1)}${th('p2','في الثانية',1)}<th>توزيع الأولويات</th>${th('ent_requests','طلبات الجهات',1)}${th('ent_benef','مستفيدو الجهات',1)}${th('ind_benef','مستفيدو الأفراد',1)}${th('total_benef','الإجمالي',1)}</tr></thead><tbody>`+
+  rows.map(r=>`<tr class="click" data-comp="${esc(r.main_comp)}"><td>${esc(r.main_comp)}${r.new_from_individuals?` <span class="mute">(${r.new_from_individuals} جديد من الأفراد)</span>`:''}</td><td class="n">${fmt(r.programs)}</td><td class="n">${r.p1}</td><td class="n">${r.p2}</td><td>${prioStack(r.L)}</td><td class="n">${fmt(r.ent_requests)}</td><td class="n">${fmt(r.ent_benef)}</td><td class="n">${fmt(r.ind_benef)}</td><td class="n"><b>${fmt(r.total_benef)}</b></td></tr>`).join('')+'</tbody>';
+  document.querySelectorAll('#comp-tbl th.sortable').forEach(th=>th.onclick=()=>{const k=th.dataset.k;compSort={k,d:compSort.k===k?-compSort.d:(k==='main_comp'?1:-1)};renderComps()});
+  document.querySelectorAll('#comp-tbl tr[data-comp]').forEach(tr=>tr.onclick=()=>{resetFilters(false);$('#f-comp').value=tr.dataset.comp;T.page=0;renderTable();$('#programs').scrollIntoView()});
+}
+
+function renderSources(){
+  const P=D.programs;
+  const srcs=[['الجهات والأفراد','برامج اجتمع عليها طلب الجهات واحتياج الأفراد'],['الجهات فقط','برامج طلبتها الجهات ولم تظهر في احتياج الأفراد'],['الأفراد فقط','برامج جديدة أُضيفت من احتياج الأفراد']];
+  $('#src-cards').innerHTML=srcs.map(([s,d])=>{const L=P.filter(p=>p.need_source===s),c=[1,2,3,4].map(k=>L.filter(p=>p.priority===k).length);
+    return `<div class="card src-card"><h3>${s==='الأفراد فقط'?s+' (برامج جديدة)':s}</h3><div class="big tnum">${fmt(L.length)}</div><div class="sub">${d}</div>${prioStack(L)}
+    <dl>${c.map((v,i)=>`<dt>الأولوية ${PN[i+1]}</dt><dd>${v}</dd>`).join('')}<dt>المستفيدون</dt><dd>${fmt(L.reduce((a,p)=>a+p.total_benef,0))}</dd></dl></div>`}).join('');
+
+  const ent={};D.reqs.forEach(r=>{(ent[r.entity]??={n:0,b:0,codes:new Set()});ent[r.entity].n++;ent[r.entity].b+=r.beneficiaries;ent[r.entity].codes.add(r.program_code)});
+  D.ent=ent;
+  const top=Object.entries(ent).sort((a,b)=>b[1].b-a[1].b).slice(0,15), mx=top[0][1].b;
+  $('#top-entities').innerHTML=top.map(([e,v])=>`<div class="hbar" title="${esc(e)}: ${v.n} طلب"><span class="lbl">${esc(e)}</span><div class="track"><div class="fill" style="width:${v.b/mx*100}%;background:var(--accent)"></div></div><span class="v">${fmt(v.b)}</span></div>`).join('');
+
+  const tot=D.ind.filter(r=>r.link_type==='__entity_total__'), cats=['موظفون','هيئة التدريس','طلاب'];
+  const benefKey={'موظفون':'ind_staff','هيئة التدريس':'ind_faculty','طلاب':'ind_students'};
+  $('#ind-tbl').innerHTML=`<thead><tr><th>الفئة</th><th class="n">الأفراد</th><th class="n">إشارات الاحتياج</th></tr></thead><tbody>`+
+    cats.map(c=>{const r=tot.filter(x=>x.category===c);return `<tr><td>${c}</td><td class="n">${fmt(r.reduce((a,x)=>a+x.respondents,0))}</td><td class="n">${fmt(r.reduce((a,x)=>a+x.signals,0))}</td></tr>`}).join('')+
+    `<tr><td><b>الإجمالي</b></td><td class="n"><b>${fmt(tot.reduce((a,x)=>a+x.respondents,0))}</b></td><td class="n"><b>${fmt(tot.reduce((a,x)=>a+x.signals,0))}</b></td></tr></tbody>`;
+  const ie={};tot.forEach(r=>{ie[r.entity]=(ie[r.entity]||0)+r.signals});
+  const itop=Object.entries(ie).sort((a,b)=>b[1]-a[1]).slice(0,8), imx=itop[0][1];
+  $('#ind-entities').innerHTML=itop.map(([e,v])=>`<div class="hbar"><span class="lbl">${esc(e)}</span><div class="track"><div class="fill" style="width:${v/imx*100}%;background:var(--k-proj)"></div></div><span class="v">${fmt(v)}</span></div>`).join('');
+
+  const sel=$('#entity-sel');
+  sel.innerHTML='<option value="">— اختر جهة (مرتبة حسب عدد الطلبات) —</option>'+Object.entries(ent).sort((a,b)=>b[1].n-a[1].n).map(([e,v])=>`<option value="${esc(e)}">${esc(e)} (${v.n} طلب)</option>`).join('');
+  sel.onchange=()=>renderEntity(sel.value);
+  sel.selectedIndex=1;renderEntity(sel.value);
+}
+
+function renderEntity(name){
+  const box=$('#entity-panel');
+  if(!name){box.className='hint';box.textContent='اختر جهة لعرض طلباتها والبرامج الموحدة التي دخلت فيها وأولوياتها.';return}
+  const R=D.reqs.filter(r=>r.entity===name), agg={};
+  R.forEach(r=>{(agg[r.program_code]??={n:0,b:0});agg[r.program_code].n++;agg[r.program_code].b+=r.beneficiaries});
+  const progs=Object.entries(agg).map(([c,v])=>({...D.byCode[c],req_n:v.n,req_b:v.b})).sort((a,b)=>a.priority-b.priority||b.req_b-a.req_b);
+  const c=[1,2,3,4].map(k=>progs.filter(p=>p.priority===k).length), linked=R.filter(r=>r.linked_project==='نعم').length;
+  box.className='';
+  box.innerHTML=`<div class="kv" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr));margin-bottom:14px">
+    <div><b class="tnum">${R.length}</b><span>طلباً</span></div><div><b class="tnum">${fmt(R.reduce((a,r)=>a+r.beneficiaries,0))}</b><span>مستفيداً كما ورد</span></div>
+    <div><b class="tnum">${progs.length}</b><span>برنامجاً موحداً</span></div><div><b class="tnum">${c[0]+c[1]}</b><span>في الأولويتين العليين</span></div><div><b class="tnum">${linked}</b><span>طلباً مرتبطاً بمشروع</span></div></div>
+    <div class="tbl-wrap"><table class="t"><thead><tr><th>البرنامج الموحد</th><th>الأولوية</th><th class="n">الدرجة</th><th class="n">طلبات الجهة</th><th class="n">مستفيدو الجهة</th></tr></thead><tbody>${progs.map(p=>`<tr class="click" data-code="${p.code}"><td class="name-cell">${esc(p.name)}<small>${p.code} · ${esc(p.main_comp)}</small></td><td>${pb(p.priority)}</td><td class="n">${fmt(p.score)}</td><td class="n">${p.req_n}</td><td class="n">${fmt(p.req_b)}</td></tr>`).join('')}</tbody></table></div>`;
+  box.querySelectorAll('tr[data-code]').forEach(tr=>tr.onclick=()=>openProgram(tr.dataset.code));
+}
+
+function renderDecisions(){
+  const L=D.programs.filter(p=>p.priority===3).sort((a,b)=>b.total_benef-a.total_benef).slice(0,10);
+  $('#dec-tbl').innerHTML=`<thead><tr><th>البرنامج</th><th>الارتباط الاستراتيجي</th><th>المشاريع</th><th class="n">المستفيدون</th><th class="n">الدرجة</th><th class="n">الفجوة عن الأولوية الثانية</th></tr></thead><tbody>`+
+  L.map(p=>`<tr class="click" data-code="${p.code}"><td class="name-cell">${esc(p.name)}<small>${p.code} · ${esc(p.main_comp)}</small></td><td>${esc(p.strat_status)}</td><td>${p.project_link==='مرتبط بمشروع/مبادرة'?'مرتبط':'غير مرتبط'}</td><td class="n">${fmt(p.total_benef)}</td><td class="n"><b>${fmt(p.score)}</b></td><td class="n mute">${55-p.score} درجات</td></tr>`).join('')+'</tbody>';
+  const all5=L.every(p=>p.size_level===5),allInd=L.every(p=>p.strat_status==='غير مباشر'&&p.project_link!=='مرتبط بمشروع/مبادرة');
+  $('#dec-note').textContent=all5&&allInd?`البرامج العشرة كلها ارتباطها «غير مباشر»، وغير مرتبطة بمشروع، وحجم طلبها في أعلى مستوى (151 فأكثر). لذلك درجتها 50 هي أقصى ما تبلغه هذه التوليفة، وتبعد 5 درجات عن الأولوية الثانية.`:'';
+  document.querySelectorAll('#dec-tbl tr[data-code]').forEach(tr=>tr.onclick=()=>openProgram(tr.dataset.code));
+}
+
+/* programs table */
+const T={q:'',prio:new Set(),sort:{k:'rank',d:1},page:0,size:25};
+function syncPrioChips(){document.querySelectorAll('#f-prio .fchip').forEach(b=>b.classList.toggle('on',T.prio.has(+b.dataset.p)))}
+function resetFilters(render=true){T.q='';T.prio=new Set();$('#f-q').value='';['#f-comp','#f-goal','#f-src','#f-proj'].forEach(s=>$(s).value='');syncPrioChips();T.page=0;if(render)renderTable()}
+function initTable(){
+  const P=D.programs,uniq=k=>[...new Set(P.map(p=>p[k]).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ar'));
+  $('#f-comp').innerHTML='<option value="">كل الجدارات الرئيسية</option>'+uniq('main_comp').map(v=>`<option>${esc(v)}</option>`).join('');
+  $('#f-goal').innerHTML='<option value="">كل الأهداف الاستراتيجية</option>'+D.goals.map(g=>`<option value="${g.goal_no}">${g.goal_no!=='0'?g.goal_no+' — ':''}${esc(g.goal_name)}</option>`).join('');
+  $('#f-src').innerHTML='<option value="">كل مصادر الاحتياج</option>'+['الجهات والأفراد','الجهات فقط','الأفراد فقط'].map(v=>`<option>${v}</option>`).join('');
+  $('#f-prio').innerHTML=[1,2,3,4].map(k=>`<button class="fchip" data-p="${k}">الأولوية ${PN[k]}</button>`).join('');
+  document.querySelectorAll('#f-prio .fchip').forEach(b=>b.onclick=()=>{const k=+b.dataset.p;T.prio.has(k)?T.prio.delete(k):T.prio.add(k);syncPrioChips();T.page=0;renderTable()});
+  $('#f-q').oninput=e=>{T.q=e.target.value.trim();T.page=0;renderTable()};
+  ['#f-comp','#f-goal','#f-src','#f-proj'].forEach(s=>$(s).onchange=()=>{T.page=0;renderTable()});
+  $('#f-reset').onclick=()=>resetFilters();
+  $('#pg-prev').onclick=()=>{T.page--;renderTable()};$('#pg-next').onclick=()=>{T.page++;renderTable()};
+  renderTable();
+}
+function filtered(){
+  const q=T.q.toLowerCase(),comp=$('#f-comp').value,goal=$('#f-goal').value,src=$('#f-src').value,proj=$('#f-proj').value;
+  return D.programs.filter(p=>
+    (!T.prio.size||T.prio.has(p.priority))&&(!comp||p.main_comp===comp)&&(!src||p.need_source===src)&&
+    (!goal||(goal==='0'?p.goal_no==null:p.goal_no===+goal))&&
+    (proj===''||((p.project_link==='مرتبط بمشروع/مبادرة')?'1':'0')===proj)&&
+    (!q||(p.name+' '+p.code+' '+(p.entities_text||'')+' '+(p.sub_comp||'')).toLowerCase().includes(q)));
+}
+function renderTable(){
+  const L=filtered(),k=T.sort.k,d=T.sort.d;
+  L.sort((a,b)=>k==='rank'?(a.priority-b.priority||b.score-a.score||b.total_benef-a.total_benef):k==='name'?d*a.name.localeCompare(b.name,'ar'):d*((a[k]??-1)-(b[k]??-1)));
+  const pages=Math.max(1,Math.ceil(L.length/T.size));T.page=Math.min(Math.max(0,T.page),pages-1);
+  const rows=L.slice(T.page*T.size,(T.page+1)*T.size);
+  const th=(key,l,n)=>`<th class="sortable${n?' n':''}${T.sort.k===key?(T.sort.d>0?' asc':' desc'):''}" data-k="${key}">${l}</th>`;
+  $('#prog-tbl').innerHTML=`<thead><tr>${th('rank','م',1)}${th('name','البرنامج')}<th>الأولوية</th>${th('score','الدرجة',1)}<th>إسهام المعايير</th><th>الهدف</th>${th('ent_entities','الجهات',1)}${th('total_benef','المستفيدون',1)}</tr></thead><tbody>`+
+    (rows.length?rows.map((p,i)=>`<tr class="click" data-code="${p.code}"><td class="n mute">${T.page*T.size+i+1}</td><td class="name-cell">${esc(p.name)}<small>${p.code} · ${esc(p.main_comp)} · ${esc(p.need_source)}</small></td><td>${pb(p.priority)}</td><td class="n"><b>${fmt(p.score)}</b></td>
+      <td><div class="stack" title="استراتيجي ${p.c_strat} + مشاريع ${p.c_proj} + حجم ${p.c_size}"><span class="ks" style="width:${p.c_strat}%"></span><span class="kp" style="width:${p.c_proj}%"></span><span class="kz" style="width:${p.c_size}%"></span></div></td>
+      <td class="mute">${p.goal_no?p.goal_no+' · '+esc(p.strat_status):'لا يظهر'}</td><td class="n">${fmt(p.ent_entities)}</td><td class="n">${fmt(p.total_benef)}</td></tr>`).join(''):`<tr><td colspan="8" class="state">لا توجد برامج تطابق التصفية.</td></tr>`)+'</tbody>';
+  document.querySelectorAll('#prog-tbl th.sortable').forEach(t=>t.onclick=()=>{const key=t.dataset.k;T.sort={k:key,d:T.sort.k===key?-T.sort.d:(key==='name'?1:-1)};renderTable()});
+  document.querySelectorAll('#prog-tbl tr[data-code]').forEach(tr=>tr.onclick=()=>openProgram(tr.dataset.code));
+  const b=L.reduce((a,p)=>a+p.total_benef,0);
+  $('#pg-info').textContent=`${fmt(L.length)} برنامجاً · ${fmt(b)} مستفيداً · صفحة ${T.page+1} من ${pages}`;
+  $('#pg-prev').disabled=T.page===0;$('#pg-next').disabled=T.page>=pages-1;
+}
+
+/* drawer */
+async function openProgram(code){
+  const dr=$('#drawer'),ov=$('#overlay');dr.hidden=false;ov.hidden=false;document.body.style.overflow='hidden';
+  dr.innerHTML='<div class="state">جاري التحميل…</div>';
+  try{
+    const [p]=await sbGet(`tna27_programs?select=*&code=eq.${encodeURIComponent(code)}`);
+    const L=v=>esc(v||'—');
+    dr.innerHTML=`<button class="btn close" id="dr-close" aria-label="إغلاق">إغلاق ✕</button>
+      <div class="eyebrow">${p.code} · ${esc(p.program_type)}</div><h3>${esc(p.name)}</h3>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">${pb(p.priority)}<span class="pill">${esc(p.main_comp)} › ${esc(p.sub_comp)}</span><span class="pill">${esc(p.need_source)}</span></div>
+      <div class="blk"><h4>لماذا هذه الأولوية؟</h4>
+        <div class="calc"><span class="h">المعيار</span><span class="h">القيمة</span><span class="h">الإسهام</span>
+          <span>الارتباط الاستراتيجي (45%)</span><span>${L(p.strat_status)}</span><span class="tnum">${fmt(p.c_strat)}</span>
+          <span>المشاريع والمبادرات (35%)</span><span>${p.project_link==='مرتبط بمشروع/مبادرة'?'مرتبط':'غير مرتبط'}</span><span class="tnum">${fmt(p.c_proj)}</span>
+          <span>حجم المستفيدين (20%)</span><span>طلب ${fmt(p.demand_size)} — مستوى ${p.size_level}</span><span class="tnum">${fmt(p.c_size)}</span>
+          <span class="tot">الدرجة المرجحة</span><span class="tot">ترتيب ${p.rank_score} من 435</span><span class="tot tnum">${fmt(p.score)}</span></div>
+        <p class="hint" style="margin-top:6px">«حجم الطلب» هو أساس الأولوية في المصفوفة (قبل استبعاد التكرار المحتمل).</p></div>
+      <div class="blk"><h4>الهدف الاستراتيجي ${p.goal_no?'('+p.goal_no+')':''}</h4><p><b style="color:var(--ink)">${L(p.goal_name)}</b></p><p>${L(p.strat_contribution)}</p><p class="hint">${L(p.strat_reason)}</p>${p.support_goal?`<p class="hint">هدف داعم: ${esc(p.support_goal)}</p>`:''}<p class="hint">صفة الربط: ${L(p.link_nature)}</p></div>
+      <div class="blk"><h4>المستفيدون</h4><div class="kv">
+        <div><b class="tnum">${fmt(p.total_benef)}</b><span>الإجمالي بعد الاستبعاد</span></div><div><b class="tnum">${fmt(p.ent_benef)}</b><span>من الجهات</span></div><div><b class="tnum">${fmt(p.ind_benef)}</b><span>من الأفراد</span></div>
+        <div><b class="tnum">${fmt(p.ent_requests)}</b><span>طلب من ${fmt(p.ent_entities)} جهة</span></div><div><b class="tnum">${fmt(p.ind_staff)} · ${fmt(p.ind_faculty)} · ${fmt(p.ind_students)}</b><span>موظفون · هيئة تدريس · طلاب</span></div><div><b class="tnum">${fmt(p.ind_signals)}</b><span>إشارة احتياج فردية</span></div></div></div>
+      ${p.projects?`<div class="blk"><h4>المشاريع والمبادرات المرتبطة</h4><p>${esc(p.projects)}</p></div>`:''}
+      ${p.entities_text?`<div class="blk"><h4>الجهات الطالبة (المستفيدون)</h4><p>${esc(p.entities_text)}</p></div>`:''}
+      ${p.ind_top_entities?`<div class="blk"><h4>أكثر الجهات والكليات طلباً من الأفراد</h4><p>${esc(p.ind_top_entities)}</p></div>`:''}
+      ${p.original_titles?`<div class="blk"><h4>المسميات كما وردت من الجهات</h4><p>${esc(p.original_titles)}</p></div>`:''}
+      ${p.target_groups?`<div class="blk"><h4>الفئات المستهدفة</h4><p>${esc(p.target_groups)}</p></div>`:''}`;
+    $('#dr-close').onclick=closeDrawer;$('#dr-close').focus();
+  }catch(e){dr.innerHTML=`<button class="btn close" id="dr-close">إغلاق ✕</button><div class="state error">تعذّر تحميل التفاصيل.</div>`;$('#dr-close').onclick=closeDrawer}
+}
+function closeDrawer(){$('#drawer').hidden=true;$('#overlay').hidden=true;document.body.style.overflow=''}
+$('#overlay').onclick=closeDrawer;document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer()});
+
+/* ask */
+async function ask(q){
+  const inp=$('#inp');q=q||inp.value.trim();if(!q)return;inp.value=q;
+  const btn=$('#ask-btn'),load=$('#load'),ans=$('#ans');btn.disabled=true;load.hidden=false;ans.hidden=true;
+  try{const r=await fetch(WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q})});
+    const d=await r.json();ans.textContent=d.answer||'لا توجد إجابة.';}
+  catch(e){ans.textContent='تعذّر الوصول إلى المساعد الآن. حاول مرة أخرى بعد قليل.'}
+  finally{ans.hidden=false;btn.disabled=false;load.hidden=true}
+}
+$('#ask-btn').onclick=()=>ask();$('#inp').addEventListener('keydown',e=>{if(e.key==='Enter')ask()});
+document.querySelectorAll('.presets .fchip').forEach(b=>b.onclick=()=>ask(b.dataset.q));
+
+load();
 </script>
-
 </body>
+</html>
